@@ -1,0 +1,54 @@
+.header {
+    background: var(--font-color);
+    height: 128px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--default-white);
+    font-family: Inter, sans-serif;
+
+    padding-left: 20px;
+    padding-right: 55px;
+}
+
+.logoBlock {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.logoBlock_image {
+    max-width: 102px;
+    max-height: 65px;
+}
+
+.logoBlock_text {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 27.998px */
+    letter-spacing: 1px;
+    width: 50%;
+}
+
+.controlBlock {
+    display: flex;
+    gap: 35px;
+}
+
+.loginBlock {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.header_text {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 33.598px */
+    letter-spacing: 0.36px;
+}
