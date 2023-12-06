@@ -1,0 +1,92 @@
+.contentWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    width: 1280px;
+    box-sizing: border-box;
+    gap: 35px;
+    padding: 30px;
+}
+
+.contentLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 30%;
+}
+
+.contentLeft__h1 {
+    color: var(--default-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 55.996px */
+    letter-spacing: 0.6px;
+}
+
+.contentLeft__p {
+    color: var(--default-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 139.99%; /* 39.197px */
+    letter-spacing: 0.42px;
+}
+
+.contentLeft__img {
+    max-width: 212px;
+    margin-top: 40px;
+}
+
+.contentRight {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 70%;
+}
+
+.faqCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 36px;
+
+    border-radius: 15px;
+    background: var(--default-white);
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.16);
+}
+
+.faqCard__headSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.faqCard__headImage {
+    max-width: 41.13px;
+}
+
+.faqCard_h1 {
+    color: var(--default-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 139.99%; /* 27.998px */
+    letter-spacing: 0.3px;
+}
+
+.faqCard__p {
+    color: var(--default-dark);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 139.99%; /* 22.398px */
+    letter-spacing: 0.24px;
+}

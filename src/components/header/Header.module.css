@@ -2,6 +2,7 @@
     background: var(--font-color);
     height: 128px;
 
+
     display: flex;
     justify-content: space-between;
     align-items: center;
