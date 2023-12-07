@@ -1,6 +1,16 @@
 .header {
+    /*display: flex;*/
+    /*width: 100vw;*/
     background: var(--font-color);
+    display: flex;
+    justify-content: center;
+
+}
+
+.headerContent {
+    /*background: var(--font-color);*/
     height: 128px;
+    width: 1280px;
 
 
     display: flex;
