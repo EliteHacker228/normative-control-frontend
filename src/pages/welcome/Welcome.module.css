@@ -1,13 +1,13 @@
-.contentWrap {
-    display: flex;
-    justify-content: center;
-}
-
 .content {
     display: flex;
-    max-width: 1280px;
     gap: 20px;
-    margin: 85px 85px 20px 85px;
+
+    max-width: calc(1280px + 40px);
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+
+    margin: 85px auto;
 }
 
 .contentLeft {
@@ -40,6 +40,8 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    justify-content: flex-start;
+    max-width: 615px;
 }
 
 .uploadButton {
@@ -62,7 +64,7 @@
 
 .uploadHint {
     color: var(--font-color);
-    font-family: Inter;
+    font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 300;
@@ -71,8 +73,13 @@
 }
 
 .contentRight {
-    display: flex;
-    align-items: center;
+
+}
+
+@media screen and (max-width: 1079px) {
+    .contentRight {
+        display: none;
+    }
 }
 
 .contentImage {
