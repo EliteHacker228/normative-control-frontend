@@ -29,6 +29,13 @@
     align-items: center;
 
     gap: 25px;
+    text-decoration: none;
+    color: var(--default-white);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--default-white);
 }
 
 .logoBlock_image {
