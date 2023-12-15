@@ -1,6 +1,7 @@
 import css from './Header.module.css';
 import normative_control_logo from './normative_control_logo.svg';
 import dropdown_icon from './dropdown_arrow.svg';
+import burger_menu from './burger_menu.svg';
 import {NavLink} from "react-router-dom";
 
 export default function Header() {
@@ -22,6 +23,10 @@ export default function Header() {
                             <img src={dropdown_icon} alt={'Dropdown arrow'}/>
                         </div>
                     </NavLink>
+                </div>
+
+                <div className={css.burgerMenu}>
+                    <img className={css.burgerMenu__img} src={burger_menu}/>
                 </div>
             </div>
         </div>

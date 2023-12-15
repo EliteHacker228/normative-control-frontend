@@ -57,6 +57,32 @@
     gap: 35px;
 }
 
+@media screen and (max-width: 810px) {
+    .controlBlock {
+        display: none;
+    }
+
+    .burgerMenu {
+        display: block;
+    }
+
+    .burgerMenu__img {
+        width: 40px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .logoBlock_text {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 811px) {
+    .burgerMenu {
+        display: none;
+    }
+}
+
 .loginBlock {
     display: flex;
     gap: 7px;
