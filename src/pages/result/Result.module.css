@@ -8,12 +8,16 @@
     max-width: calc(1280px + 40px);
     padding-left: 20px;
     padding-right: 20px;
-    margin: 85px auto;
+    margin: 18px auto;
 }
 
 .content_section {
     display: flex;
     gap: 20px;
+}
+
+.bottom_section {
+    margin-top: 30px;
 }
 
 .content_element {
@@ -22,6 +26,11 @@
 
 .content_half {
     flex-basis: 50%;
+}
+
+.content_center {
+    display: flex;
+    justify-content: center;
 }
 
 .content_header {
@@ -39,6 +48,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    margin-top: 75px;
 }
 
 .controls_description {
@@ -77,8 +88,16 @@
     letter-spacing: 1px;
 }
 
+.textbox_input:focus {
+    outline: none;
+}
+
 .textbox_copy {
 
+}
+
+.textbox_copy:hover {
+    cursor: pointer;
 }
 
 .controls_download {
@@ -99,6 +118,10 @@
     line-height: 139.99%; /* 33.598px */
     letter-spacing: 0.36px;
     text-transform: uppercase;
+}
+
+.controls_download:hover {
+    cursor: pointer;
 }
 
 .errors_list {
@@ -125,6 +148,10 @@
     border: 1px solid var(--default-gray);
     background: var(--default-white);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.error:hover {
+    cursor: pointer;
 }
 
 .error_description {
@@ -158,6 +185,10 @@
 
 .wrap_button {
     margin-bottom: 6px;
+}
+
+.wrap_button:hover {
+    cursor: pointer;
 }
 
 /*.contentWrap {*/
