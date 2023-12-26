@@ -142,7 +142,7 @@ export default function Result() {
             <Header/>
             <div className={css.content}>
                 <div className={css.content_section}>
-                    <div className={`${css.content_element} ${css.content_half}`}>
+                    <div className={`${css.content_element_tl}`}>
                         <div className={css.controls}>
                             <p className={css.controls_description}>Чтобы преподаватель смог просмотреть результат,
                                 скопируйте и отправьте ему ID
@@ -155,12 +155,12 @@ export default function Result() {
                             <button className={css.controls_download}>Скачать результат</button>
                         </div>
                     </div>
-                    <div className={`${css.content_element} ${css.content_half} ${css.content_center}`}>
+                    <div className={`${css.content_element_tr}`}>
                         <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
                     </div>
                 </div>
                 <div className={`${css.content_section} ${css.bottom_section}`}>
-                    <div className={`${css.content_element} ${css.content_half}`}>
+                    <div className={`${css.content_element_bl}`}>
                         <h1 className={css.content_header}>Список ошибок</h1>
                         <div className={css.errors_list}>
                             <div className={css.error}>
@@ -206,7 +206,7 @@ export default function Result() {
                             </div>
                         </div>
                     </div>
-                    <div className={`${css.content_element} ${css.content_half}`}>
+                    <div className={`${css.content_element_br}`}>
                         <h1 className={css.content_header}>Просмотр документа</h1>
                         <div>
                             <img className={css.wrap_button} src={wrap_page_ico}/>
