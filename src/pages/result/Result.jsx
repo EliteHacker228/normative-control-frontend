@@ -140,83 +140,95 @@ export default function Result() {
     return (
         <div>
             <Header/>
-            <div className={css.content}>
-                <div className={css.content_section}>
-                    <div className={`${css.content_element_tl}`}>
-                        <div className={css.controls}>
-                            <p className={css.controls_description}>Чтобы преподаватель смог просмотреть результат,
-                                скопируйте и отправьте ему ID
-                                документа:</p>
-                            <label className={css.textbox} htmlFor={'textbox_input'}>
-                                <input className={css.textbox_input} id={'textbox_input'} type={'text'}
-                                       value={'c5dfb849c20c42088f3269f82b2e477f'}/>
-                                <img className={css.textbox_copy} src={result_copy_ico}/>
-                            </label>
-                            <button className={css.controls_download}>Скачать результат</button>
-                        </div>
+            {isWrapped ?
+                <div className={css.content}>
+                    <h1 className={css.content_header}>Просмотр документа</h1>
+                    <div>
+                        <img className={css.wrap_button} src={unwrap_page_ico} onClick={onWrapHandler}/>
                     </div>
-                    <div className={`${css.content_element_tr}`}>
-                        <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
+                    <div className={`${css.document_container} ${css.document_container_wrapped}`}>
+                        <iframe className={css.document_view} srcDoc={srcDoc}/>
                     </div>
                 </div>
-                <div className={`${css.content_section} ${css.bottom_section}`}>
-                    <div className={`${css.content_element_bl}`}>
-                        <h1 className={css.content_header}>Список ошибок</h1>
-                        <div className={css.errors_list}>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Пустая строка после заголовка отформатирована в
-                                    режиме только строчных букв</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                :
+                <div className={css.content}>
+                    <div className={css.content_section}>
+                        <div className={`${css.content_element_tl}`}>
+                            <div className={css.controls}>
+                                <p className={css.controls_description}>Чтобы преподаватель смог просмотреть результат,
+                                    скопируйте и отправьте ему ID
+                                    документа:</p>
+                                <label className={css.textbox} htmlFor={'textbox_input'}>
+                                    <input className={css.textbox_input} id={'textbox_input'} type={'text'}
+                                           value={'c5dfb849c20c42088f3269f82b2e477f'}/>
+                                    <img className={css.textbox_copy} src={result_copy_ico}/>
+                                </label>
+                                <button className={css.controls_download}>Скачать результат</button>
                             </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Неправильный шрифт</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Неправильный шрифт</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Неправильный шрифт</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Неправильный шрифт</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Грамматическая ошибка, которую нашел Word</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Текст подчеркнут</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
-                            <div className={css.error}>
-                                <p className={css.error_description}>Текст подчеркнут</p>
-                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                            </div>
+                        </div>
+                        <div className={`${css.content_element_tr}`}>
+                            <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
                         </div>
                     </div>
-                    <div className={`${css.content_element_br}`}>
-                        <h1 className={css.content_header}>Просмотр документа</h1>
-                        <div>
-                            <img className={css.wrap_button} src={wrap_page_ico}/>
+                    <div className={`${css.content_section} ${css.bottom_section}`}>
+                        <div className={`${css.content_element_bl}`}>
+                            <h1 className={css.content_header}>Список ошибок</h1>
+                            <div className={css.errors_list}>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Пустая строка после заголовка отформатирована в
+                                        режиме только строчных букв</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Грамматическая ошибка, которую нашел Word</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Текст подчеркнут</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                                <div className={css.error}>
+                                    <p className={css.error_description}>Текст подчеркнут</p>
+                                    <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                </div>
+                            </div>
                         </div>
-                        <div className={css.document_container}>
-                            <iframe className={css.document_view} srcDoc={srcDoc}/>
+                        <div className={`${css.content_element_br}`}>
+                            <h1 className={css.content_header}>Просмотр документа</h1>
+                            <div>
+                                <img className={css.wrap_button} src={wrap_page_ico} onClick={onWrapHandler}/>
+                            </div>
+                            <div className={css.document_container}>
+                                <iframe className={css.document_view} srcDoc={srcDoc}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     );
 }

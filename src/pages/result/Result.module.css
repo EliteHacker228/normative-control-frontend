@@ -185,6 +185,10 @@
     height: 556px;
 }
 
+.document_container_wrapped {
+    height: 900px;
+}
+
 .document_view {
     width: 100%;
     background-color: var(--default-white);
