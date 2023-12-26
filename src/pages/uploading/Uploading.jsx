@@ -28,7 +28,7 @@ export default function Uploading() {
     }, [uploadingProgress]);
 
     return (
-        <>
+        <div>
             <Header/>
             {uploadingProgress === 100 ?
                 <div>
@@ -56,6 +56,6 @@ export default function Uploading() {
                     </div>
                 </div>
             }
-        </>
+        </div>
     );
 }
