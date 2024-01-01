@@ -7,6 +7,10 @@
 
 }
 
+.zIndex_2 {
+    z-index: 2;
+}
+
 .headerContent {
     /*background: var(--font-color);*/
     height: 128px;
@@ -71,10 +75,23 @@
     width: 100%;
 }
 
-.popUp__auth {
+.popUp__content {
     background-color: var(--default-white);
     flex-basis: 500px;
+}
 
+.popUp__links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 64px;
+    gap: 16px;
+}
+
+.popUp__link {
+    text-decoration: none;
+    color: var(--default-dark);
+    font-size: 32px;
 }
 
 .selectionMenu {

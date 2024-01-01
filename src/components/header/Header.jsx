@@ -31,6 +31,9 @@ export default function Header() {
         setSelectedAuthType(authType[e.target.value])
     };
 
+    const [isBurgerMenuExpanded, setIsBurgerMenuExpanded] = useState(false);
+    const toggleExpandBurgerMenu = () => setIsBurgerMenuExpanded(!isBurgerMenuExpanded);
+
 
     return (
         <div className={css.header}>
@@ -54,12 +57,13 @@ export default function Header() {
                 </div>
 
                 {isAuthPopUpShowed &&
-                    <div className={css.popUp}>
+                    <div className={`${css.popUp} ${css.zIndex_2}`}>
                         <div className={css.popUp__background} onClick={toggleOpenAuthPopUp}></div>
-                        <div className={css.popUp__auth}>
+                        <div className={css.popUp__content}>
                             <div className={css.selectionMenu}>
-                                <label className={`${css.selectionBlock} ${selectedAuthType === authType.login && css.selectionBlock__checked}`}
-                                       htmlFor="auth_type_login">
+                                <label
+                                    className={`${css.selectionBlock} ${selectedAuthType === authType.login && css.selectionBlock__checked}`}
+                                    htmlFor="auth_type_login">
                                     <p className={css.selectionBlock__label}
                                     >Войти</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="login"
@@ -69,8 +73,9 @@ export default function Header() {
                                            onChange={handleAuthTypeSelection}/>
                                 </label>
 
-                                <label className={`${css.selectionBlock} ${selectedAuthType === authType.registration && css.selectionBlock__checked}`}
-                                       htmlFor="auth_type_registration">
+                                <label
+                                    className={`${css.selectionBlock} ${selectedAuthType === authType.registration && css.selectionBlock__checked}`}
+                                    htmlFor="auth_type_registration">
                                     <p className={css.selectionBlock__label}
                                     >Зарегистрироваться</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="registration"
@@ -103,9 +108,25 @@ export default function Header() {
                 }
 
 
-                <div className={css.burgerMenu}>
+                <div className={css.burgerMenu} onClick={toggleExpandBurgerMenu}>
                     <img className={css.burgerMenu__img} src={burger_menu}/>
                 </div>
+
+                {isBurgerMenuExpanded &&
+                    <div className={css.popUp}>
+                        <div className={css.popUp__background} onClick={toggleExpandBurgerMenu}></div>
+                        <div className={css.popUp__content}>
+                            <div className={css.popUp__links}>
+                                <NavLink className={css.popUp__link} to={'/faq'}>
+                                    <p>FAQ</p>
+                                </NavLink>
+                                <NavLink className={css.popUp__link} onClick={toggleOpenAuthPopUp}>
+                                    <p>Войти</p>
+                                </NavLink>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     );
