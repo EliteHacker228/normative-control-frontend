@@ -87,6 +87,7 @@
 .selectionBlock {
     flex-basis: 50%;
     text-align: center;
+    display: block;
 }
 
 .selectionBlock:hover {
