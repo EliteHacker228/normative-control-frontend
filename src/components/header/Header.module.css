@@ -17,7 +17,6 @@
     justify-content: space-between;
     align-items: center;
 
-    color: var(--default-white);
     font-family: Inter, sans-serif;
 
     padding-left: 20px;
@@ -55,6 +54,75 @@
 .controlBlock {
     display: flex;
     gap: 35px;
+}
+
+.popUp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.popUp__background {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.popUp__auth {
+    background-color: var(--default-white);
+    flex-basis: 500px;
+
+}
+
+.selectionMenu {
+    display: flex;
+    justify-content: center;
+    height: 25px;
+    margin-top: 10px;
+}
+
+.selectionBlock {
+    flex-basis: 50%;
+    text-align: center;
+}
+
+.selectionBlock:hover {
+    box-shadow: 0 3px 0 0 lightgoldenrodyellow;
+    cursor: pointer;
+}
+
+.selectionBlock__checked {
+    box-shadow: 0 3px 0 0 red;
+}
+
+.selectionBlock__selected {
+    box-shadow: 0 3px 0 0 black;
+}
+
+.selectionBlock__radio {
+    display: none;
+}
+
+.selectionBlock__label {
+
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.authForm__header {
+
+}
+
+.authForm__input {
+
 }
 
 @media screen and (max-width: 810px) {
