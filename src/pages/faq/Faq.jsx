@@ -11,17 +11,17 @@ export default function Faq() {
         <div>
             <Header/>
             <div className={css.content}>
-                <div className={css.contentLeft}>
-                    <h1 className={css.contentLeft__h1}>
+                <div className={css.aboutFaq}>
+                    <h1 className={css.aboutFaq__header}>
                         Ответы на часто задаваемые вопросы
                     </h1>
-                    <p className={css.contentLeft__p}>
+                    <p className={css.aboutFaq__text}>
                         Мы думаем, что они также могут быть полезны для вас
                     </p>
-                    <img className={css.contentLeft__img} src={faq_panda_image}
+                    <img className={css.aboutFaq__img} src={faq_panda_image}
                          alt={'Thinking panda with question marks'}/>
                 </div>
-                <div className={css.contentRight}>
+                <div className={css.faqCards}>
                     <div className={css.faqCard}>
                         <div className={css.faqCard__headSection}>
                             <img className={css.faqCard__headImage} src={faq_data_saving_ico}/>
