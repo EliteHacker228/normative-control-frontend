@@ -33,26 +33,28 @@ export default function Uploading() {
             {uploadingProgress === 100 ?
                 <div>
                     <div className={css.content}>
-                        <p className={css.progressStatus}></p>
-                        <div className={css.contentCenter}>
-                            <div className={css.finishBanner}>
-                                <img className={css.uploadingCompleteImg} src={uploadingComplete}
+                        <p/>
+                        <div className={css.uploadingProgress}>
+                            <div className={css.uploadingProgress__finishBanner}>
+                                <img className={css.uploadingProgress__uploadingCompleteImg} src={uploadingComplete}
                                      alt={'Uploading complete'}/>
-                                <p className={css.progressStatus}>Проверка окончена!</p>
+                                <p className={css.uploadingProgress__text}>Проверка окончена!</p>
                             </div>
-                            <button className={css.uploadButton}>ПОСМОТРЕТЬ РЕЗУЛЬТАТ</button>
-                            <img className={css.awakePandaImg} src={awakePandaImg}/>
+                            <button className={`${css.button} ${css.button_results} ${css.button_red} ${css.button_shadow}`}>ПОСМОТРЕТЬ
+                                РЕЗУЛЬТАТ
+                            </button>
+                            <img className={css.uploadingProgress__mascot} src={awakePandaImg}/>
                         </div>
                     </div>
                 </div>
                 :
                 <div className={css.content}>
-                    <div className={css.contentCenter}>
-                        <div className={css.progressWheel} ref={progressWheel}>
-                            <p className={css.progressTitle}>{`${uploadingProgress}%`}</p>
+                    <div className={css.uploadingProgress}>
+                        <div className={css.uploadingProgress__wheel} ref={progressWheel}>
+                            <p className={css.uploadingProgress__indicator}>{`${uploadingProgress}%`}</p>
                         </div>
-                        <p className={css.progressStatus}>Ожидание...</p>
-                        <img className={css.sleepyPandaImg} src={sleepyPandaImg}/>
+                        <p className={css.uploadingProgress__text}>Ожидание...</p>
+                        <img className={css.uploadingProgress__mascot} src={sleepyPandaImg}/>
                     </div>
                 </div>
             }

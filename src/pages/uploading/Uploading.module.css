@@ -10,7 +10,7 @@
     margin: 0 auto;
 }
 
-.contentCenter {
+.uploadingProgress {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -18,18 +18,18 @@
     margin-top: 165px;
 }
 
-.finishBanner {
+.uploadingProgress__finishBanner {
     display: flex;
     flex-direction: column;
     gap: 35px;
 
     align-items: center;
 }
-.uploadingCompleteImg {
+.uploadingProgress__uploadingCompleteImg {
     max-width: 210px;
     max-height: 210px;
 }
-.progressWheel {
+.uploadingProgress__wheel {
     width: 300px;
     height: 300px;
     border-radius: 50%;
@@ -43,7 +43,7 @@
     justify-content: center;
 }
 
-.progressWheel::before {
+.uploadingProgress__wheel::before {
     content: '';
     position: absolute;
     width: 200px;
@@ -56,7 +56,7 @@
     background-color: var(--default-white);
 }
 
-.progressTitle {
+.uploadingProgress__indicator {
     position: relative;
 
     color: #000;
@@ -67,7 +67,7 @@
     line-height: normal;
 }
 
-.progressStatus {
+.uploadingProgress__text {
     color: #1E4391;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
@@ -78,16 +78,9 @@
     letter-spacing: 0.6px;
 }
 
-.uploadButton {
-    margin-top: 50px;
-
+.button {
     border: none;
     border-radius: 20px;
-    background: linear-gradient(0deg, var(--default-red) 0%, var(--default-red) 100%);
-    box-shadow: 0px 19px 11px -16px #0380B1;
-
-    width: 396px;
-    height: 79.418px;
 
     color: var(--default-white);
     font-family: 'Inter', sans-serif;
@@ -98,15 +91,29 @@
     letter-spacing: 0.36px;
 }
 
-.sleepyPandaImg {
-    /*max-width: 250px;*/
-    max-height: 190px;
-    align-self: flex-end;
-    padding-top: 50px;
+.button:hover {
+    cursor: pointer;
 }
 
-.awakePandaImg {
-    /*max-width: 250px;*/
+.button_results {
+    margin-top: 50px;
+    width: 396px;
+    height: 79.418px;
+}
+
+.button_red {
+    background: linear-gradient(0deg, var(--default-red) 0%, var(--default-red) 100%);
+}
+
+.button_red:hover {
+    background: linear-gradient(0deg, #FF4040 0%, #FF4040 100%);
+}
+
+.button_shadow {
+    box-shadow: 0px 19px 11px -16px #0380B1;
+}
+
+.uploadingProgress__mascot {
     max-height: 190px;
     align-self: flex-end;
     padding-top: 50px;
