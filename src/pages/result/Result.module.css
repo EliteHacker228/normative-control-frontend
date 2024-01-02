@@ -11,40 +11,39 @@
     margin: 18px auto;
 }
 
-.content_section {
+.contentSection {
     display: flex;
     gap: 20px;
 }
 
-.bottom_section {
+.contentSection_top {
+
+}
+
+.contentSection_bottom {
     margin-top: 30px;
 }
 
-.content_element_tl {
+.content__topLeftElement {
     flex-basis: 50%;
 }
 
-.content_element_tr {
+.content__topRightElement {
     flex-basis: 50%;
 
     display: flex;
     justify-content: center;
 }
 
-.content_element_bl {
+.content__bottomLeftElement {
     flex-basis: 50%;
 }
 
-.content_element_br {
+.content__bottomRightElement {
     flex-basis: 50%;
 }
 
-.content_center {
-    display: flex;
-    justify-content: center;
-}
-
-.content_header {
+.content__header {
     color: var(--default-dark);
     text-align: center;
     font-family: Ubuntu, sans-serif;
@@ -63,7 +62,7 @@
     margin-top: 75px;
 }
 
-.controls_description {
+.controls__description {
     color: var(--default-dark);
     text-align: center;
     font-family: Ubuntu, sans-serif;
@@ -135,7 +134,7 @@
     cursor: pointer;
 }
 
-.errors_list {
+.errorsList {
     border-radius: 10px;
     background: #FFF;
     box-shadow: 3px 4px 10px 0px rgba(0, 0, 0, 0.25);
@@ -165,7 +164,7 @@
     cursor: pointer;
 }
 
-.error_description {
+.error__description {
     color: var(--default-dark);
     font-family: Ubuntu, sans-serif;
     font-size: 16px;
@@ -179,17 +178,17 @@
 
 }
 
-.document_container {
+.documentContainer {
     background-color: var(--default-gray);
     border-radius: 10px;
     height: 556px;
 }
 
-.document_container_wrapped {
+.documentContainer_wrapped {
     height: 900px;
 }
 
-.document_view {
+.documentContainer__view {
     width: 100%;
     background-color: var(--default-white);
     transform: scaleX(0.8);
@@ -198,28 +197,28 @@
     border: none;
 }
 
-.wrap_button {
+.content__wrapButton {
     margin-bottom: 6px;
 }
 
-.wrap_button:hover {
+.content__wrapButton:hover {
     cursor: pointer;
 }
 
 @media screen and (max-width: 1079px) {
-    .content_element_tl {
+    .content__topLeftElement {
         flex: auto;
     }
 
-    .content_element_br {
+    .content__bottomRightElement {
         flex: auto;
     }
 
-    .content_element_tr {
+    .content__topRightElement {
         display: none;
     }
 
-    .content_element_bl {
+    .content__bottomLeftElement {
         display: none;
     }
 }

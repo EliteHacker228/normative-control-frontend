@@ -8,9 +8,9 @@ import css from "./Result.module.css";
 import {useState} from "react";
 
 export default function Result() {
-    const [isWrapped, setIsWrapped] = useState(false);
+    const [isFolded, setIsFolded] = useState(false);
 
-    const onWrapHandler = () => setIsWrapped(!isWrapped);
+    const onFoldHandler = () => setIsFolded(!isFolded);
 
     const srcDoc =
         `<!doctype html><html>
@@ -140,90 +140,88 @@ export default function Result() {
     return (
         <div>
             <Header/>
-            {isWrapped ?
+            {isFolded ?
                 <div className={css.content}>
-                    <h1 className={css.content_header}>Просмотр документа</h1>
+                    <h1 className={css.content__header}>Просмотр документа</h1>
                     <div>
-                        <img className={css.wrap_button} src={unwrap_page_ico} onClick={onWrapHandler}/>
+                        <img className={css.content__wrapButton} src={unwrap_page_ico} onClick={onFoldHandler}/>
                     </div>
-                    <div className={`${css.document_container} ${css.document_container_wrapped}`}>
-                        <iframe className={css.document_view} srcDoc={srcDoc}/>
+                    <div className={`${css.documentContainer} ${css.documentContainer_wrapped}`}>
+                        <iframe className={css.documentContainer__view} srcDoc={srcDoc}/>
                     </div>
                 </div>
                 :
                 <div className={css.content}>
-                    <div className={css.content_section}>
-                        <div className={`${css.content_element_tl}`}>
-                            <div className={css.controls}>
-                                <p className={css.controls_description}>Чтобы преподаватель смог просмотреть результат,
-                                    скопируйте и отправьте ему ID
-                                    документа:</p>
-                                <label className={css.textbox} htmlFor={'textbox_input'}>
-                                    <input className={css.textbox_input} id={'textbox_input'} type={'text'}
-                                           value={'c5dfb849c20c42088f3269f82b2e477f'}/>
-                                    <img className={css.textbox_copy} src={result_copy_ico}/>
-                                </label>
-                                <button className={css.controls_download}>Скачать результат</button>
-                            </div>
+                    <div className={`${css.contentSection} ${css.contentSection_top}`}>
+                        <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                            <p className={css.controls__description}>Чтобы преподаватель смог просмотреть результат,
+                                скопируйте и отправьте ему ID
+                                документа:</p>
+                            <label className={css.textbox} htmlFor={'textbox_input'}>
+                                <input className={css.textbox_input} id={'textbox_input'} type={'text'}
+                                       value={'c5dfb849c20c42088f3269f82b2e477f'}/>
+                                <img className={css.textbox_copy} src={result_copy_ico}/>
+                            </label>
+                            <button className={css.controls_download}>Скачать результат</button>
                         </div>
-                        <div className={`${css.content_element_tr}`}>
+                        <div className={`${css.content__topRightElement}`}>
                             <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
                         </div>
                     </div>
-                    <div className={`${css.content_section} ${css.bottom_section}`}>
-                        <div className={`${css.content_element_bl}`}>
-                            <h1 className={css.content_header}>Список ошибок</h1>
-                            <div className={css.errors_list}>
+                    <div className={`${css.contentSection} ${css.contentSection_bottom}`}>
+                        <div className={`${css.content__bottomLeftElement}`}>
+                            <h1 className={css.content__header}>Список ошибок</h1>
+                            <div className={css.errorsList}>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Пустая строка после заголовка отформатирована в
+                                    <p className={css.error__description}>Пустая строка после заголовка отформатирована в
                                         режиме только строчных букв</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <p className={css.error__description}>Неправильный шрифт</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <p className={css.error__description}>Неправильный шрифт</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <p className={css.error__description}>Неправильный шрифт</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Неправильный шрифт</p>
+                                    <p className={css.error__description}>Неправильный шрифт</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Грамматическая ошибка, которую нашел Word</p>
+                                    <p className={css.error__description}>Грамматическая ошибка, которую нашел Word</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
+                                    <p className={css.error__description}>Ошибка правописания, которую нашел Word</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Ошибка правописания, которую нашел Word</p>
+                                    <p className={css.error__description}>Ошибка правописания, которую нашел Word</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Текст подчеркнут</p>
+                                    <p className={css.error__description}>Текст подчеркнут</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                                 <div className={css.error}>
-                                    <p className={css.error_description}>Текст подчеркнут</p>
+                                    <p className={css.error__description}>Текст подчеркнут</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
                             </div>
                         </div>
-                        <div className={`${css.content_element_br}`}>
-                            <h1 className={css.content_header}>Просмотр документа</h1>
+                        <div className={`${css.content__bottomRightElement}`}>
+                            <h1 className={css.content__header}>Просмотр документа</h1>
                             <div>
-                                <img className={css.wrap_button} src={wrap_page_ico} onClick={onWrapHandler}/>
+                                <img className={css.content__wrapButton} src={wrap_page_ico} onClick={onFoldHandler}/>
                             </div>
-                            <div className={css.document_container}>
-                                <iframe className={css.document_view} srcDoc={srcDoc}/>
+                            <div className={css.documentContainer}>
+                                <iframe className={css.documentContainer__view} srcDoc={srcDoc}/>
                             </div>
                         </div>
                     </div>
