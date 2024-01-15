@@ -57,7 +57,7 @@ export default function Header() {
                 </div>
 
                 {isAuthPopUpShowed &&
-                    <div className={`${css.popUp} ${css.zIndex_2}`}>
+                    <div className={`${css.popUp} ${css.zIndex_3}`}>
                         <div className={css.popUp__background} onClick={toggleOpenAuthPopUp}></div>
                         <div className={css.popUp__content}>
                             <div className={css.selectionMenu}>
@@ -113,7 +113,7 @@ export default function Header() {
                 </div>
 
                 {isBurgerMenuExpanded &&
-                    <div className={css.popUp}>
+                    <div className={`${css.popUp} ${css.zIndex_2}`}>
                         <div className={css.popUp__background} onClick={toggleExpandBurgerMenu}></div>
                         <div className={css.popUp__content}>
                             <div className={css.popUp__links}>
