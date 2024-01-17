@@ -5,7 +5,7 @@
     max-width: calc(1280px + 40px);
     padding-left: 20px;
     padding-right: 20px;
-    align-items: center;
+    /*align-items: center;*/
 
     margin: 85px auto;
 }
@@ -88,6 +88,14 @@
     letter-spacing: 0.4px;
 }
 
+.content__hint__error {
+    color: var(--default-red);
+}
+
+.bold {
+   font-weight: 500;
+}
+
 @media screen and (max-width: 1079px) {
     .content__image {
         display: none;
@@ -95,5 +103,7 @@
 }
 
 .content__image {
-    max-width: 500px;
+    margin-top: 135px;
+    max-width: 493px;
+    max-height: 269px;
 }
