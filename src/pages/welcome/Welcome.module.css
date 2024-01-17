@@ -105,6 +105,10 @@
     letter-spacing: 0.4px;
 }
 
+.content__hint__upload {
+
+}
+
 .content__hint__error {
     color: var(--default-red);
 }
@@ -114,12 +118,39 @@
 }
 
 .bold {
-   font-weight: 500;
+    font-weight: 500;
 }
 
 @media screen and (max-width: 1079px) {
     .content__image {
         display: none;
+    }
+
+}
+
+@media screen and (max-width: 810px) {
+    .content__hint__upload {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .content__header {
+        font-size: 32px;
+    }
+
+    .content__text {
+        font-size: 24px;
+    }
+
+    .button_upload {
+        width: 320px;
+        height: 64px;
+        font-size: 24px;
+    }
+
+    .content {
+        margin-top: 20px;
     }
 }
 

@@ -87,7 +87,7 @@ export default function Welcome() {
                                     className={`${css.button} ${css.button_upload} ${css.button_red} ${css.button_shadow}`}
                                     onClick={onUploadButtonClick}>ВЫБРАТЬ ФАЙЛ
                                 </button>
-                                <p className={css.content__hint}>или перетащите файл сюда</p>
+                                <p className={`${css.content__hint} ${css.content__hint__upload}`}>или перетащите файл сюда</p>
                             </div>
                         }
                     </div>
