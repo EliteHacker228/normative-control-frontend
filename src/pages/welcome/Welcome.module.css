@@ -37,11 +37,28 @@
 }
 
 .content__upload {
+
+}
+
+.upload__controls {
     display: flex;
     gap: 20px;
     align-items: center;
     justify-content: flex-start;
     max-width: 615px;
+}
+
+.upload__dragndrop {
+    height: 79.418px;
+    background-color: var(--default-gray);
+    border-style: dashed;
+    border-color: var(--default-dark);
+    border-width: 2px;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button {
@@ -90,6 +107,10 @@
 
 .content__hint__error {
     color: var(--default-red);
+}
+
+.content__hint__dragndrop {
+    color: var(--default-dark);
 }
 
 .bold {
