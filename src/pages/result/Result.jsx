@@ -5,10 +5,15 @@ import magnifier_ico from './magnifier_ico.svg';
 import wrap_page_ico from './wrap_page_ico.svg';
 import unwrap_page_ico from './unwrap_page_ico.svg';
 import css from "./Result.module.css";
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 export default function Result() {
     const [isFolded, setIsFolded] = useState(false);
+    const resultDownloadRef = useRef(null);
+
+    const onResultDownloadClick = () => {
+        resultDownloadRef.current.click();
+    };
 
     const onFoldHandler = () => setIsFolded(!isFolded);
 
@@ -162,7 +167,12 @@ export default function Result() {
                                        value={'c5dfb849c20c42088f3269f82b2e477f'}/>
                                 <img className={css.textbox_copy} src={result_copy_ico}/>
                             </label>
-                            <button className={css.controls_download}>Скачать результат</button>
+                            <button className={css.controls_download} onClick={onResultDownloadClick}>Скачать результат</button>
+                            <a href={'public/dummy_result.docx'} ref={resultDownloadRef} download={`result_${new Date().getTime()}.docx`}
+                               style={
+                                   {display: 'none'}
+                               }
+                            />
                         </div>
                         <div className={`${css.content__topRightElement}`}>
                             <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
@@ -173,7 +183,8 @@ export default function Result() {
                             <h1 className={css.content__header}>Список ошибок</h1>
                             <div className={css.errorsList}>
                                 <div className={css.error}>
-                                    <p className={css.error__description}>Пустая строка после заголовка отформатирована в
+                                    <p className={css.error__description}>Пустая строка после заголовка отформатирована
+                                        в
                                         режиме только строчных букв</p>
                                     <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
                                 </div>
