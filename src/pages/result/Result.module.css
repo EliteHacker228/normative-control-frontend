@@ -238,9 +238,9 @@
 
 @media screen and (max-width: 425px) {
     .controls_download {
-        width: 200px;
-        font-size: 14px;
-        padding: 16px 20px;
+        width: 220px;
+        font-size: 16px;
+        padding: 16px ;
         margin-top: 16px;
     }
 
