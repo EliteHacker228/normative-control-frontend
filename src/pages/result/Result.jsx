@@ -142,6 +142,17 @@ export default function Result() {
 
 </html>`;
 
+    const [textId, setTextId] = useState('c5dfb849c20c42088f3269f82b2e');
+    let copyTimeoutId;
+    const onClickCopy = () => {
+        navigator.clipboard.writeText('c5dfb849c20c42088f3269f82b2e');
+        setTextId('Скопировано');
+
+        copyTimeoutId = setTimeout(() => {
+            setTextId('c5dfb849c20c42088f3269f82b2e');
+        }, 2000);
+    };
+
     return (
         <div>
             <Header/>
@@ -162,13 +173,16 @@ export default function Result() {
                             <p className={css.controls__description}>Чтобы преподаватель смог просмотреть результат,
                                 скопируйте и отправьте ему ID
                                 документа:</p>
-                            <label className={css.textbox} htmlFor={'textbox_input'}>
+                            <div className={css.textbox}>
                                 <input className={css.textbox_input} id={'textbox_input'} type={'text'}
-                                       value={'c5dfb849c20c42088f3269f82b2e'}/>
-                                <img className={css.textbox_copy} src={result_copy_ico}/>
-                            </label>
-                            <button className={css.controls_download} onClick={onResultDownloadClick}>Скачать результат</button>
-                            <a href={'public/dummy_result.docx'} ref={resultDownloadRef} download={`result_${new Date().getTime()}.docx`}
+                                       value={textId}/>
+                                <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>
+                            </div>
+                            <button className={css.controls_download} onClick={onResultDownloadClick}>Скачать
+                                результат
+                            </button>
+                            <a href={'public/dummy_result.docx'} ref={resultDownloadRef}
+                               download={`result_${new Date().getTime()}.docx`}
                                style={
                                    {display: 'none'}
                                }
