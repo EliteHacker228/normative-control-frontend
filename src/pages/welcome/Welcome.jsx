@@ -28,14 +28,17 @@ export default function Welcome() {
 
         if (fileSize > _20MB) {
             setFileError(fileErrors.fileIsTooBig);
+            window.scrollTo(0, document.body.scrollHeight);
             return;
         }
         if (fileExtension !== 'docx') {
             setFileError(fileErrors.wrongFileExtension);
+            window.scrollTo(0, document.body.scrollHeight);
             return;
         }
 
         setFileError(null);
+        window.scrollTo(0, 0);
         navigate('/uploading');
     };
 
