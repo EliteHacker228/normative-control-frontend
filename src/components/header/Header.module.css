@@ -147,6 +147,25 @@
 
 }
 
+.burgerMenu:hover {
+    cursor: pointer;
+}
+
+
+.loginBlock {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.header_text {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 33.598px */
+    letter-spacing: 0.36px;
+}
+
 @media screen and (max-width: 768px) {
     .controlBlock {
         display: none;
@@ -195,23 +214,4 @@
     .burgerMenu__img {
         transform: scale(0.7);
     }
-}
-
-.burgerMenu:hover {
-    cursor: pointer;
-}
-
-
-.loginBlock {
-    display: flex;
-    gap: 7px;
-    align-items: center;
-}
-
-.header_text {
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 139.99%; /* 33.598px */
-    letter-spacing: 0.36px;
 }

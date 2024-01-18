@@ -121,6 +121,12 @@
     font-weight: 500;
 }
 
+.content__image {
+    margin-top: 135px;
+    max-width: 493px;
+    max-height: 269px;
+}
+
 @media screen and (max-width: 1024px) {
     .content__image {
         display: none;
@@ -172,10 +178,4 @@
     .content {
         margin-top: 20px;
     }
-}
-
-.content__image {
-    margin-top: 135px;
-    max-width: 493px;
-    max-height: 269px;
 }
