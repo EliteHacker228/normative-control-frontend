@@ -164,7 +164,7 @@ export default function Result() {
                                 документа:</p>
                             <label className={css.textbox} htmlFor={'textbox_input'}>
                                 <input className={css.textbox_input} id={'textbox_input'} type={'text'}
-                                       value={'c5dfb849c20c42088f3269f82b2e477f'}/>
+                                       value={'c5dfb849c20c42088f3269f82b2e'}/>
                                 <img className={css.textbox_copy} src={result_copy_ico}/>
                             </label>
                             <button className={css.controls_download} onClick={onResultDownloadClick}>Скачать результат</button>

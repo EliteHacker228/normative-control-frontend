@@ -86,7 +86,7 @@
 
 .textbox_input {
     border: none;
-    width: 358px;
+    width: 330px;
 
     color: var(--default-dark);
     text-align: center;
@@ -206,7 +206,7 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 1079px) {
+@media screen and (max-width: 1024px) {
     .content__topLeftElement {
         flex: auto;
     }
@@ -222,4 +222,85 @@
     .content__bottomLeftElement {
         display: none;
     }
+}
+
+@media screen and (max-width: 768px) {
+    .textbox {
+        gap: 10px;
+        padding: 10px 10px;
+        font-size: 8px;
+    }
+
+    .content__header {
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .controls_download {
+        width: 200px;
+        font-size: 14px;
+        padding: 16px 20px;
+        margin-top: 16px;
+    }
+
+    .controls__description {
+        font-size: 20px;
+    }
+
+    .textbox_input {
+        font-size: 20px;
+    }
+
+    .textbox {
+        gap: 5px;
+        padding: 10px 5px;
+        font-size: 8px;
+    }
+
+    .textbox_input {
+        width: fit-content;
+    }
+
+    .content__header {
+        font-size: 24px;
+    }
+
+    .controls {
+        margin-top: 16px;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    .controls {
+        margin-top: 0;
+    }
+
+    .controls_download {
+        width: fit-content;
+        font-size: 14px;
+        padding: 8px 16px;
+        margin-top: 12px;
+    }
+
+    .controls__description {
+        font-size: 16px;
+    }
+
+    .textbox {
+        height: 40px;
+    }
+
+    .textbox_copy {
+        transform: scale(0.7);
+    }
+
+    .textbox_input {
+        font-size: 16px;
+    }
+
+    .content__header {
+        font-size: 18px;
+    }
+
 }
