@@ -132,6 +132,7 @@
 
 .controls_download:hover {
     cursor: pointer;
+    background: linear-gradient(200deg, #0089CD 20%, #00BCCD);
 }
 
 .errorsList {
