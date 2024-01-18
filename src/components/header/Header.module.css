@@ -147,7 +147,7 @@
 
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 768px) {
     .controlBlock {
         display: none;
     }
@@ -161,17 +161,46 @@
     }
 }
 
-@media screen and (max-width: 500px) {
-    .logoBlock_text {
-        display: none;
-    }
-}
-
-@media screen and (min-width: 811px) {
+@media screen and (min-width: 769px) {
     .burgerMenu {
         display: none;
     }
 }
+
+@media screen and (max-width: 425px) {
+    .headerContent {
+        height: 96px;
+    }
+
+    .logoBlock_text {
+        display: none;
+    }
+
+    .logoBlock_image {
+        transform: scale(0.7);
+    }
+}
+
+@media screen and (max-width: 325px) {
+    .headerContent {
+        height: 56px;
+        padding-left: 8px;
+        padding-right: 32px;
+    }
+
+    .logoBlock_image {
+        transform: scale(0.5);
+    }
+
+    .burgerMenu__img {
+        transform: scale(0.7);
+    }
+}
+
+.burgerMenu:hover {
+    cursor: pointer;
+}
+
 
 .loginBlock {
     display: flex;

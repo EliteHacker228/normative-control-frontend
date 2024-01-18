@@ -49,7 +49,7 @@ export default function Header() {
                     </NavLink>
                     <NavLink className={css.link}>
                         <div className={css.loginBlock} onClick={toggleOpenAuthPopUp}>
-                            <p className={css.header_text}>Войти</p>
+                            <p className={css.header_text}>Вход</p>
                             {isAuthPopUpShowed ? <img src={pullup_icon} alt={'Dropdown arrow'}/> :
                                 <img src={dropdown_icon} alt={'Dropdown arrow'}/>}
                         </div>
@@ -65,7 +65,7 @@ export default function Header() {
                                     className={`${css.selectionBlock} ${selectedAuthType === authType.login && css.selectionBlock__checked}`}
                                     htmlFor="auth_type_login">
                                     <p className={css.selectionBlock__label}
-                                    >Войти</p>
+                                    >Вход</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="login"
                                            id="auth_type_login"
                                            name="select_auth_type"
@@ -77,7 +77,7 @@ export default function Header() {
                                     className={`${css.selectionBlock} ${selectedAuthType === authType.registration && css.selectionBlock__checked}`}
                                     htmlFor="auth_type_registration">
                                     <p className={css.selectionBlock__label}
-                                    >Зарегистрироваться</p>
+                                    >Регистрация</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="registration"
                                            id="auth_type_registration"
                                            name="select_auth_type"
@@ -88,19 +88,19 @@ export default function Header() {
                             </div>
                             {selectedAuthType === authType.login ?
                                 <div className={css.authForm}>
-                                    <h2 className={css.authForm__header}>Войдите</h2>
+                                    <h2 className={css.authForm__header}>Вход</h2>
                                     <input className={css.authForm__input} type={'text'} placeholder={'E-mail'}/>
                                     <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
-                                    <button>Войти</button>
+                                    <button>Вход</button>
                                 </div>
                                 :
                                 <div className={css.authForm}>
-                                    <h2 className={css.authForm__header}>Зарегистрируйтесь</h2>
+                                    <h2 className={css.authForm__header}>Регистрация</h2>
                                     <input className={css.authForm__input} type={'text'} placeholder={'E-mail'}/>
                                     <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
                                     <input className={css.authForm__input} type={'password'}
                                            placeholder={'Повторите пароль'}/>
-                                    <button>Зарегистрироваться</button>
+                                    <button>Регистрация</button>
                                 </div>
                             }
                         </div>
@@ -121,7 +121,7 @@ export default function Header() {
                                     <p>FAQ</p>
                                 </NavLink>
                                 <NavLink className={css.popUp__link} onClick={toggleOpenAuthPopUp}>
-                                    <p>Войти</p>
+                                    <p>Вход</p>
                                 </NavLink>
                             </div>
                         </div>
