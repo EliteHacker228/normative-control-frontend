@@ -101,7 +101,7 @@ export default function Welcome() {
                     {fileError === fileErrors.fileIsTooBig &&
                         <p className={`${css.content__hint} ${css.content__hint__error}`}>Слишком большой файл.
                             Пожалуйста,
-                            загрузите размером <span className={css.bold}>до 20 МБ</span></p>
+                            загрузите файл размером <span className={css.bold}>до 20 МБ</span></p>
                     }
                     <input type='file' id='upload' ref={fileInputRef} onChange={onFileUpload} style={
                         {display: 'none'}
