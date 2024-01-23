@@ -91,7 +91,7 @@ export default function Header() {
                                     <h2 className={css.authForm__header}>Вход</h2>
                                     <input className={css.authForm__input} type={'text'} placeholder={'E-mail'}/>
                                     <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
-                                    <button>Вход</button>
+                                    <button className={`${css.button} ${css.button_upload} ${css.button_red}`}>Вход</button>
                                 </div>
                                 :
                                 <div className={css.authForm}>
@@ -100,7 +100,7 @@ export default function Header() {
                                     <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
                                     <input className={css.authForm__input} type={'password'}
                                            placeholder={'Повторите пароль'}/>
-                                    <button>Регистрация</button>
+                                    <button className={`${css.button} ${css.button_upload} ${css.button_red}`}>Регистрация</button>
                                 </div>
                             }
                         </div>
