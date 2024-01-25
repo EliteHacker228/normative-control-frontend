@@ -6,6 +6,7 @@ import wrap_page_ico from './wrap_page_ico.svg';
 import unwrap_page_ico from './unwrap_page_ico.svg';
 import css from "./Result.module.css";
 import {useRef, useState} from "react";
+import Footer from "../../components/footer/Footer.jsx";
 
 export default function Result() {
     const [isFolded, setIsFolded] = useState(false);
@@ -252,6 +253,7 @@ export default function Result() {
                     </div>
                 </div>
             }
+            <Footer/>
         </div>
     );
 }

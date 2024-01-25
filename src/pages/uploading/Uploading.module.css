@@ -7,6 +7,7 @@
     max-width: calc(1280px + 40px);
     /*padding-left: 20px;*/
     /*padding-right: 20px;*/
+    height: max(100vh, 700px);
     margin: 0 auto;
 }
 

@@ -5,6 +5,7 @@ import faq_system_requirements_ico from './faq_system_requirements_ico.svg';
 import faq_word_correction_ico from './faq_word_correction_ico.svg';
 import faq_contents_ico from './faq_contents_ico.svg';
 import Header from "../../components/header/Header.jsx";
+import Footer from "../../components/footer/Footer.jsx";
 
 export default function Faq() {
     return (
@@ -73,6 +74,7 @@ export default function Faq() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

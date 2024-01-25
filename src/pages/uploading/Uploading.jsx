@@ -5,6 +5,7 @@ import awakePandaImg from './awake_panda_img.png';
 import uploadingComplete from './progress_bar_ready_img.png';
 import Header from "../../components/header/Header.jsx";
 import {useNavigate} from "react-router-dom";
+import Footer from "../../components/footer/Footer.jsx";
 
 export default function Uploading() {
     const [uploadingProgress, setUploadingProgress] = useState(0);
@@ -66,6 +67,7 @@ export default function Uploading() {
                     </div>
                 </div>
             }
+            <Footer/>
         </div>
     );
 }

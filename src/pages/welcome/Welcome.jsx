@@ -3,6 +3,7 @@ import welcome_panda_img from './welcome_panda.png';
 import Header from "../../components/header/Header.jsx";
 import {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import Footer from "../../components/footer/Footer.jsx";
 
 export default function Welcome() {
     let fileInputRef = useRef(null);
@@ -67,7 +68,7 @@ export default function Welcome() {
     };
 
     return (
-        <div>
+        <div className={css.page}>
             <Header/>
             <div className={css.content}>
                 <div className={css.content__main}>
@@ -109,6 +110,7 @@ export default function Welcome() {
                 </div>
                 <img className={css.content__image} src={welcome_panda_img} alt={'Panda is welcoming user'}/>
             </div>
+            <Footer/>
         </div>
     );
 }

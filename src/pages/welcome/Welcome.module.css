@@ -6,6 +6,7 @@
     padding-left: 20px;
     padding-right: 20px;
     /*align-items: center;*/
+    height: max(calc(100vh - 128px - 128px - 85px - 85px), 550px);
 
     margin: 85px auto;
 }
@@ -138,6 +139,10 @@
     .content__hint__upload {
         display: none;
     }
+
+    .content {
+        height: max(calc(100vh - 128px - 128px - 85px - 85px), 620px);
+    }
 }
 
 @media screen and (max-width: 425px) {
@@ -157,6 +162,8 @@
 
     .content {
         margin-top: 20px;
+
+        height: max(calc(100vh - 96px - 96px - 20px - 85px), 480px);
     }
 }
 
@@ -177,5 +184,7 @@
 
     .content {
         margin-top: 20px;
+
+        height: max(calc(100vh - 56px - 56px - 20px - 85px), 350px);
     }
 }
