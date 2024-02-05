@@ -1,3 +1,7 @@
+.block__no_display {
+    display: none;
+}
+
 .authForm {
     display: flex;
     flex-direction: column;
