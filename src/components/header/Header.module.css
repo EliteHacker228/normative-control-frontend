@@ -77,6 +77,7 @@
 .popUp__background {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
+    cursor: pointer;
 }
 
 .popUp__content {
@@ -208,6 +209,13 @@
     font-weight: 700;
     line-height: 139.99%; /* 33.598px */
     letter-spacing: 0.36px;
+}
+
+.auth_error {
+    color: var(--default-red);
+    font-family: Ubuntu Mono, sans-serif;
+    text-align: center;
+    font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {

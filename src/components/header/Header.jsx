@@ -5,6 +5,9 @@ import pullup_icon from './pullup_arrow.svg';
 import burger_menu from './burger_menu.svg';
 import {NavLink} from "react-router-dom";
 import {useEffect, useState} from "react";
+import Login from "./authPopUp/login/Login.jsx";
+import Registration from "./authPopUp/registration/Registration.jsx";
+import AuthPopUp from "./authPopUp/AuthPopUp.jsx";
 
 export default function Header() {
 
@@ -24,11 +27,10 @@ export default function Header() {
         };
     });
 
-    const authType = {"login": 0, "registration": 1};
-    const [selectedAuthType, setSelectedAuthType] = useState(authType.login);
+    const [selectedAuthType, setSelectedAuthType] = useState('login');
 
     const handleAuthTypeSelection = (e) => {
-        setSelectedAuthType(authType[e.target.value])
+        setSelectedAuthType(e.target.value)
     };
 
     const [isBurgerMenuExpanded, setIsBurgerMenuExpanded] = useState(false);
@@ -62,47 +64,29 @@ export default function Header() {
                         <div className={css.popUp__content}>
                             <div className={css.selectionMenu}>
                                 <label
-                                    className={`${css.selectionBlock} ${selectedAuthType === authType.login && css.selectionBlock__checked}`}
+                                    className={`${css.selectionBlock} ${selectedAuthType === 'login' && css.selectionBlock__checked}`}
                                     htmlFor="auth_type_login">
-                                    <p className={css.selectionBlock__label}
-                                    >Вход</p>
+                                    <p className={css.selectionBlock__label}>Вход</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="login"
                                            id="auth_type_login"
                                            name="select_auth_type"
-                                           checked={selectedAuthType === authType.login}
+                                           checked={selectedAuthType === 'login'}
                                            onChange={handleAuthTypeSelection}/>
                                 </label>
 
                                 <label
-                                    className={`${css.selectionBlock} ${selectedAuthType === authType.registration && css.selectionBlock__checked}`}
+                                    className={`${css.selectionBlock} ${selectedAuthType === 'registration' && css.selectionBlock__checked}`}
                                     htmlFor="auth_type_registration">
                                     <p className={css.selectionBlock__label}
                                     >Регистрация</p>
                                     <input className={css.selectionBlock__radio} type="radio" value="registration"
                                            id="auth_type_registration"
                                            name="select_auth_type"
-                                           checked={selectedAuthType === authType.registration}
+                                           checked={selectedAuthType === 'registration'}
                                            onChange={handleAuthTypeSelection}/>
                                 </label>
-
                             </div>
-                            {selectedAuthType === authType.login ?
-                                <div className={css.authForm}>
-                                    <h2 className={css.authForm__header}>Вход</h2>
-                                    <input className={css.authForm__input} type={'text'} placeholder={'E-mail'}/>
-                                    <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
-                                    <button className={`${css.button} ${css.button_upload} ${css.button_red}`}>Вход</button>
-                                </div>
-                                :
-                                <div className={css.authForm}>
-                                    <h2 className={css.authForm__header}>Регистрация</h2>
-                                    <input className={css.authForm__input} type={'text'} placeholder={'E-mail'}/>
-                                    <input className={css.authForm__input} type={'password'} placeholder={'Пароль'}/>
-                                    <input className={css.authForm__input} type={'password'}
-                                           placeholder={'Повторите пароль'}/>
-                                    <button className={`${css.button} ${css.button_upload} ${css.button_red}`}>Регистрация</button>
-                                </div>
-                            }
+                            <AuthPopUp selectedAuthType={selectedAuthType}/>
                         </div>
                     </div>
                 }
