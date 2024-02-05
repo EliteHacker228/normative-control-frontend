@@ -8,11 +8,19 @@ import {useEffect, useState} from "react";
 import Login from "./authPopUp/login/Login.jsx";
 import Registration from "./authPopUp/registration/Registration.jsx";
 import AuthPopUp from "./authPopUp/AuthPopUp.jsx";
+import AuthService from "../../services/auth/AuthService.js";
 
 export default function Header() {
 
     const [isAuthPopUpShowed, setIsAuthPopUpShowed] = useState(false);
-    const toggleOpenAuthPopUp = () => setIsAuthPopUpShowed(!isAuthPopUpShowed);
+    const toggleOpenAuthPopUp = () => {
+        if (isAuthPopUpShowed)
+            closePopUp();
+        else
+            showPopUp();
+    };
+    const closePopUp = () => setIsAuthPopUpShowed(false);
+    const showPopUp = () => setIsAuthPopUpShowed(true);
 
     const handleKeyDown = (e) => {
         if (isAuthPopUpShowed && e.code === 'Escape')
@@ -49,13 +57,26 @@ export default function Header() {
                     <NavLink className={css.link} to={'/faq'}>
                         <p className={css.header_text}>FAQ</p>
                     </NavLink>
-                    <NavLink className={css.link}>
-                        <div className={css.loginBlock} onClick={toggleOpenAuthPopUp}>
-                            <p className={css.header_text}>Вход</p>
-                            {isAuthPopUpShowed ? <img src={pullup_icon} alt={'Dropdown arrow'}/> :
-                                <img src={dropdown_icon} alt={'Dropdown arrow'}/>}
-                        </div>
-                    </NavLink>
+                    {
+                        AuthService.isUserAuthenticated() &&
+                        <NavLink className={css.link} to={'/profile'}>
+                            <p  className={css.header_text}>Личный кабинет</p>
+                        </NavLink>
+                    }
+                    {
+                        AuthService.isUserAuthenticated() ?
+                            <NavLink className={css.link} onClick={AuthService.logout}>
+                                <p className={css.header_text}>Выход</p>
+                            </NavLink>
+                            :
+                            <NavLink className={css.link}>
+                                <div className={css.loginBlock} onClick={toggleOpenAuthPopUp}>
+                                    <p className={css.header_text}>Вход</p>
+                                    {isAuthPopUpShowed ? <img src={pullup_icon} alt={'Dropdown arrow'}/> :
+                                        <img src={dropdown_icon} alt={'Dropdown arrow'}/>}
+                                </div>
+                            </NavLink>
+                    }
                 </div>
 
                 {isAuthPopUpShowed &&
@@ -86,7 +107,7 @@ export default function Header() {
                                            onChange={handleAuthTypeSelection}/>
                                 </label>
                             </div>
-                            <AuthPopUp selectedAuthType={selectedAuthType}/>
+                            <AuthPopUp selectedAuthType={selectedAuthType} onAuth={closePopUp}/>
                         </div>
                     </div>
                 }
@@ -104,9 +125,22 @@ export default function Header() {
                                 <NavLink className={css.popUp__link} to={'/faq'}>
                                     <p>FAQ</p>
                                 </NavLink>
-                                <NavLink className={css.popUp__link} onClick={toggleOpenAuthPopUp}>
-                                    <p>Вход</p>
-                                </NavLink>
+                                {
+                                    AuthService.isUserAuthenticated() &&
+                                    <NavLink className={css.popUp__link} to={'/profile'}>
+                                        <p>Личный кабинет</p>
+                                    </NavLink>
+                                }
+                                {
+                                    AuthService.isUserAuthenticated() ?
+                                        <NavLink className={css.popUp__link} onClick={AuthService.logout}>
+                                            <p>Выход</p>
+                                        </NavLink>
+                                        :
+                                        <NavLink className={css.popUp__link} onClick={toggleOpenAuthPopUp}>
+                                            <p>Вход</p>
+                                        </NavLink>
+                                }
                             </div>
                         </div>
                     </div>

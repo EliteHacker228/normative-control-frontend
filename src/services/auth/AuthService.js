@@ -2,6 +2,15 @@ import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
 
 export default class AuthService {
+    static isUserAuthenticated(){
+        return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
+    }
+
+    static logout(){
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+    }
+
     static async loginWithCredentials(email, password) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");

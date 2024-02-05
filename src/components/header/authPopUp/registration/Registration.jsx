@@ -5,7 +5,7 @@ import AuthService from "../../../../services/auth/AuthService.js";
 import WrongCredentialsError from "../../../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../../../assets/CredentialsAlreadyInUse.js";
 
-export default function Registration() {
+export default function Registration({onAuth}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -40,6 +40,7 @@ export default function Registration() {
         setIsRegistrationFailed(false);
         try {
             await AuthService.registerWithCredentials(email, password);
+            onAuth();
         } catch (e) {
             if (e instanceof CredentialsAlreadyInUse) {
                 setIsRegistrationFailed(true);

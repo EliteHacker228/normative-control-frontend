@@ -4,7 +4,7 @@ import AuthService from "../../../../services/auth/AuthService.js";
 import WrongCredentialsError from "../../../../assets/WrongCredentialsError.js";
 import AuthUtils from "../authUtils/AuthUtils.js";
 
-export default function Login({selectedAuthType}) {
+export default function Login({onAuth}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,6 +20,7 @@ export default function Login({selectedAuthType}) {
         setIsLoginFailed(false);
         try {
             await AuthService.loginWithCredentials(email, password);
+            onAuth();
         } catch (e) {
             if (e instanceof WrongCredentialsError) {
                 setIsLoginFailed(true);
