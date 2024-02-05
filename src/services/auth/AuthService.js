@@ -1,4 +1,5 @@
 import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
+import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
 
 export default class AuthService {
     static async loginWithCredentials(email, password) {
@@ -20,7 +21,6 @@ export default class AuthService {
         let response = await fetch("http://localhost:8080/account/login", requestOptions);
         if (response.status === 200) {
             let responseJson = await response.json();
-            console.log(responseJson);
             localStorage.setItem('accessToken', responseJson.accessToken);
             localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
         } else if (response.status === 401) {
@@ -31,7 +31,7 @@ export default class AuthService {
         }
     }
 
-    static async registerWithCredentials(email, password){
+    static async registerWithCredentials(email, password) {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -47,9 +47,16 @@ export default class AuthService {
             redirect: 'follow'
         };
 
-        fetch("localhost:8080/account/register", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        let response = await fetch("http://localhost:8080/account/register", requestOptions);
+        if (response.status === 200) {
+            let responseJson = await response.json();
+            localStorage.setItem('accessToken', responseJson.accessToken);
+            localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
+        } else if (response.status === 409) {
+            let responseText = await response.text();
+            throw new CredentialsAlreadyInUse(`Error ${response.status}: ${responseText}`);
+        } else {
+            throw new Error(`Unknown error`);
+        }
     }
 }

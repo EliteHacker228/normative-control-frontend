@@ -1,7 +1,8 @@
 import css from "../AuthPopUp.module.css";
 import {useState} from "react";
-import AuthService from "../../../../services/auth/auth.js";
+import AuthService from "../../../../services/auth/AuthService.js";
 import WrongCredentialsError from "../../../../assets/WrongCredentialsError.js";
+import AuthUtils from "../authUtils/AuthUtils.js";
 
 export default function Login({selectedAuthType}) {
 
@@ -25,7 +26,7 @@ export default function Login({selectedAuthType}) {
                 setLoginFailureReason('Неверный e-mail или пароль')
             } else {
                 setIsLoginFailed(true);
-                setLoginFailureReason('Попытка войти не удалась по неизвестным причинам');
+                setLoginFailureReason('Попытка входа не удалась. Пожалуйста, попробуйте снова');
             }
         }
         setIsPending(false);
@@ -34,14 +35,7 @@ export default function Login({selectedAuthType}) {
     const onEmailInput = (e) => {
         const currentEmail = e.target.value
         setEmail(currentEmail);
-        setIsEmailWrongDomain(!isEmailCorrect(currentEmail));
-    }
-
-    const isEmailCorrect = (email) => {
-        const emailRegExp =
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-        return email.match(emailRegExp) && (email.endsWith('@urfu.me') || email.endsWith('@at.urfu.ru'));
+        setIsEmailWrongDomain(!AuthUtils.isEmailCorrect(currentEmail));
     }
 
     return (
@@ -53,7 +47,7 @@ export default function Login({selectedAuthType}) {
                 <input className={css.authForm__input} type={'password'} placeholder={'Пароль'} value={password}
                        onChange={e => setPassword(e.target.value)}/>
                 <button className={`${css.button} ${css.button_upload} ${css.button_red}`}
-                        disabled={!(isEmailCorrect(email) && password) || isPending} onClick={onLogin}>Вход
+                        disabled={!(AuthUtils.isEmailCorrect(email) && password) || isPending} onClick={onLogin}>Вход
                 </button>
                 {isLoginFailed && <p className={css.auth_error}>{loginFailureReason}</p>}
                 {isEmailWrongDomain &&
