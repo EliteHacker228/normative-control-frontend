@@ -35,6 +35,16 @@ export default function Registration({onAuth}) {
             setIsPasswrodsMismathes(false);
     }
 
+    const onPasswordRepetitionInput = (e) => {
+        const currentRepetitionPassword = e.target.value;
+        setIsRegistrationFailed(false);
+        setPasswordRepetition(currentRepetitionPassword);
+        if (currentRepetitionPassword !== password)
+            setIsPasswrodsMismathes(true);
+        else
+            setIsPasswrodsMismathes(false);
+    }
+
     const registrationOnSubmit = async (e) => {
         e.preventDefault();
         setIsPending(true);
@@ -54,15 +64,6 @@ export default function Registration({onAuth}) {
         setIsPending(false);
     }
 
-    const onPasswordRepetitionInput = (e) => {
-        const currentRepetitionPassword = e.target.value;
-        setPasswordRepetition(currentRepetitionPassword);
-        if (currentRepetitionPassword !== password)
-            setIsPasswrodsMismathes(true);
-        else
-            setIsPasswrodsMismathes(false);
-    }
-
     return (
         <form className={css.authForm} onSubmit={registrationOnSubmit}>
             <h2 className={css.authForm__header}>Регистрация</h2>
@@ -76,7 +77,7 @@ export default function Registration({onAuth}) {
                     disabled={!(AuthUtils.isEmailCorrect(email) && password && passwordRepetition && password === passwordRepetition) || isPending}>
                 Регистрация
             </button>
-            {isEmailWrongDomain &&
+            {isEmailWrongDomain && email.trim() !== '' &&
                 <p className={css.auth_error}>Укажите e-mail в домене <b>@urfu.me</b> или <b>@at.urfu.ru</b></p>}
             {isPasswrodsMismathes && <p className={css.auth_error}>Пароли не совпадают</p>}
             {isRegistrationFailed && <p className={css.auth_error}>{registrationFailureReason}</p>}
