@@ -13,6 +13,11 @@ import AuthService from "../../services/auth/AuthService.js";
 export default function Header() {
 
     const [isAuthPopUpShowed, setIsAuthPopUpShowed] = useState(false);
+    const [isUserAuthed, setIsUserAuthed] = useState(AuthService.isUserAuthenticated());
+    const onAuth = () => {
+        closePopUp();
+        setIsUserAuthed(AuthService.isUserAuthenticated());
+    };
     const toggleOpenAuthPopUp = () => {
         if (isAuthPopUpShowed)
             closePopUp();
@@ -65,7 +70,7 @@ export default function Header() {
                     }
                     {
                         AuthService.isUserAuthenticated() ?
-                            <NavLink className={css.link} onClick={AuthService.logout}>
+                            <NavLink className={css.link} onClick={AuthService.logout} to={'/'}>
                                 <p className={css.header_text}>Выход</p>
                             </NavLink>
                             :
@@ -107,7 +112,7 @@ export default function Header() {
                                            onChange={handleAuthTypeSelection}/>
                                 </label>
                             </div>
-                            <AuthPopUp selectedAuthType={selectedAuthType} onAuth={closePopUp}/>
+                            <AuthPopUp selectedAuthType={selectedAuthType} onAuth={onAuth}/>
                         </div>
                     </div>
                 }

@@ -1,6 +1,6 @@
 import css from "../AuthPopUp.module.css";
 import {useState} from "react";
-import AuthUtils from "../authUtils/AuthUtils.js";
+import AuthUtils from "../../../../utils/authUtils/AuthUtils.js";
 import AuthService from "../../../../services/auth/AuthService.js";
 import WrongCredentialsError from "../../../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../../../assets/CredentialsAlreadyInUse.js";

@@ -2,7 +2,7 @@ import css from "../AuthPopUp.module.css";
 import {useState} from "react";
 import AuthService from "../../../../services/auth/AuthService.js";
 import WrongCredentialsError from "../../../../assets/WrongCredentialsError.js";
-import AuthUtils from "../authUtils/AuthUtils.js";
+import AuthUtils from "../../../../utils/authUtils/AuthUtils.js";
 
 export default function Login({onAuth}) {
 

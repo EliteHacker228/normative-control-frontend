@@ -3,7 +3,7 @@ export default class AuthUtils {
         const emailRegExp =
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-        return email.match(emailRegExp) && (email.endsWith('@urfu.me') || email.endsWith('@at.urfu.ru'));
+        return email.match(emailRegExp) && (email.endsWith('@urfu.me') || email.endsWith('@urfu.ru') || email.endsWith('@at.urfu.ru'));
     }
 
     static isPasswordCorrect(password) {
