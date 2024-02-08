@@ -73,7 +73,7 @@ export default function Registration({onAuth}) {
             <input className={css.authForm__input} type={'password'} placeholder={'Повторите пароль'}
                    onChange={onPasswordRepetitionInput}/>
             <button className={`${css.button} ${css.button_upload} ${css.button_red}`}
-                    disabled={!(AuthUtils.isEmailCorrect(email) && password && passwordRepetition) || isPending}>
+                    disabled={!(AuthUtils.isEmailCorrect(email) && password && passwordRepetition && password === passwordRepetition) || isPending}>
                 Регистрация
             </button>
             {isEmailWrongDomain &&
