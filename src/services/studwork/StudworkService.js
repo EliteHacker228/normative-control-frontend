@@ -3,7 +3,7 @@ import {v4 as getUUID} from 'uuid';
 export default class StudworkService {
     static upload(file, onProgressUpdate, onProgressComplete){
         let socket = new WebSocket("ws://localhost:8080/student/document/verify");
-        let delay = 40;
+        let delay = 30;
         let savedStart = 0;
 
         let initMessage = {
@@ -27,10 +27,10 @@ export default class StudworkService {
                     let percents = Math.floor(Number(responseJson.value) * 100);
                     for(let start = savedStart; start <= percents; start++) {
                         setTimeout(() => onProgressUpdate(start), delay);
-                        delay += 40;
+                        delay += 30;
                         console.log(start, delay);
                     }
-                    savedStart += percents;
+                    savedStart = percents + 1;
                 }
 
                 if ('id' in responseJson) {
