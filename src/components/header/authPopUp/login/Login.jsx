@@ -15,7 +15,8 @@ export default function Login({onAuth}) {
     const [isEmailWrongDomain, setIsEmailWrongDomain] = useState(false);
     const [isPending, setIsPending] = useState(false);
 
-    const onLogin = async () => {
+    const loginOnSubmit = async (e) => {
+        e.preventDefault();
         setIsPending(true);
         setIsLoginFailed(false);
         try {
@@ -41,19 +42,21 @@ export default function Login({onAuth}) {
 
     return (
         <div>
-            <div className={css.authForm}>
+            <form className={css.authForm} onSubmit={loginOnSubmit}>
                 <h2 className={css.authForm__header}>Вход</h2>
                 <input className={css.authForm__input} type={'text'} placeholder={'E-mail'} value={email}
                        onChange={onEmailInput}/>
                 <input className={css.authForm__input} type={'password'} placeholder={'Пароль'} value={password}
                        onChange={e => setPassword(e.target.value)}/>
                 <button className={`${css.button} ${css.button_upload} ${css.button_red}`}
-                        disabled={!(AuthUtils.isEmailCorrect(email) && password) || isPending} onClick={onLogin}>Вход
+                        disabled={!(AuthUtils.isEmailCorrect(email) && password) || isPending}
+                        type={'submit'}>Вход
                 </button>
                 {isLoginFailed && <p className={css.auth_error}>{loginFailureReason}</p>}
                 {isEmailWrongDomain &&
-                    <p className={css.auth_error}>Укажите корректный e-mail в домене <b>@urfu.me</b> или <b>@at.urfu.ru</b></p>}
-            </div>
+                    <p className={css.auth_error}>Укажите корректный e-mail в
+                        домене <b>@urfu.me</b> или <b>@at.urfu.ru</b></p>}
+            </form>
         </div>
     );
 }
