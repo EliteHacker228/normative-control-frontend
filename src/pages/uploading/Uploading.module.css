@@ -38,7 +38,7 @@
     border-width: 2px;
     border-color: #D2D2D2;
 
-    background: conic-gradient(blue 180deg, white 0deg);
+    background: conic-gradient(blue 0deg, white 0deg);
     display: flex;
     align-items: center;
     justify-content: center;

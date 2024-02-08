@@ -4,6 +4,7 @@ import Header from "../../components/header/Header.jsx";
 import {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Footer from "../../components/footer/Footer.jsx";
+import StudworkService from "../../services/studwork/StudworkService.js";
 
 export default function Welcome() {
     let fileInputRef = useRef(null);
@@ -40,7 +41,9 @@ export default function Welcome() {
 
         setFileError(null);
         window.scrollTo(0, 0);
-        navigate('/uploading');
+
+        // StudworkService.upload(file);
+        navigate('/uploading', {'state':{'file': file}});
     };
 
     const [isDragActive, setIsDragActive] = useState(false);
