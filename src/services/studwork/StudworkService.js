@@ -1,7 +1,7 @@
 import {v4 as getUUID} from 'uuid';
 
 export default class StudworkService {
-    static upload(file, onProgressUpdate, onProgressComplete){
+    static uploadForAnonymousVerification(file, onProgressUpdate, onProgressComplete){
         let socket = new WebSocket("ws://localhost:8080/student/document/verify");
         let delay = 30;
         let savedStart = 0;
@@ -54,5 +54,20 @@ export default class StudworkService {
         socket.onerror = function(error) {
             console.log(`[error] ${error}`);
         };
+    }
+
+    static async getResultOfAnonymousVerification(resultId, fingerprint){
+        let requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        try {
+            let response = await fetch(`http://localhost:8080/student/document/render?documentId=${resultId}&fingerprint=${fingerprint}`, requestOptions);
+            let responseHtml = await response.text();
+            return responseHtml;
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

@@ -30,28 +30,10 @@ export default function Uploading() {
 
     useEffect(() => {
         if(location.state.file)
-            StudworkService.upload(location.state.file, onProgressUpdate, onProgressComplete);
+            StudworkService.uploadForAnonymousVerification(location.state.file, onProgressUpdate, onProgressComplete);
         else
-            console.log('Не смог обнаружить файл');
+            throw new Error('Не смог обнаружить файл для загрузки');
     }, []);
-
-    // let timer;
-    // const updateCount = () => {
-    //     timer = setInterval(() => {
-    //         progressWheel.current.style.background = `conic-gradient(blue ${(uploadingProgress + 1) * 3.6}deg, white 0deg)`;
-    //         // console.log(progressWheel.current);
-    //         // progressTitle.current.textContent = `Ожидание${'.'.repeat(uploadingProgress % 3)}`;
-    //         setUploadingProgress(prevCount => prevCount + 1);
-    //     }, 10)
-    //
-    //     if (uploadingProgress === 100) {
-    //         clearInterval(timer);
-    //     }
-    // }
-    // useEffect(() => {
-    //     updateCount();
-    //     return () => clearInterval(timer);
-    // }, [uploadingProgress]);
 
     const onSeeResultsClick = () => {
         navigate(`/result?resultId=${resultId}&fingerprint=${resultFingerprint}`);
