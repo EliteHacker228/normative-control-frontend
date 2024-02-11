@@ -24,20 +24,30 @@ export default function Uploading() {
         progressWheel.current.style.background = `conic-gradient(blue ${(uploadingPercents) * 3.6}deg, white 0deg)`;
     };
 
-    const onProgressComplete = (id, fingerprint) => {
+    const onProgressAnonymousComplete = (id, fingerprint) => {
         setResultId(id);
         setResultFingerprint(fingerprint);
     };
 
+    const onProgressAuthedComplete = (id) => {
+        setResultId(id);
+    };
+
     useEffect(() => {
-        if(location.state.file)
-            StudworkService.uploadForAnonymousVerification(location.state.file, onProgressUpdate, onProgressComplete);
+        if (location.state.file)
+            if (AuthService.isUserAuthenticated())
+                StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
+            else
+                StudworkService.uploadForAnonymousVerification(location.state.file, onProgressUpdate, onProgressAnonymousComplete);
         else
             throw new Error('Не смог обнаружить файл для загрузки');
     }, []);
 
     const onSeeResultsClick = () => {
-        navigate(`/result?resultId=${resultId}&fingerprint=${resultFingerprint}`);
+        if (AuthService.isUserAuthenticated())
+            navigate(`/result?resultId=${resultId}`);
+        else
+            navigate(`/result?resultId=${resultId}&fingerprint=${resultFingerprint}`);
     };
 
     return (

@@ -10,6 +10,7 @@ import Footer from "../../components/footer/Footer.jsx";
 import {useSearchParams} from "react-router-dom";
 import parse from 'html-react-parser';
 import StudworkService from "../../services/studwork/StudworkService.js";
+import AuthService from "../../services/auth/AuthService.js";
 
 export default function Result() {
     const [isFolded, setIsFolded] = useState(false);
@@ -24,9 +25,14 @@ export default function Result() {
     const [duplicateResDom, setDuplicateResDom] = useState();
 
     useEffect(() => {
-        StudworkService
-            .getResultOfAnonymousVerification(searchParams.get('resultId'), searchParams.get('fingerprint'))
-            .then((resultHtml) => setResultHtml(resultHtml));
+        if (AuthService.isUserAuthenticated())
+            StudworkService
+                .getResultOfAuthedVerification(searchParams.get('resultId'))
+                .then((resultHtml) => setResultHtml(resultHtml));
+        else
+            StudworkService
+                .getResultOfAnonymousVerification(searchParams.get('resultId'), searchParams.get('fingerprint'))
+                .then((resultHtml) => setResultHtml(resultHtml));
     }, []);
 
     useEffect(() => {
@@ -111,6 +117,35 @@ export default function Result() {
         return elm.scrollIntoView();
     };
 
+    const downloadingHandler = async () => {
+        let file;
+        let response;
+
+        let myHeaders = new Headers();
+        myHeaders.append('Authorization', `Bearer ${AuthService.getAccessToken()}`);
+
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        if (AuthService.isUserAuthenticated()) {
+            file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}`;
+            response = await fetch(file, requestOptions);
+        } else {
+            file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}&fingerprint=${searchParams.get('fingerprint')}`;
+            response = await fetch(file);
+        }
+        console.log(response);
+        let responseBlob = await response.blob();
+        let objectUrl = window.URL.createObjectURL(responseBlob);
+        resultDownloadRef.current.href = objectUrl;
+        resultDownloadRef.current.download = `conclusion_${new Date().getTime()}.docx`;
+        resultDownloadRef.current.click();
+        window.URL.revokeObjectURL(objectUrl);
+    };
+
     return (
         <div>
             <Header/>
@@ -136,16 +171,10 @@ export default function Result() {
                                        value={textId}/>
                                 <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>
                             </div>
-                            <button className={css.controls_download} onClick={onResultDownloadClick}>Скачать
+                            <button className={css.controls_download} onClick={downloadingHandler}>Скачать
                                 результат
                             </button>
-                            <a download={`result_${new Date().getTime()}.docx`}
-                               href={`http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}&fingerprint=${searchParams.get('fingerprint')}`}
-                               ref={resultDownloadRef}
-                               style={
-                                   {display: 'none'}
-                               }
-                            />
+                            <a ref={resultDownloadRef}/>
                         </div>
                         <div className={`${css.content__topRightElement}`}>
                             <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>

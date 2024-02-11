@@ -1,4 +1,5 @@
 import {v4 as getUUID} from 'uuid';
+import AuthService from "../auth/AuthService.js";
 
 export default class StudworkService {
     static uploadForAnonymousVerification(file, onProgressUpdate, onProgressComplete){
@@ -13,7 +14,7 @@ export default class StudworkService {
 
         socket.onopen = function(e) {
             console.log("[open] Соединение установлено");
-            console.log("Инициирую сессию проверку");
+            console.log("Инициирую сессию анонимной проверку");
             console.log(initMessage);
             socket.send(JSON.stringify(initMessage));
             socket.send(file);
@@ -62,13 +63,13 @@ export default class StudworkService {
         let savedStart = 0;
 
         let initMessage = {
-            'fingerprint' : getUUID(),
+            'token' : AuthService.getAccessToken(),
             'length' : file.size
         };
 
         socket.onopen = function(e) {
             console.log("[open] Соединение установлено");
-            console.log("Инициирую сессию проверку");
+            console.log("Инициирую сессию авторизованной проверку");
             console.log(initMessage);
             socket.send(JSON.stringify(initMessage));
             socket.send(file);
@@ -89,7 +90,7 @@ export default class StudworkService {
                 }
 
                 if ('id' in responseJson) {
-                    onProgressComplete(responseJson.id, initMessage.fingerprint);
+                    onProgressComplete(responseJson.id);
                 }
             }catch(e){
                 console.log(e);
@@ -119,6 +120,25 @@ export default class StudworkService {
 
         try {
             let response = await fetch(`http://localhost:8080/student/document/render?documentId=${resultId}&fingerprint=${fingerprint}`, requestOptions);
+            let responseHtml = await response.text();
+            return responseHtml;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static async getResultOfAuthedVerification(resultId){
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
+
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            let response = await fetch(`http://localhost:8080/student/document/render?documentId=${resultId}`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
