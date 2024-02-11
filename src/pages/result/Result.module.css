@@ -175,6 +175,13 @@
     letter-spacing: 0.24px;
 }
 
+.error__cite {
+    background-color: lightgray;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 16px;
+}
+
 .error_ico {
 
 }

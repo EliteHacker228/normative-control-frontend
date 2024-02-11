@@ -7,6 +7,7 @@ import Header from "../../components/header/Header.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import Footer from "../../components/footer/Footer.jsx";
 import StudworkService from "../../services/studwork/StudworkService.js";
+import AuthService from "../../services/auth/AuthService.js";
 
 export default function Uploading() {
     const [uploadingProgress, setUploadingProgress] = useState(0);

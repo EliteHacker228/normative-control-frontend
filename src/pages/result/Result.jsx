@@ -8,6 +8,7 @@ import css from "./Result.module.css";
 import {useEffect, useRef, useState} from "react";
 import Footer from "../../components/footer/Footer.jsx";
 import {useSearchParams} from "react-router-dom";
+import parse from 'html-react-parser';
 import StudworkService from "../../services/studwork/StudworkService.js";
 
 export default function Result() {
@@ -19,18 +20,24 @@ export default function Result() {
     const [resultHtml, setResultHtml] = useState('');
     const [detectedMistakes, setDetectedMistakes] = useState([]);
 
-    const resultView = useRef();
+    const resultViewRef = useRef();
+    const [duplicateResDom, setDuplicateResDom] = useState();
 
     useEffect(() => {
         StudworkService
             .getResultOfAnonymousVerification(searchParams.get('resultId'), searchParams.get('fingerprint'))
-            .then((resultHtml)=>setResultHtml(resultHtml));
+            .then((resultHtml) => setResultHtml(resultHtml));
     }, []);
 
     useEffect(() => {
-        let newMistakes = eval(resultHtml.slice(resultHtml.indexOf('['), resultHtml.lastIndexOf(']}];}') + 3));
-        if (newMistakes)
+        let newMistakes = eval(resultHtml.slice(resultHtml.indexOf('['), resultHtml.indexOf(';}</script>')));
+        resultViewRef.current.srcdoc = resultHtml;
+        let docDom = new DOMParser().parseFromString(resultHtml, "text/html");
+        setDuplicateResDom(docDom);
+        if (newMistakes) {
             setDetectedMistakes(newMistakes);
+            console.log(newMistakes);
+        }
     }, [resultHtml])
 
     const onResultDownloadClick = () => {
@@ -49,6 +56,59 @@ export default function Result() {
         copyTimeoutId = setTimeout(() => {
             setTextId(searchParams.get('resultId'));
         }, 2000);
+    };
+
+    const getMistakeCiteHtml = (mistakeId) => {
+        let elms = duplicateResDom.querySelectorAll(`[id='${mistakeId}']`);
+        if (elms.length === 0) {
+            console.log(mistakeId);
+            return '';
+        }
+
+        if (elms.length === 2) {
+            if (elms[0].innerText === '' && elms[1].innerText === '')
+                return elms[0].innerHTML;
+
+            if (elms[0].innerText === '')
+                return elms[1].innerHTML;
+
+            if (elms[1].innerText === '')
+                return elms[0].innerHTML;
+        }
+
+        let elm = elms[0];
+        while (elm.nodeName === 'SPAN')
+            elm = elm.parentNode
+
+        if (elm.innerText === '')
+            return '*ОТСТУП*';
+
+        return elm.innerHTML;
+    };
+
+    const scrollToElementWithId = (mistakeId) => {
+        let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
+        if (elms.length === 0) {
+            console.log(mistakeId);
+            return;
+        }
+
+        if (elms.length === 2) {
+            if (elms[0].innerText === '' && elms[1].innerText === '')
+                return elms[0].scrollIntoView();
+
+            if (elms[0].innerText === '')
+                return elms[1].scrollIntoView();
+
+            if (elms[1].innerText === '')
+                return elms[0].scrollIntoView();
+        }
+
+        let elm = elms[0];
+        while (elm.nodeName === 'SPAN')
+            elm = elm.parentNode
+
+        return elm.scrollIntoView();
     };
 
     return (
@@ -95,15 +155,24 @@ export default function Result() {
                         <div className={`${css.content__bottomLeftElement}`}>
                             <h1 className={css.content__header}>Список ошибок</h1>
                             <div className={css.errorsList}>
-                                {detectedMistakes.map((element) => {
-                                    return (<div className={css.error}>
-                                        <div>
-                                            <p className={css.error__description}><b>{element.mistakeReason}</b></p>
-                                            <p className={css.error__description}>{element.description}</p>
-                                        </div>
-                                        <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
-                                    </div>);
-                                })}
+                                {detectedMistakes
+                                    .filter((element) => Boolean(duplicateResDom.getElementById(element.id)))
+                                    .map((element) => {
+                                        return (
+                                            <div className={css.error}
+                                                 onClick={() => scrollToElementWithId(element.id)}>
+                                                <div>
+                                                    <p className={css.error__description}><b>{element.mistakeReason}</b>
+                                                    </p>
+                                                    <p className={css.error__description}>{element.description}</p>
+                                                    <div className={css.error__cite}>
+                                                        {parse(getMistakeCiteHtml(element.id))}
+                                                    </div>
+                                                </div>
+                                                <img src={magnifier_ico} alt={'Magnifier glass ico'}/>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                         </div>
                         <div className={`${css.content__bottomRightElement}`}>
@@ -113,8 +182,7 @@ export default function Result() {
                             </div>
                             <div className={css.documentContainer}>
                                 <iframe id={'verifyResultView'} className={css.documentContainer__view}
-                                        ref={resultView}
-                                        srcDoc={resultHtml}/>
+                                        ref={resultViewRef}/>
                             </div>
                         </div>
                     </div>
@@ -122,5 +190,6 @@ export default function Result() {
             }
             <Footer/>
         </div>
-    );
+    )
+        ;
 }
