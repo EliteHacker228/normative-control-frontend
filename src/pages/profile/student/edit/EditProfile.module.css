@@ -1,0 +1,117 @@
+.content {
+    display: flex;
+    gap: 20px;
+
+    max-width: calc(1280px + 40px);
+    padding-left: 20px;
+    padding-right: 20px;
+    /*align-items: center;*/
+    height: max(calc(100vh - 128px - 128px - 85px - 85px), 550px);
+
+    margin: 85px auto;
+}
+
+.content__main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.content__header {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+}
+
+
+.content__text {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+}
+
+.authForm__input {
+    color: var(--default-dark);
+    font-family: Ubuntu Mono, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 139.99%; /* 27.998px */
+    letter-spacing: 1px;
+    text-align: left;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border-style: solid;
+}
+
+.authForm__input:disabled {
+    background-color: lightgray;
+    color: white;
+}
+
+.authForm__input:disabled::placeholder {
+    color: white;
+    opacity: 0.8;
+}
+
+.authForm__input:disabled:hover {
+    cursor: not-allowed;
+}
+
+.button {
+    border: none;
+    border-radius: 20px;
+
+    color: var(--default-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 33.598px */
+    letter-spacing: 0.36px;
+}
+
+.button:disabled {
+    background: var(--default-dark);
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.button:enabled:hover {
+    cursor: pointer;
+}
+
+.button_upload {
+    height: 60px;
+}
+
+.button_blue {
+    background: #6B6AEC;
+}
+
+.button_blue:enabled:hover {
+    opacity: 0.9;
+}
+
+.button_shadow {
+    box-shadow: 0px 19px 11px -16px #0380B1;
+}
+
+.auth_error {
+    color: var(--default-red);
+    font-family: Ubuntu Mono, sans-serif;
+    text-align: center;
+    font-size: 20px;
+}
+
+.content__image {
+    margin-top: 135px;
+    max-width: 493px;
+    max-height: 269px;
+}

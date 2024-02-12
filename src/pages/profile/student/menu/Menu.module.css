@@ -1,0 +1,22 @@
+.menu {
+    display: flex;
+    gap: 16px;
+
+    padding-left: 24px;
+    padding-top: 8px;
+}
+
+.menu__element {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+.menu__element__chosen {
+    border-bottom: solid dodgerblue;
+}
