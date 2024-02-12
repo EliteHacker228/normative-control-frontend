@@ -25,7 +25,7 @@ export default function Result() {
     const [duplicateResDom, setDuplicateResDom] = useState();
 
     useEffect(() => {
-        if (AuthService.isUserAuthenticated())
+        if (AuthService.isUserLocallyAuthenticated())
             StudworkService
                 .getResultOfAuthedVerification(searchParams.get('resultId'))
                 .then((resultHtml) => setResultHtml(resultHtml));
@@ -36,7 +36,10 @@ export default function Result() {
     }, []);
 
     useEffect(() => {
-        let newMistakes = eval(resultHtml.slice(resultHtml.indexOf('['), resultHtml.indexOf(';}</script>')));
+        let newMistakes = [];
+        if(resultHtml)
+            newMistakes = eval(resultHtml.slice(resultHtml.indexOf('<script >') + 9, resultHtml.indexOf('</script>')) + ';mistakes();')
+
         resultViewRef.current.srcdoc = resultHtml;
         let docDom = new DOMParser().parseFromString(resultHtml, "text/html");
         setDuplicateResDom(docDom);
@@ -130,7 +133,7 @@ export default function Result() {
             redirect: 'follow'
         };
 
-        if (AuthService.isUserAuthenticated()) {
+        if (AuthService.isUserLocallyAuthenticated()) {
             file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}`;
             response = await fetch(file, requestOptions);
         } else {

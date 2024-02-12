@@ -13,10 +13,10 @@ import AuthService from "../../services/auth/AuthService.js";
 export default function Header() {
 
     const [isAuthPopUpShowed, setIsAuthPopUpShowed] = useState(false);
-    const [isUserAuthed, setIsUserAuthed] = useState(AuthService.isUserAuthenticated());
+    const [isUserAuthed, setIsUserAuthed] = useState(AuthService.isUserLocallyAuthenticated());
     const onAuth = () => {
         closePopUp();
-        setIsUserAuthed(AuthService.isUserAuthenticated());
+        setIsUserAuthed(AuthService.isUserLocallyAuthenticated());
     };
     const toggleOpenAuthPopUp = () => {
         if (isAuthPopUpShowed)
@@ -63,13 +63,13 @@ export default function Header() {
                         <p className={css.header_text}>FAQ</p>
                     </NavLink>
                     {
-                        AuthService.isUserAuthenticated() &&
+                        AuthService.isUserLocallyAuthenticated() &&
                         <NavLink className={css.link} to={'/profile'}>
                             <p  className={css.header_text}>Личный кабинет</p>
                         </NavLink>
                     }
                     {
-                        AuthService.isUserAuthenticated() ?
+                        AuthService.isUserLocallyAuthenticated() ?
                             <NavLink className={css.link} onClick={AuthService.logout} to={'/'}>
                                 <p className={css.header_text}>Выход</p>
                             </NavLink>
@@ -131,13 +131,13 @@ export default function Header() {
                                     <p>FAQ</p>
                                 </NavLink>
                                 {
-                                    AuthService.isUserAuthenticated() &&
+                                    AuthService.isUserLocallyAuthenticated() &&
                                     <NavLink className={css.popUp__link} to={'/profile'}>
                                         <p>Личный кабинет</p>
                                     </NavLink>
                                 }
                                 {
-                                    AuthService.isUserAuthenticated() ?
+                                    AuthService.isUserLocallyAuthenticated() ?
                                         <NavLink className={css.popUp__link} onClick={AuthService.logout}>
                                             <p>Выход</p>
                                         </NavLink>

@@ -35,7 +35,7 @@ export default function Uploading() {
 
     useEffect(() => {
         if (location.state.file)
-            if (AuthService.isUserAuthenticated())
+            if (AuthService.isUserLocallyAuthenticated())
                 StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
             else
                 StudworkService.uploadForAnonymousVerification(location.state.file, onProgressUpdate, onProgressAnonymousComplete);
@@ -44,7 +44,7 @@ export default function Uploading() {
     }, []);
 
     const onSeeResultsClick = () => {
-        if (AuthService.isUserAuthenticated())
+        if (AuthService.isUserLocallyAuthenticated())
             navigate(`/result?resultId=${resultId}`);
         else
             navigate(`/result?resultId=${resultId}&fingerprint=${resultFingerprint}`);

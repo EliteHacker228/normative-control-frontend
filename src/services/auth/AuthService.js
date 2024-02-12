@@ -2,7 +2,7 @@ import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
 
 export default class AuthService {
-    static isUserAuthenticated() {
+    static isUserLocallyAuthenticated() {
         return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
     }
 
