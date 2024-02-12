@@ -15,7 +15,7 @@ export default function Profile() {
             <Header/>
             <Menu/>
             {location.pathname === '/profile/edit' && <EditProfile/>}
-            {location.pathname === '/profile/list' && <Verilog/>}
+            {(location.pathname === '/profile/list' || location.pathname === '/profile') && <Verilog/>}
             <Footer/>
         </div>
     );
