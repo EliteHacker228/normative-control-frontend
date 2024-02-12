@@ -7,7 +7,7 @@ import Welcome from "./pages/welcome/Welcome.jsx";
 import Uploading from "./pages/uploading/Uploading.jsx";
 import Result from "./pages/result/Result.jsx";
 import Faq from "./pages/faq/Faq.jsx";
-import Profile from "./pages/profile/Profile.jsx";
+import Profile from "./pages/profile/student/Profile.jsx";
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
                 <Route path='/welcome' element={<Welcome/>}/>
                 <Route path='/uploading' element={<Uploading/>}/>
                 <Route path='/result' element={<Result/>}/>
-                <Route path='/profile' element={<Profile/>}/>
+                <Route path='/profile/*' element={<Profile/>}/>
                 <Route path='/faq' element={<Faq/>}/>
             </Routes>
         </BrowserRouter>

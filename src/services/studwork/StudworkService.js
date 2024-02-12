@@ -145,4 +145,19 @@ export default class StudworkService {
             console.log(e);
         }
     }
+
+    static async getListOfAuthedVerifications(){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        let response = await fetch("http://localhost:8080/student/document/list", requestOptions);
+        let responseJson = await response.json();
+        return responseJson;
+    }
 }
