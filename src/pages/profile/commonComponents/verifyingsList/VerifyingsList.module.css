@@ -1,0 +1,65 @@
+.verilog__emptyHeader {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+    color: gray;
+
+    margin-top: 24px;
+    margin-left: 24px;
+}
+
+.verilog__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    border-radius: 8px;
+    background-color: var(--default-gray);
+    padding: 8px;
+
+    width: 600px;
+    height: 555px;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+}
+
+.verilog__card {
+    border-radius: 8px;
+    border: 1px solid var(--default-gray);
+    background: var(--default-white);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 8px;
+}
+
+.verilog__text {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+}
+
+.verilod__dateText {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+}
+
+.verilog__link {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    color: dodgerblue;
+}

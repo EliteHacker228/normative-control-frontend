@@ -7,7 +7,8 @@ import Welcome from "./pages/welcome/Welcome.jsx";
 import Uploading from "./pages/uploading/Uploading.jsx";
 import Result from "./pages/result/Result.jsx";
 import Faq from "./pages/faq/Faq.jsx";
-import Profile from "./pages/profile/student/Profile.jsx";
+import StudentProfile from "./pages/profile/student/StudentProfile.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 
 
 function App() {

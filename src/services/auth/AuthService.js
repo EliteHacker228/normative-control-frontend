@@ -6,6 +6,10 @@ export default class AuthService {
         return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
     }
 
+    static getUserRole() {
+        return localStorage.getItem('role');
+    }
+
     static getAccessToken() {
         return localStorage.getItem('accessToken');
     }

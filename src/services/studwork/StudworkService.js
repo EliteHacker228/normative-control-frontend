@@ -146,6 +146,25 @@ export default class StudworkService {
         }
     }
 
+    static async getResultOfAuthedVerificationByInspector(resultId){
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
+
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        try {
+            let response = await fetch(`http://localhost:8080/inspector/document/render?documentId=${resultId}`, requestOptions);
+            let responseHtml = await response.text();
+            return responseHtml;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     static async getListOfAuthedVerifications(){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
@@ -159,5 +178,20 @@ export default class StudworkService {
         let response = await fetch("http://localhost:8080/student/document/list", requestOptions);
         let responseJson = await response.json();
         return responseJson;
+    }
+
+    static async getListOfVerificationsByStudentsEmail(email){
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
+
+        let requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        let result = await fetch(`http://localhost:8080/inspector/students/find?email=${email}`, requestOptions);
+        let resultJson = await result.json();
+        return resultJson;
     }
 }

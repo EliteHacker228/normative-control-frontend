@@ -1,13 +1,13 @@
-import css from './Profile.module.css';
+import css from './StudentProfile.module.css';
 import Header from "../../../components/header/Header.jsx";
 import Footer from "../../../components/footer/Footer.jsx";
 import React from "react";
 import {useLocation} from "react-router-dom";
 import Verilog from "./verilog/Verilog.jsx";
-import EditProfile from "./edit/EditProfile.jsx";
-import Menu from "./menu/Menu.jsx";
+import EditProfile from "../commonComponents/edit/EditProfile.jsx";
+import Menu from "../commonComponents/menu/Menu.jsx";
 
-export default function Profile() {
+export default function StudentProfile() {
     const location = useLocation();
     const menuElements = [
         {

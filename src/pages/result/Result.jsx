@@ -25,19 +25,26 @@ export default function Result() {
     const [duplicateResDom, setDuplicateResDom] = useState();
 
     useEffect(() => {
-        if (AuthService.isUserLocallyAuthenticated())
-            StudworkService
-                .getResultOfAuthedVerification(searchParams.get('resultId'))
-                .then((resultHtml) => setResultHtml(resultHtml));
-        else
+        if (AuthService.isUserLocallyAuthenticated()) {
+            if (AuthService.getUserRole() === 'STUDENT') {
+                StudworkService
+                    .getResultOfAuthedVerification(searchParams.get('resultId'))
+                    .then((resultHtml) => setResultHtml(resultHtml));
+            } else if (AuthService.getUserRole() === 'INSPECTOR') {
+                StudworkService
+                    .getResultOfAuthedVerificationByInspector(searchParams.get('resultId'))
+                    .then((resultHtml) => setResultHtml(resultHtml));
+            }
+        } else {
             StudworkService
                 .getResultOfAnonymousVerification(searchParams.get('resultId'), searchParams.get('fingerprint'))
                 .then((resultHtml) => setResultHtml(resultHtml));
+        }
     }, []);
 
     useEffect(() => {
         let newMistakes = [];
-        if(resultHtml)
+        if (resultHtml)
             newMistakes = eval(resultHtml.slice(resultHtml.indexOf('<script >') + 9, resultHtml.indexOf('</script>')) + ';mistakes();')
 
         resultViewRef.current.srcdoc = resultHtml;
@@ -134,8 +141,13 @@ export default function Result() {
         };
 
         if (AuthService.isUserLocallyAuthenticated()) {
-            file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}`;
-            response = await fetch(file, requestOptions);
+            if (AuthService.getUserRole() === 'STUDENT') {
+                file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}`;
+                response = await fetch(file, requestOptions);
+            } else if (AuthService.getUserRole() === 'INSPECTOR') {
+                file = `http://localhost:8080/inspector/document/conclusion?documentId=${searchParams.get('resultId')}`;
+                response = await fetch(file, requestOptions);
+            }
         } else {
             file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}&fingerprint=${searchParams.get('fingerprint')}`;
             response = await fetch(file);
