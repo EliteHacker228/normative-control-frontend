@@ -31,6 +31,19 @@
     padding-right: 200px;
 }
 
+.verilog__emptyHeader {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+    color: gray;
+
+    margin-top: 24px;
+    margin-left: 24px;
+}
+
 .verilog__list {
     display: flex;
     flex-direction: column;
@@ -60,6 +73,15 @@
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
+    line-height: 139.99%;
+    letter-spacing: 0.015em;
+}
+
+.verilod__dateText {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
     line-height: 139.99%;
     letter-spacing: 0.015em;
 }
