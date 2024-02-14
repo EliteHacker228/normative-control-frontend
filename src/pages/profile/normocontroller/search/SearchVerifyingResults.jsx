@@ -24,7 +24,8 @@ export default function SearchVerifyingResults() {
         setSearchByEmailQuery(e.target.value);
     };
 
-    const onSearch = async () => {
+    const onSearch = async (e) => {
+        e.preventDefault();
         doSearch(searchByEmailQuery);
     };
 
@@ -39,9 +40,12 @@ export default function SearchVerifyingResults() {
     return (
         <div className={css.content}>
             <div>
-                <input type={'text'} onInput={onSearchQueryInput} value={searchByEmailQuery}
-                       placeholder={'Введите e-mail студента'}/>
-                <button onClick={onSearch}>Найти</button>
+                <form className={css.search} onSubmit={onSearch}>
+                    <input className={css.searchInput} type={'text'} onInput={onSearchQueryInput}
+                           value={searchByEmailQuery}
+                           placeholder={'Введите e-mail студента'}/>
+                    <button type={'submit'} className={css.searchButton}>🔍</button>
+                </form>
                 <div className={css.verilogContainer}>
                     <h1 className={css.content__header}>Список найденных работ</h1>
                     <VerifyingsList listOfAuthedVerifications={listOfAuthedVerifications}/>
