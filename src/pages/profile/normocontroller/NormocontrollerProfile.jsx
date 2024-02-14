@@ -8,6 +8,15 @@ import SearchVerifyingResults from "./search/SearchVerifyingResults.jsx";
 
 export default function NormocontrollerProfile() {
     const location = useLocation();
+
+    const getNormocontrollersPath = () => {
+        let normocontrollersLastSearchQuery = localStorage.getItem('normocontrollersLastSearchQuery');
+        if (normocontrollersLastSearchQuery) {
+            return `/profile/search?query=${normocontrollersLastSearchQuery}`;
+        }
+        return '/profile/search';
+    };
+
     const menuElements = [
         {
             title: 'Изменить личные данные',
@@ -15,7 +24,7 @@ export default function NormocontrollerProfile() {
         },
         {
             title: 'Поиск студенческих работ',
-            path: '/profile/search'
+            path: getNormocontrollersPath()
         }
     ];
 
@@ -23,8 +32,9 @@ export default function NormocontrollerProfile() {
         <div>
             <Header/>
             <Menu elements={menuElements}/>
-            {location.pathname === menuElements[0].path && <EditProfile/>}
-            {(location.pathname === menuElements[1].path || location.pathname === '/profile') && <SearchVerifyingResults/>}
+            {menuElements[0].path === location.pathname && <EditProfile/>}
+            {(menuElements[1].path.startsWith(location.pathname) || '/profile' === location.pathname) &&
+                <SearchVerifyingResults/>}
             <Footer/>
         </div>
     );
