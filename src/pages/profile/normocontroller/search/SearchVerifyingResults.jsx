@@ -13,7 +13,7 @@ export default function SearchVerifyingResults() {
     const [listOfAuthedVerifications, setListOfAuthedVerification] = useState([]);
 
     useEffect(() => {
-        let normocontrollersLastSearchQuery = localStorage.getItem('normocontrollersLastSearchQuery');
+        let normocontrollersLastSearchQuery = searchParameters.get('query');
         if (normocontrollersLastSearchQuery) {
             setSearchByEmailQuery(normocontrollersLastSearchQuery);
             doSearch(normocontrollersLastSearchQuery);
