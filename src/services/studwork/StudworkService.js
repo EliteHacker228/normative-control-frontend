@@ -191,7 +191,10 @@ export default class StudworkService {
         };
 
         let result = await fetch(`http://localhost:8080/inspector/students/find?email=${email}`, requestOptions);
-        let resultJson = await result.json();
-        return resultJson;
+        if(result.ok) {
+            let resultJson = await result.json();
+            return resultJson;
+        }
+        return [];
     }
 }
