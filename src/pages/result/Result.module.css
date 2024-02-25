@@ -117,7 +117,7 @@
 
     border: none;
     border-radius: 20px;
-    background: linear-gradient(260deg, #0089CD -5.57%, #00BCCD 87.25%);
+    background: var(--button-background);
 
     color: var(--default-white);
     text-align: center;
@@ -132,7 +132,7 @@
 
 .controls_download:hover {
     cursor: pointer;
-    background: linear-gradient(200deg, #0089CD 20%, #00BCCD);
+    background: var(--button-background-hover);
 }
 
 .errorsList {

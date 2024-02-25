@@ -39,14 +39,14 @@ export default function SearchVerifyingResults() {
 
     return (
         <div className={css.content}>
-            <div>
+            <div className={css.verilogContainer}>
                 <form className={css.search} onSubmit={onSearch}>
                     <input className={css.searchInput} type={'text'} onInput={onSearchQueryInput}
                            value={searchByEmailQuery}
                            placeholder={'Введите e-mail студента'}/>
                     <button type={'submit'} className={css.searchButton}>🔍</button>
                 </form>
-                <div className={css.verilogContainer}>
+                <div>
                     <h1 className={css.content__header}>Список найденных работ</h1>
                     <VerifyingsList listOfAuthedVerifications={listOfAuthedVerifications}/>
                 </div>

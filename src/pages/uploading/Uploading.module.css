@@ -103,11 +103,11 @@
 }
 
 .button_red {
-    background: linear-gradient(0deg, var(--default-red) 0%, var(--default-red) 100%);
+    background: var(--default-red);
 }
 
 .button_red:hover {
-    background: linear-gradient(0deg, #FF4040 0%, #FF4040 100%);
+    background: var(--default-red-hover);
 }
 
 .button_shadow {

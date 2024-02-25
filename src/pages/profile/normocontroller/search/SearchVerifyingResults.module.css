@@ -12,7 +12,6 @@
 
 .search {
     display: flex;
-    width: 600px;
     gap: 4px;
 }
 
@@ -60,6 +59,33 @@
 }
 
 .verilogContainer {
-    /*padding-left: 300px;*/
-    padding-right: 200px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    .content__image {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .content {
+        height: max(calc(100vh - 128px - 128px - 24px - 24px), 550px);
+        margin: 24px auto;
+    }
+
+    .content__header {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+
+}
+
+@media screen and (max-width: 325px) {
+    .content__header {
+        font-size: 24px;
+    }
 }
