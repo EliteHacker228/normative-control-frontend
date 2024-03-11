@@ -2,7 +2,7 @@ import {v4 as getUUID} from 'uuid';
 import AuthService from "../auth/AuthService.js";
 
 export default class StudworkService {
-    static uploadForAnonymousVerification(file, onProgressUpdate, onProgressComplete){
+    static uploadForAnonymousVerification2(file, onProgressUpdate, onProgressComplete){
         let socket = new WebSocket("ws://localhost:8080/student/document/verify");
         let delay = 30;
         let savedStart = 0;
@@ -55,6 +55,37 @@ export default class StudworkService {
         socket.onerror = function(error) {
             console.log(`[error] ${error}`);
         };
+    }
+
+    static async uploadForAnonymousVerification(file){
+        const formdata = new FormData();
+        formdata.append("document", file, "sample.docx");
+
+        const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+        };
+
+        let response = await fetch("http://localhost:8080/documents/verification", requestOptions);
+        let result = await response.json();
+        let documentId = result.documentId;
+        console.log(result);
+        return documentId;
+    }
+
+    static async checkIfAnonymousVerificationCompleted(documentId){
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        };
+
+        let response = await fetch(`http://localhost:8080/documents/isVerified?documentId=${documentId}`, requestOptions);
+        let responseJson = response.json();
+        let message = responseJson.message;
+        if(response.ok)
+            return true;
+        return false;
     }
 
     static uploadForAuthedVerification(file, onProgressUpdate, onProgressComplete){
@@ -119,7 +150,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`http://localhost:8080/student/document/render?documentId=${resultId}&fingerprint=${fingerprint}`, requestOptions);
+            let response = await fetch(`http://localhost:8080/documents/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {

@@ -14,7 +14,6 @@ export default function Uploading() {
     const progressWheel = useRef(null);
 
     const [resultId, setResultId] = useState('');
-    const [resultFingerprint, setResultFingerprint] = useState('');
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,7 +25,7 @@ export default function Uploading() {
 
     const onProgressAnonymousComplete = (id, fingerprint) => {
         setResultId(id);
-        setResultFingerprint(fingerprint);
+        // setResultFingerprint(fingerprint);
     };
 
     const onProgressAuthedComplete = (id) => {
@@ -34,20 +33,36 @@ export default function Uploading() {
     };
 
     useEffect(() => {
-        if (location.state.file)
-            if (AuthService.isUserLocallyAuthenticated())
-                StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
+        (async () => {
+            if (location.state.file)
+                if (AuthService.isUserLocallyAuthenticated()) {
+                    StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
+                } else {
+                    let documentId = await StudworkService.uploadForAnonymousVerification(location.state.file);
+                    console.log("Загрузил на проверку документ, у него такой id: " + documentId);
+                    let intervalId = setInterval(async () => {
+                        console.log("Проверяю статус проверки документа с id: " + documentId);
+                        let isWorkReady = await StudworkService.checkIfAnonymousVerificationCompleted(documentId);
+                        if (isWorkReady) {
+                            console.log("Документ проверен, его id: " + documentId);
+                            setResultId(documentId);
+                            console.log("Устанавливаю id в state id: " + documentId);
+                            onProgressUpdate(100);
+                            onProgressAnonymousComplete(documentId);
+                            clearInterval(intervalId);
+                        }
+                    },1000)
+                }
             else
-                StudworkService.uploadForAnonymousVerification(location.state.file, onProgressUpdate, onProgressAnonymousComplete);
-        else
-            throw new Error('Не смог обнаружить файл для загрузки');
+                throw new Error('Не смог обнаружить файл для загрузки');
+        })();
     }, []);
 
     const onSeeResultsClick = () => {
         if (AuthService.isUserLocallyAuthenticated())
             navigate(`/result?resultId=${resultId}`);
         else
-            navigate(`/result?resultId=${resultId}&fingerprint=${resultFingerprint}`);
+            navigate(`/result?resultId=${resultId}`);
     };
 
     return (
@@ -75,9 +90,7 @@ export default function Uploading() {
                 :
                 <div className={css.content}>
                     <div className={css.uploadingProgress}>
-                        <div className={css.uploadingProgress__wheel} ref={progressWheel}>
-                            <p className={css.uploadingProgress__indicator}>{`${uploadingProgress}%`}</p>
-                        </div>
+                        <div className={css.uploadingProgress__wheel} ref={progressWheel}/>
                         <p className={css.uploadingProgress__text}>Ожидание...</p>
                         <img className={css.uploadingProgress__mascot} src={sleepyPandaImg}/>
                     </div>

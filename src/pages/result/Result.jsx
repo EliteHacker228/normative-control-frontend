@@ -43,16 +43,19 @@ export default function Result() {
     }, []);
 
     useEffect(() => {
-        let newMistakes = [];
-        if (resultHtml)
-            newMistakes = eval(resultHtml.slice(resultHtml.indexOf('<script >') + 9, resultHtml.indexOf('</script>')) + ';mistakes();')
+        if (resultHtml !== "") {
+            let newMistakes = [];
+            newMistakes = eval(resultHtml.slice(resultHtml.indexOf('<script>') + 8, resultHtml.indexOf('</script>')) + ';mistakes();')
+            console.log(resultHtml);
+            // console.log(resultHtml.slice(resultHtml.indexOf('<script>') + 9, resultHtml.indexOf('</script>')));
 
-        resultViewRef.current.srcdoc = resultHtml;
-        let docDom = new DOMParser().parseFromString(resultHtml, "text/html");
-        setDuplicateResDom(docDom);
-        if (newMistakes) {
-            setDetectedMistakes(newMistakes);
-            console.log(newMistakes);
+            resultViewRef.current.srcdoc = resultHtml;
+            let docDom = new DOMParser().parseFromString(resultHtml, "text/html");
+            setDuplicateResDom(docDom);
+            if (newMistakes.length !== 0) {
+                setDetectedMistakes(newMistakes);
+                console.log(newMistakes);
+            }
         }
     }, [resultHtml])
 
@@ -149,7 +152,7 @@ export default function Result() {
                 response = await fetch(file, requestOptions);
             }
         } else {
-            file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}&fingerprint=${searchParams.get('fingerprint')}`;
+            file = `http://localhost:8080/documents/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
             response = await fetch(file);
         }
         console.log(response);

@@ -31,30 +31,41 @@
     max-height: 210px;
 }
 .uploadingProgress__wheel {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     border-style: solid;
     border-width: 2px;
     border-color: #D2D2D2;
 
-    background: conic-gradient(blue 0deg, white 0deg);
+    background: conic-gradient(blue 120deg, white 0deg);
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: uploadingProgressWheelSpin 5s linear infinite;
 }
 
 .uploadingProgress__wheel::before {
     content: '';
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border-style: solid;
     border-width: 2px;
     border-color: #D2D2D2;
 
     background-color: var(--default-white);
+}
+
+@keyframes uploadingProgressWheelSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .uploadingProgress__indicator {
