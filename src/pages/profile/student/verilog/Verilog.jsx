@@ -5,22 +5,21 @@ import StudworkService from "../../../../services/studwork/StudworkService.js";
 import VerifyingsList from "../../commonComponents/verifyingsList/VerifyingsList.jsx";
 
 export default function Verilog() {
-    // const [listOfAuthedVerifications, setListOfAuthedVerification] = useState([]);
+    const [listOfAuthedVerifications, setListOfAuthedVerification] = useState([]);
 
     useEffect(() => {
-        // (async function () {
-        //     let authedVerifications = await StudworkService.getListOfAuthedVerifications();
-        //     console.log(authedVerifications);
-        //     setListOfAuthedVerification(authedVerifications);
-        // })();
+        (async function () {
+            let authedVerifications = await StudworkService.getListOfAuthedVerifications();
+            console.log(authedVerifications);
+            setListOfAuthedVerification(authedVerifications);
+        })();
     }, []);
 
     return (
         <div className={css.content}>
             <div className={css.verilogContainer}>
                 <h1 className={css.content__header}>Список ваших проверок</h1>
-                {/*<VerifyingsList listOfAuthedVerifications={listOfAuthedVerifications}/>*/}
-                <VerifyingsList listOfAuthedVerifications={[]}/>
+                <VerifyingsList listOfAuthedVerifications={listOfAuthedVerifications}/>
             </div>
             <img className={css.content__image} src={panda_with_laptop} alt={'Panda with it\'s laptop'}/>
         </div>

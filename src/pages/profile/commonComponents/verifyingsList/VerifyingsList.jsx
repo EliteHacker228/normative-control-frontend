@@ -7,7 +7,7 @@ export default function VerifyingsList({listOfAuthedVerifications}) {
             {listOfAuthedVerifications.length === 0 &&
                 <h1 className={css.verilog__emptyHeader}>Здесь пока ничего нет</h1>}
             <div className={css.verilog__cards}>
-                {listOfAuthedVerifications.reverse().map((element) => {
+                {listOfAuthedVerifications.map((element) => {
                     return (
                         <div className={css.verilog__card}>
                             <NavLink to={`/result?resultId=${element.id}`}

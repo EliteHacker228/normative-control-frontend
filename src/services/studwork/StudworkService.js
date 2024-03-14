@@ -190,7 +190,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let response = await fetch("http://localhost:8080/student/document/list", requestOptions);
+        let response = await fetch("http://localhost:8080/documents/authed/list?targetUserEmail=", requestOptions);
         let responseJson = await response.json();
         return responseJson;
     }
@@ -205,7 +205,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let result = await fetch(`http://localhost:8080/inspector/students/find?email=${email}`, requestOptions);
+        let result = await fetch(`http://localhost:8080/documents/authed/find?searchQuery=${email}`, requestOptions);
         if(result.ok) {
             let resultJson = await result.json();
             return resultJson;
