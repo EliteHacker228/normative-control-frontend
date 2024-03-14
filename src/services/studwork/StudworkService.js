@@ -57,7 +57,7 @@ export default class StudworkService {
         };
     }
 
-    static async uploadForAnonymousVerification(file){
+    static async uploadForAnonymousVerification3(file){
         const formdata = new FormData();
         formdata.append("document", file, "sample.docx");
 
@@ -74,13 +74,31 @@ export default class StudworkService {
         return documentId;
     }
 
-    static async checkIfAnonymousVerificationCompleted(documentId){
+    static async uploadForAnonymousVerification(file, fingerprint){
+        const formdata = new FormData();
+        formdata.append("document", file, "sample.docx");
+        formdata.append("fingerprint", fingerprint);
+
+        const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+        };
+
+        let response = await fetch("http://localhost:8080/documents/open/verification", requestOptions);
+        let result = await response.json();
+        let documentId = result.documentId;
+        console.log(result);
+        return documentId;
+    }
+
+    static async checkIfVerificationCompleted(documentId){
         const requestOptions = {
             method: "GET",
             redirect: "follow"
         };
 
-        let response = await fetch(`http://localhost:8080/documents/isVerified?documentId=${documentId}`, requestOptions);
+        let response = await fetch(`http://localhost:8080/documents/open/isVerified?documentId=${documentId}`, requestOptions);
         let responseJson = response.json();
         let message = responseJson.message;
         if(response.ok)
@@ -88,59 +106,25 @@ export default class StudworkService {
         return false;
     }
 
-    static uploadForAuthedVerification(file, onProgressUpdate, onProgressComplete){
-        let socket = new WebSocket("ws://localhost:8080/student/document/verify");
-        let delay = 30;
-        let savedStart = 0;
+    static async uploadForAuthedVerification(file){
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
 
-        let initMessage = {
-            'token' : AuthService.getAccessToken(),
-            'length' : file.size
+        const formdata = new FormData();
+        formdata.append("document", file, "sample.docx");
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: formdata,
+            redirect: "follow"
         };
 
-        socket.onopen = function(e) {
-            console.log("[open] Соединение установлено");
-            console.log("Инициирую сессию авторизованной проверку");
-            console.log(initMessage);
-            socket.send(JSON.stringify(initMessage));
-            socket.send(file);
-        };
-
-        socket.onmessage = function(event) {
-            console.log(`[message] Данные получены с сервера: ${event.data}`);
-            try {
-                let responseJson = JSON.parse(event.data);
-                if ('value' in responseJson) {
-                    let percents = Math.floor(Number(responseJson.value) * 100);
-                    for(let start = savedStart; start <= percents; start++) {
-                        setTimeout(() => onProgressUpdate(start), delay);
-                        delay += 30;
-                        console.log(start, delay);
-                    }
-                    savedStart = percents + 1;
-                }
-
-                if ('id' in responseJson) {
-                    onProgressComplete(responseJson.id);
-                }
-            }catch(e){
-                console.log(e);
-            }
-        };
-
-        socket.onclose = function(event) {
-            if (event.wasClean) {
-                console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-            } else {
-                // например, сервер убил процесс или сеть недоступна
-                // обычно в этом случае event.code 1006
-                console.log('[close] Соединение прервано');
-            }
-        };
-
-        socket.onerror = function(error) {
-            console.log(`[error] ${error}`);
-        };
+        let response = await fetch("http://localhost:8080/documents/authed/verification", requestOptions);
+        let result = await response.json();
+        let documentId = result.documentId;
+        console.log(result);
+        return documentId;
     }
 
     static async getResultOfAnonymousVerification(resultId, fingerprint){
@@ -150,7 +134,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`http://localhost:8080/documents/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
+            let response = await fetch(`http://localhost:8080/documents/open/verifiedDocument?documentId=${resultId}&documentType=html&fingerprint=${fingerprint}`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -169,7 +153,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`http://localhost:8080/student/document/render?documentId=${resultId}`, requestOptions);
+            let response = await fetch(`http://localhost:8080/documents/authed/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {

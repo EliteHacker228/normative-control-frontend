@@ -3,6 +3,7 @@ import welcome_panda_img from "../../../welcome/welcome_panda.png";
 import {useState} from "react";
 import AuthUtils from "../../../../utils/authUtils/AuthUtils.js";
 import AccountService from "../../../../services/account/AccountService.js";
+import AuthService from "../../../../services/auth/AuthService.js";
 
 export default function EditProfile(){
     const [email, setEmail] = useState('');
@@ -17,6 +18,9 @@ export default function EditProfile(){
     const [passwordUpdateStatus, setPasswordUpdateStatus] = useState('');
 
     const [isUpdatePending, setIsUpdatePending] = useState(false);
+
+    const [isEmailUpdatedSuccessfully, setIsEmailUpdatedSuccessfully] = useState(false);
+    const [isPasswordUpdatedSuccessfully, setIsPasswordUpdatedSuccessfully] = useState(false);
     // Указанный e-mail уже используется
     // Произошла ошибка
 
@@ -73,9 +77,12 @@ export default function EditProfile(){
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsUpdatePending(true);
+        setIsEmailUpdatedSuccessfully(false);
+        setIsPasswordUpdatedSuccessfully(false);
         if (!isEmailWrong && !isEmailEmpty()) {
             try {
                 await AccountService.updateEmail(email);
+                setIsEmailUpdatedSuccessfully(true);
             } catch (e) {
                 console.log(e);
                 setEmailUpdateStatus('Не удалось обнвоить e-mail. Попробуйте позже');
@@ -85,6 +92,7 @@ export default function EditProfile(){
         if (!isPasswordsMismatch && !isPasswordEmpty()) {
             try {
                 await AccountService.updatePassword(password);
+                setIsPasswordUpdatedSuccessfully(true);
             } catch (e) {
                 console.log(e);
                 setPasswordUpdateStatus('Не удалось обновить пароль. Попробуйте позже');
@@ -123,6 +131,10 @@ export default function EditProfile(){
                     {isEmailWrong && <p className={css.auth_error}>Укажите корректный e-mail в
                         домене <b>@urfu.me</b> или <b>@at.urfu.ru</b></p>}
                     {isPasswordsMismatch && <p className={css.auth_error}>Пароли не совпадают</p>}
+                </div>
+                <div>
+                    {isEmailUpdatedSuccessfully && <p className={css.updated_successfully}>Ваш e-mail успешно обновлён</p>}
+                    {isPasswordUpdatedSuccessfully && <p className={css.updated_successfully}>Ваш пароль успешно обновлён</p>}
                 </div>
             </form>
             <img className={css.content__image} src={welcome_panda_img} alt={'Panda is welcoming user'}/>

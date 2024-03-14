@@ -17,11 +17,13 @@ export default class AccountService {
             redirect: 'follow'
         };
 
-        let response = await fetch("https://localhost:8080/account/email", requestOptions);
+        let response = await fetch("http://localhost:8080/account/email", requestOptions);
         if (response.status !== 200) {
             let responseText = await response.text();
             throw new Error(`Error ${response.status} : ${responseText}`);
         }
+        let responseJson = await response.json();
+        await AuthService.updateAccessAndRefreshTokens(responseJson);
     }
 
     static async updatePassword(newPassword) {

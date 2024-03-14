@@ -33,16 +33,15 @@ export default function Uploading() {
     };
 
     useEffect(() => {
+        let intervalId;
         (async () => {
             if (location.state.file)
                 if (AuthService.isUserLocallyAuthenticated()) {
-                    StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
-                } else {
-                    let documentId = await StudworkService.uploadForAnonymousVerification(location.state.file);
+                    let documentId = await StudworkService.uploadForAuthedVerification(location.state.file, onProgressUpdate, onProgressAuthedComplete);
                     console.log("Загрузил на проверку документ, у него такой id: " + documentId);
-                    let intervalId = setInterval(async () => {
+                    intervalId = setInterval(async () => {
                         console.log("Проверяю статус проверки документа с id: " + documentId);
-                        let isWorkReady = await StudworkService.checkIfAnonymousVerificationCompleted(documentId);
+                        let isWorkReady = await StudworkService.checkIfVerificationCompleted(documentId);
                         if (isWorkReady) {
                             console.log("Документ проверен, его id: " + documentId);
                             setResultId(documentId);
@@ -51,11 +50,30 @@ export default function Uploading() {
                             onProgressAnonymousComplete(documentId);
                             clearInterval(intervalId);
                         }
-                    },1000)
+                    }, 1000);
+                } else {
+                    let documentId = await StudworkService.uploadForAnonymousVerification(location.state.file, AuthService.getFingerprint());
+                    console.log("Загрузил на проверку документ, у него такой id: " + documentId);
+                    intervalId = setInterval(async () => {
+                        console.log("Проверяю статус проверки документа с id: " + documentId);
+                        let isWorkReady = await StudworkService.checkIfVerificationCompleted(documentId);
+                        if (isWorkReady) {
+                            console.log("Документ проверен, его id: " + documentId);
+                            setResultId(documentId);
+                            console.log("Устанавливаю id в state id: " + documentId);
+                            onProgressUpdate(100);
+                            onProgressAnonymousComplete(documentId);
+                            clearInterval(intervalId);
+                        }
+                    }, 1000);
                 }
             else
                 throw new Error('Не смог обнаружить файл для загрузки');
         })();
+
+        return () => {
+            clearInterval(intervalId)
+        };
     }, []);
 
     const onSeeResultsClick = () => {

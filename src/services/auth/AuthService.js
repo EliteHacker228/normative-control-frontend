@@ -1,9 +1,29 @@
 import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
+import {v4 as getUUID} from "uuid";
 
 export default class AuthService {
     static isUserLocallyAuthenticated() {
         return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
+    }
+
+    static #userSetFingerprint(fingerprint){
+        return localStorage.setItem('fingerprint', fingerprint);
+    }
+
+    static getFingerprint(){
+        return localStorage.getItem('fingerprint');
+    }
+
+    static userHasFingerprint(){
+        return Boolean(this.getFingerprint);
+    }
+
+    static generateAndSetFingerprintIfUserIfAbsent(){
+        if(!this.userHasFingerprint()){
+            let uuid = getUUID();
+            this.#userSetFingerprint(uuid)
+        }
     }
 
     static getUserRole() {
@@ -18,8 +38,9 @@ export default class AuthService {
         return localStorage.getItem('refreshToken');
     }
 
-    static async updateAccessAndRefreshTokens() {
-
+    static async updateAccessAndRefreshTokens(responseJson) {
+        localStorage.setItem('accessToken', responseJson.accessToken);
+        localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
     }
 
     static logout() {
@@ -49,7 +70,7 @@ export default class AuthService {
             let responseJson = await response.json();
             localStorage.setItem('accessToken', responseJson.accessToken);
             localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
-            localStorage.setItem('role', responseJson.roles[0]);
+            localStorage.setItem('role', responseJson.role);
         } else if (response.status === 401) {
             let responseText = await response.text();
             throw new WrongCredentialsError(`Error ${response.status}: ${responseText}`);
@@ -79,7 +100,7 @@ export default class AuthService {
             let responseJson = await response.json();
             localStorage.setItem('accessToken', responseJson.accessToken);
             localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
-            localStorage.setItem('role', responseJson.roles[0]);
+            localStorage.setItem('role', responseJson.role);
         } else if (response.status === 409) {
             let responseText = await response.text();
             throw new CredentialsAlreadyInUse(`Error ${response.status}: ${responseText}`);

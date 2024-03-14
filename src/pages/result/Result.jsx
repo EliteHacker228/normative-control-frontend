@@ -26,18 +26,12 @@ export default function Result() {
 
     useEffect(() => {
         if (AuthService.isUserLocallyAuthenticated()) {
-            if (AuthService.getUserRole() === 'STUDENT') {
-                StudworkService
-                    .getResultOfAuthedVerification(searchParams.get('resultId'))
-                    .then((resultHtml) => setResultHtml(resultHtml));
-            } else if (AuthService.getUserRole() === 'INSPECTOR') {
-                StudworkService
-                    .getResultOfAuthedVerificationByInspector(searchParams.get('resultId'))
-                    .then((resultHtml) => setResultHtml(resultHtml));
-            }
+            StudworkService
+                .getResultOfAuthedVerification(searchParams.get('resultId'))
+                .then((resultHtml) => setResultHtml(resultHtml));
         } else {
             StudworkService
-                .getResultOfAnonymousVerification(searchParams.get('resultId'), searchParams.get('fingerprint'))
+                .getResultOfAnonymousVerification(searchParams.get('resultId'), AuthService.getFingerprint())
                 .then((resultHtml) => setResultHtml(resultHtml));
         }
     }, []);
@@ -144,15 +138,10 @@ export default function Result() {
         };
 
         if (AuthService.isUserLocallyAuthenticated()) {
-            if (AuthService.getUserRole() === 'STUDENT') {
-                file = `http://localhost:8080/student/document/conclusion?documentId=${searchParams.get('resultId')}`;
-                response = await fetch(file, requestOptions);
-            } else if (AuthService.getUserRole() === 'INSPECTOR') {
-                file = `http://localhost:8080/inspector/document/conclusion?documentId=${searchParams.get('resultId')}`;
-                response = await fetch(file, requestOptions);
-            }
+            file = `http://localhost:8080/documents/authed/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
+            response = await fetch(file, requestOptions);
         } else {
-            file = `http://localhost:8080/documents/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
+            file = `http://localhost:8080/documents/open/verifiedDocument?documentId=${searchParams.get('resultId')}&fingerprint=${AuthService.getFingerprint()}&documentType=docx`;
             response = await fetch(file);
         }
         console.log(response);
