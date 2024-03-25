@@ -1,9 +1,7 @@
 import AuthService from "../auth/AuthService.js";
-import ApiUrlResolver from "../../utils/apiUri/ApiUrlResolver.js";
+import ENV from "../../utils/apiUri/ENV.js";
 
 export default class AccountService {
-    static #API_URL = ApiUrlResolver.getApiUrl();
-
     static async updateEmail(newEmail) {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -20,7 +18,7 @@ export default class AccountService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${this.#API_URL}/account/email`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/account/email`, requestOptions);
         if (response.status !== 200) {
             let responseText = await response.text();
             throw new Error(`Error ${response.status} : ${responseText}`);
@@ -45,7 +43,7 @@ export default class AccountService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${this.#API_URL}/account/password`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/account/password`, requestOptions);
         if (response.status !== 200) {
             let responseText = await response.text();
             throw new Error(`Error ${response.status} : ${responseText}`);

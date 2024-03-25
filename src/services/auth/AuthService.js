@@ -1,10 +1,9 @@
 import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
 import {v4 as getUUID} from "uuid";
-import ApiUrlResolver from "../../utils/apiUri/ApiUrlResolver.js";
+import ENV from "../../utils/apiUri/ENV.js";
 
 export default class AuthService {
-    static #API_URL = ApiUrlResolver.getApiUrl();
     static isUserLocallyAuthenticated() {
         return localStorage.getItem('accessToken') && localStorage.getItem('refreshToken');
     }
@@ -67,7 +66,7 @@ export default class AuthService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${this.#API_URL}/account/login`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/account/login`, requestOptions);
         if (response.status === 200) {
             let responseJson = await response.json();
             localStorage.setItem('accessToken', responseJson.accessToken);
@@ -97,7 +96,7 @@ export default class AuthService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${this.#API_URL}/account/register`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/account/register`, requestOptions);
         if (response.status === 200) {
             let responseJson = await response.json();
             localStorage.setItem('accessToken', responseJson.accessToken);

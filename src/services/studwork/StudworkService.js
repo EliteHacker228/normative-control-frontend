@@ -1,10 +1,8 @@
 import {v4 as getUUID} from 'uuid';
 import AuthService from "../auth/AuthService.js";
-import ApiUrlResolver from "../../utils/apiUri/ApiUrlResolver.js";
+import ENV from "../../utils/apiUri/ENV.js";
 
 export default class StudworkService {
-    static #API_URL = ApiUrlResolver.getApiUrl();
-
     static async uploadForAnonymousVerification(file, fingerprint){
         const formdata = new FormData();
         formdata.append("document", file, "sample.docx");
@@ -16,7 +14,7 @@ export default class StudworkService {
             redirect: "follow"
         };
 
-        let response = await fetch(`${this.#API_URL}/documents/open/verification`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents/open/verification`, requestOptions);
         let result = await response.json();
         let documentId = result.documentId;
         console.log(result);
@@ -29,7 +27,7 @@ export default class StudworkService {
             redirect: "follow"
         };
 
-        let response = await fetch(`${this.#API_URL}/documents/open/isVerified?documentId=${documentId}`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents/open/isVerified?documentId=${documentId}`, requestOptions);
         let responseJson = response.json();
         let message = responseJson.message;
         if(response.ok)
@@ -51,7 +49,7 @@ export default class StudworkService {
             redirect: "follow"
         };
 
-        let response = await fetch(`${this.#API_URL}/documents/authed/verification`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents/authed/verification`, requestOptions);
         let result = await response.json();
         let documentId = result.documentId;
         console.log(result);
@@ -65,7 +63,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${this.#API_URL}/documents/open/verifiedDocument?documentId=${resultId}&documentType=html&fingerprint=${fingerprint}`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/documents/open/verifiedDocument?documentId=${resultId}&documentType=html&fingerprint=${fingerprint}`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -84,7 +82,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${this.#API_URL}/documents/authed/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/documents/authed/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -103,7 +101,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${this.#API_URL}/inspector/document/render?documentId=${resultId}`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/inspector/document/render?documentId=${resultId}`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -121,7 +119,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${this.#API_URL}/documents/authed/list?targetUserEmail=`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents/authed/list?targetUserEmail=`, requestOptions);
         let responseJson = await response.json();
         return responseJson;
     }
@@ -136,7 +134,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let result = await fetch(`${this.#API_URL}/documents/authed/find?searchQuery=${email}`, requestOptions);
+        let result = await fetch(`${ENV.API_URL}/documents/authed/find?searchQuery=${email}`, requestOptions);
         if(result.ok) {
             let resultJson = await result.json();
             return resultJson;
