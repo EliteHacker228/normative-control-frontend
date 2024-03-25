@@ -11,8 +11,11 @@ import {useSearchParams} from "react-router-dom";
 import parse from 'html-react-parser';
 import StudworkService from "../../services/studwork/StudworkService.js";
 import AuthService from "../../services/auth/AuthService.js";
+import ApiUrlResolver from "../../utils/apiUri/ApiUrlResolver.js";
 
 export default function Result() {
+    const API_URL = ApiUrlResolver.getApiUrl();
+
     const [isFolded, setIsFolded] = useState(false);
     const resultDownloadRef = useRef();
 
@@ -138,10 +141,10 @@ export default function Result() {
         };
 
         if (AuthService.isUserLocallyAuthenticated()) {
-            file = `http://localhost:8080/documents/authed/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
+            file = `${API_URL}/documents/authed/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
             response = await fetch(file, requestOptions);
         } else {
-            file = `http://localhost:8080/documents/open/verifiedDocument?documentId=${searchParams.get('resultId')}&fingerprint=${AuthService.getFingerprint()}&documentType=docx`;
+            file = `${API_URL}/documents/open/verifiedDocument?documentId=${searchParams.get('resultId')}&fingerprint=${AuthService.getFingerprint()}&documentType=docx`;
             response = await fetch(file);
         }
         console.log(response);

@@ -1,16 +1,11 @@
-import {useEffect, useState} from 'react'
-import reactLogo from '/react.svg'
-import viteLogo from '/vite.svg'
-import css from './App.module.css'
+import {useEffect} from 'react'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Welcome from "./pages/welcome/Welcome.jsx";
 import Uploading from "./pages/uploading/Uploading.jsx";
 import Result from "./pages/result/Result.jsx";
 import Faq from "./pages/faq/Faq.jsx";
-import StudentProfile from "./pages/profile/student/StudentProfile.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import AuthService from "./services/auth/AuthService.js";
-
 
 function App() {
     useEffect(() => {
