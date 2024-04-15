@@ -14,7 +14,7 @@ export default class StudworkService {
             redirect: "follow"
         };
 
-        let response = await fetch(`${ENV.API_URL}/documents/open/verification`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents`, requestOptions);
         let result = await response.json();
         let documentId = result.documentId;
         console.log(result);
@@ -22,13 +22,17 @@ export default class StudworkService {
     }
 
     static async checkIfVerificationCompleted(documentId){
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
+
         const requestOptions = {
             method: "GET",
+            headers: myHeaders,
             redirect: "follow"
         };
 
-        let response = await fetch(`${ENV.API_URL}/documents/open/isVerified?documentId=${documentId}`, requestOptions);
-        let responseJson = response.json();
+        let response = await fetch(`${ENV.API_URL}/documents/${documentId}/status`, requestOptions);
+        let responseJson = await response.json();
         let message = responseJson.message;
         if(response.ok)
             return true;
@@ -40,7 +44,8 @@ export default class StudworkService {
         myHeaders.append("Authorization", `Bearer ${AuthService.getAccessToken()}`);
 
         const formdata = new FormData();
-        formdata.append("document", file, "sample.docx");
+        formdata.append("document", file, "MyWork.docx");
+        formdata.append("documentName", "MyWork.docx");
 
         const requestOptions = {
             method: "POST",
@@ -49,9 +54,9 @@ export default class StudworkService {
             redirect: "follow"
         };
 
-        let response = await fetch(`${ENV.API_URL}/documents/authed/verification`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents`, requestOptions);
         let result = await response.json();
-        let documentId = result.documentId;
+        let documentId = result.document.id;
         console.log(result);
         return documentId;
     }
@@ -63,7 +68,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${ENV.API_URL}/documents/open/verifiedDocument?documentId=${resultId}&documentType=html&fingerprint=${fingerprint}`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/documents/${resultId}?type=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -82,7 +87,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${ENV.API_URL}/documents/authed/verifiedDocument?documentId=${resultId}&documentType=html`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/documents/${resultId}?type=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -101,7 +106,7 @@ export default class StudworkService {
         };
 
         try {
-            let response = await fetch(`${ENV.API_URL}/inspector/document/render?documentId=${resultId}`, requestOptions);
+            let response = await fetch(`${ENV.API_URL}/documents/${resultId}?type=html`, requestOptions);
             let responseHtml = await response.text();
             return responseHtml;
         } catch (e) {
@@ -119,7 +124,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${ENV.API_URL}/documents/authed/list?targetUserEmail=`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents/verifications`, requestOptions);
         let responseJson = await response.json();
         return responseJson;
     }

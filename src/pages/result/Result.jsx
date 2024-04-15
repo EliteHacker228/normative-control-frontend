@@ -139,10 +139,10 @@ export default function Result() {
         };
 
         if (AuthService.isUserLocallyAuthenticated()) {
-            file = `${ENV.API_URL}/documents/authed/verifiedDocument?documentId=${searchParams.get('resultId')}&documentType=docx`;
+            file = `${ENV.API_URL}/documents/${searchParams.get('resultId')}?type=docx`;
             response = await fetch(file, requestOptions);
         } else {
-            file = `${ENV.API_URL}/documents/open/verifiedDocument?documentId=${searchParams.get('resultId')}&fingerprint=${AuthService.getFingerprint()}&documentType=docx`;
+            file = `${ENV.API_URL}/documents/${searchParams.get('resultId')}?type=docx`;
             response = await fetch(file);
         }
         console.log(response);
@@ -160,7 +160,7 @@ export default function Result() {
             {isFolded ?
                 <div className={css.content}>
                     <h1 className={css.content__header}>Просмотр документа</h1>
-                    <div>
+                    <div style={{visibility: 'hidden'}}>
                         <img className={css.content__wrapButton} src={unwrap_page_ico} onClick={onFoldHandler}/>
                     </div>
                     <div className={`${css.documentContainer} ${css.documentContainer_wrapped}`}>
@@ -169,25 +169,25 @@ export default function Result() {
                 </div>
                 :
                 <div className={css.content}>
-                    <div className={`${css.contentSection} ${css.contentSection_top}`}>
-                        <div className={`${css.controls} ${css.content__topLeftElement}`}>
-                            <p className={css.controls__description}>Чтобы преподаватель смог просмотреть результат,
-                                скопируйте и отправьте ему ID
-                                документа:</p>
-                            <div className={css.textbox}>
-                                <input className={css.textbox_input} id={'textbox_input'} type={'text'}
-                                       value={textId}/>
-                                <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>
-                            </div>
-                            <button className={css.controls_download} onClick={downloadingHandler}>Скачать
-                                результат
-                            </button>
-                            <a ref={resultDownloadRef}/>
-                        </div>
-                        <div className={`${css.content__topRightElement}`}>
-                            <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
-                        </div>
-                    </div>
+                    {/*<div className={`${css.contentSection} ${css.contentSection_top}`}>*/}
+                    {/*    <div className={`${css.controls} ${css.content__topLeftElement}`}>*/}
+                    {/*        <p className={css.controls__description}>Чтобы преподаватель смог просмотреть результат,*/}
+                    {/*            скопируйте и отправьте ему ID*/}
+                    {/*            документа:</p>*/}
+                    {/*        <div className={css.textbox}>*/}
+                    {/*            <input className={css.textbox_input} id={'textbox_input'} type={'text'}*/}
+                    {/*                   value={textId}/>*/}
+                    {/*            <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>*/}
+                    {/*        </div>*/}
+                    {/*        <button className={css.controls_download} onClick={downloadingHandler}>Скачать*/}
+                    {/*            результат*/}
+                    {/*        </button>*/}
+                    {/*        <a ref={resultDownloadRef}/>*/}
+                    {/*    </div>*/}
+                    {/*    <div className={`${css.content__topRightElement}`}>*/}
+                    {/*        <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div className={`${css.contentSection} ${css.contentSection_bottom}`}>
                         <div className={`${css.content__bottomLeftElement}`}>
                             <h1 className={css.content__header}>Список ошибок</h1>
@@ -214,7 +214,7 @@ export default function Result() {
                         </div>
                         <div className={`${css.content__bottomRightElement}`}>
                             <h1 className={css.content__header}>Просмотр документа</h1>
-                            <div>
+                            <div style={{visibility: 'hidden'}}>
                                 <img className={css.content__wrapButton} src={wrap_page_ico} onClick={onFoldHandler}/>
                             </div>
                             <div className={css.documentContainer}>
