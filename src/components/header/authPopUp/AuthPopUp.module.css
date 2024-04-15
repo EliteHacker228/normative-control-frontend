@@ -26,6 +26,35 @@
     padding: 0px 8px;
     border-radius: 8px;
     border-style: solid;
+    width: 250px;
+}
+
+.authForm__select {
+    color: var(--default-dark);
+    font-family: Ubuntu Mono, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 139.99%; /* 27.998px */
+    letter-spacing: 1px;
+    text-align: left;
+    padding: 0px 8px;
+    border-radius: 8px;
+    border-style: solid;
+    background-color: white;
+    width: 250px;
+    height: 32px;
+}
+
+.authForm__text {
+    color: var(--default-dark);
+    font-family: Ubuntu Mono, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 139.99%; /* 27.998px */
+    letter-spacing: 1px;
+    text-align: left;
 }
 
 .auth_error {
