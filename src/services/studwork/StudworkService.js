@@ -124,7 +124,7 @@ export default class StudworkService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${ENV.API_URL}/documents/verifications`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/documents`, requestOptions);
         let responseJson = await response.json();
         return responseJson;
     }

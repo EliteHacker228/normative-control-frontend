@@ -7,14 +7,16 @@ export default function VerifyingsList({listOfAuthedVerifications}) {
             {listOfAuthedVerifications.length === 0 &&
                 <h1 className={css.verilog__emptyHeader}>Здесь пока ничего нет</h1>}
             <div className={css.verilog__cards}>
-                {listOfAuthedVerifications.map((element) => {
+                {listOfAuthedVerifications.reverse().map((element) => {
                     return (
                         <div className={css.verilog__card}>
                             <NavLink to={`/result?resultId=${element.id}`}
                                      className={css.verilog__link}>Просмотреть</NavLink>
                             <p className={css.verilod__dateText}>Дата проверки:
-                                {' ' + new Date(element.timestamp).toLocaleTimeString('ru-RU') + ' ' + new Date(element.timestamp).toLocaleDateString('ru-RU')}</p>
-                            <p className={css.verilog__text}>ID: {element.id}</p>
+                                {' ' + new Date(element.verificationDate).toLocaleDateString('ru-RU')}</p>
+                            <p className={css.verilod__dateText}>Время проверки:
+                                {' ' + new Date(element.verificationDate).toLocaleTimeString('ru-RU') }</p>
+                            <p className={css.verilod__dateText}>Имя: {element.fileName}</p>
                         </div>
                     );
                 })}
