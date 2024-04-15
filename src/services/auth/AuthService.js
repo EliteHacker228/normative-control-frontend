@@ -32,6 +32,10 @@ export default class AuthService {
         return localStorage.getItem('role');
     }
 
+    static getUserId() {
+        return localStorage.getItem('id');
+    }
+
     static getAccessToken() {
         return localStorage.getItem('accessToken');
     }
@@ -42,13 +46,14 @@ export default class AuthService {
 
     static async updateAccessAndRefreshTokens(responseJson) {
         localStorage.setItem('accessToken', responseJson.accessToken);
-        localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
+        localStorage.setItem('refreshToken', responseJson.refreshToken);
     }
 
     static logout() {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('role');
+        localStorage.removeItem('id');
     }
 
     static async loginWithCredentials(email, password) {
@@ -73,6 +78,7 @@ export default class AuthService {
             localStorage.setItem('accessToken', responseJson.accessToken);
             localStorage.setItem('refreshToken', responseJson.refreshToken);
             localStorage.setItem('role', this.getRoleFromAccessToken(responseJson.accessToken));
+            localStorage.setItem('id', this.getIdFromAccessToken(responseJson.accessToken));
         } else if (response.status === 401) {
             let responseText = await response.text();
             throw new WrongCredentialsError(`Error ${response.status}: ${responseText}`);
@@ -86,6 +92,13 @@ export default class AuthService {
         console.log(jwtFields);
         console.log(jwtFields.role);
         return jwtFields.role;
+    }
+
+    static getIdFromAccessToken(accessToken){
+        let jwtFields = jose.decodeJwt(accessToken);
+        console.log(jwtFields);
+        console.log(jwtFields.id);
+        return jwtFields.id;
     }
 
     static async registerWithCredentials(email, lastName, firstName, middleName, academicGroupdId, normocontrollerId, password) {
@@ -115,6 +128,7 @@ export default class AuthService {
             localStorage.setItem('accessToken', responseJson.accessToken);
             localStorage.setItem('refreshToken', responseJson.refreshToken);
             localStorage.setItem('role', this.getRoleFromAccessToken(responseJson.accessToken));
+            localStorage.setItem('id', this.getIdFromAccessToken(responseJson.accessToken));
         } else if (response.status === 409) {
             let responseText = await response.text();
             throw new CredentialsAlreadyInUse(`Error ${response.status}: ${responseText}`);

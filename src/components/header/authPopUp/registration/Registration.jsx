@@ -103,8 +103,8 @@ export default function Registration({onAuth}) {
                     onChange={(e) => setAcademicGroupId(e.target.value)}>
                 <option value="">-</option>
                 {
-                    academicGroups.map((academicGroup) =>
-                        <option value={academicGroup.id}>
+                    academicGroups.map((academicGroup, index) =>
+                        <option value={academicGroup.id} key={index}>
                             {academicGroup.name}
                         </option>)
                 }
@@ -114,8 +114,8 @@ export default function Registration({onAuth}) {
                     onChange={(e) => setNormocontrollerId(e.target.value)}>
                 <option value="">-</option>
                 {
-                    normocontrollers.map((normocontroller) =>
-                        <option value={normocontroller.id}>
+                    normocontrollers.map((normocontroller, index) =>
+                        <option value={normocontroller.id} key={index}>
                             {`${normocontroller.lastName} ${normocontroller.firstName[0]}. ${normocontroller.lastName[0]}.`}
                         </option>)
                 }
