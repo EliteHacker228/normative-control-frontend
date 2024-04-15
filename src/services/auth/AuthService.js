@@ -2,6 +2,7 @@ import WrongCredentialsError from "../../assets/WrongCredentialsError.js";
 import CredentialsAlreadyInUse from "../../assets/CredentialsAlreadyInUse.js";
 import {v4 as getUUID} from "uuid";
 import ENV from "../../utils/apiUri/ENV.js";
+import * as jose from 'jose'
 
 export default class AuthService {
     static isUserLocallyAuthenticated() {
@@ -66,18 +67,25 @@ export default class AuthService {
             redirect: 'follow'
         };
 
-        let response = await fetch(`${ENV.API_URL}/account/login`, requestOptions);
+        let response = await fetch(`${ENV.API_URL}/auth/login`, requestOptions);
         if (response.status === 200) {
             let responseJson = await response.json();
             localStorage.setItem('accessToken', responseJson.accessToken);
-            localStorage.setItem('refreshToken', responseJson.refreshToken.refreshToken);
-            localStorage.setItem('role', responseJson.role);
+            localStorage.setItem('refreshToken', responseJson.refreshToken);
+            localStorage.setItem('role', this.getRoleFromAccessToken(responseJson.accessToken));
         } else if (response.status === 401) {
             let responseText = await response.text();
             throw new WrongCredentialsError(`Error ${response.status}: ${responseText}`);
         } else {
             throw new Error(`Unknown error`);
         }
+    }
+
+    static getRoleFromAccessToken(accessToken){
+        let jwtFields = jose.decodeJwt(accessToken);
+        console.log(jwtFields);
+        console.log(jwtFields.role);
+        return jwtFields.role;
     }
 
     static async registerWithCredentials(email, password) {

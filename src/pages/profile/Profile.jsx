@@ -10,7 +10,7 @@ export default function Profile() {
 
     if (userRole === 'STUDENT')
         return <StudentProfile/>;
-    else if (userRole === 'INSPECTOR')
+    else if (userRole === 'NORMOCONTROLLER')
         return <NormocontrollerProfile/>;
     else
         return <Navigate to={'/'}/>
