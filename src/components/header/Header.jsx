@@ -10,14 +10,23 @@ import Registration from "./authPopUp/registration/Registration.jsx";
 import AuthPopUp from "./authPopUp/AuthPopUp.jsx";
 import AuthService from "../../services/auth/AuthService.js";
 
-export default function Header() {
+export default function Header({externalOnAuthStatusChanged}) {
 
     const [isAuthPopUpShowed, setIsAuthPopUpShowed] = useState(false);
     const [isUserAuthed, setIsUserAuthed] = useState(AuthService.isUserLocallyAuthenticated());
     const onAuth = () => {
         closePopUp();
         setIsUserAuthed(AuthService.isUserLocallyAuthenticated());
+        if(externalOnAuthStatusChanged)
+            externalOnAuthStatusChanged();
     };
+
+    const logout = () => {
+        AuthService.logout();
+        if(externalOnAuthStatusChanged)
+            externalOnAuthStatusChanged();
+    };
+
     const toggleOpenAuthPopUp = () => {
         if (isAuthPopUpShowed)
             closePopUp();
@@ -70,7 +79,7 @@ export default function Header() {
                     }
                     {
                         AuthService.isUserLocallyAuthenticated() ?
-                            <NavLink className={css.link} onClick={AuthService.logout} to={'/'}>
+                            <NavLink className={css.link} onClick={logout} to={'/'}>
                                 <p className={css.header_text}>Выход</p>
                             </NavLink>
                             :
@@ -138,7 +147,7 @@ export default function Header() {
                                 }
                                 {
                                     AuthService.isUserLocallyAuthenticated() ?
-                                        <NavLink className={css.popUp__link} onClick={AuthService.logout}>
+                                        <NavLink className={css.popUp__link} onClick={logout}>
                                             <p>Выход</p>
                                         </NavLink>
                                         :
