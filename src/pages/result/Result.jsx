@@ -169,25 +169,24 @@ export default function Result() {
                 </div>
                 :
                 <div className={css.content}>
-                    {/*<div className={`${css.contentSection} ${css.contentSection_top}`}>*/}
-                    {/*    <div className={`${css.controls} ${css.content__topLeftElement}`}>*/}
-                    {/*        <p className={css.controls__description}>Чтобы преподаватель смог просмотреть результат,*/}
-                    {/*            скопируйте и отправьте ему ID*/}
-                    {/*            документа:</p>*/}
-                    {/*        <div className={css.textbox}>*/}
-                    {/*            <input className={css.textbox_input} id={'textbox_input'} type={'text'}*/}
-                    {/*                   value={textId}/>*/}
-                    {/*            <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>*/}
-                    {/*        </div>*/}
-                    {/*        <button className={css.controls_download} onClick={downloadingHandler}>Скачать*/}
-                    {/*            результат*/}
-                    {/*        </button>*/}
-                    {/*        <a ref={resultDownloadRef}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div className={`${css.content__topRightElement}`}>*/}
-                    {/*        <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div className={`${css.contentSection} ${css.contentSection_top}`}>
+                        <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                            <p className={css.controls__description}>Ваша работа проверена! Вы можете просмотреть данный
+                                результат повторно в личном кабинете, а также скачать его</p>
+                            {/*<div className={css.textbox}>*/}
+                            {/*    <input className={css.textbox_input} id={'textbox_input'} type={'text'}*/}
+                            {/*           value={textId}/>*/}
+                            {/*    <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>*/}
+                            {/*</div>*/}
+                            <button className={css.controls_download} onClick={downloadingHandler}>Скачать
+                                результат
+                            </button>
+                            <a ref={resultDownloadRef}/>
+                        </div>
+                        <div className={`${css.content__topRightElement}`}>
+                            <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>
+                        </div>
+                    </div>
                     <div className={`${css.contentSection} ${css.contentSection_bottom}`}>
                         <div className={`${css.content__bottomLeftElement}`}>
                             <h1 className={css.content__header}>Список ошибок</h1>
