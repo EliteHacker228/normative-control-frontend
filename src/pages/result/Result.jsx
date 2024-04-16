@@ -212,7 +212,7 @@ export default function Result() {
                                                 <div className={`${css.controls} ${css.content__topLeftElement}`}>
                                                     <p className={css.controls__description}>Ваша работа проверена
                                                         автоматически и вручную. Она была <span
-                                                            className={css.red}>отклонена</span> нормоконтролером.
+                                                            className={css.green}>принята</span> нормоконтролером.
                                                         Вы можете просмотреть данный результат повторно в личном
                                                         кабинете, а также скачать его</p>
                                                     <button className={css.controls_download}
@@ -224,7 +224,7 @@ export default function Result() {
                                                 :
                                                 <div className={`${css.controls} ${css.content__topLeftElement}`}>
                                                     <p className={css.controls__description}>Ваша работа проверена
-                                                        автоматически и вручную. Она была <span className={css.green}>принято</span> нормоконтролером.
+                                                        автоматически и вручную. Она была <span className={css.red}>отклонена</span> нормоконтролером.
                                                         Вы можете просмотреть данный результат повторно в личном
                                                         кабинете, а также скачать его</p>
                                                     <button className={css.controls_download}
