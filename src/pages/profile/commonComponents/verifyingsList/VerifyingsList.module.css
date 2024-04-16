@@ -60,6 +60,21 @@
     letter-spacing: 0.015em;
 }
 
+.verilog__text__not_checked {
+    color: gray;
+    font-weight: bold;
+}
+
+.verilog__text__accepted {
+    color: green;
+    font-weight: bold;
+}
+
+.verilog__text__rejected {
+    color: indianred;
+    font-weight: bold;
+}
+
 .verilog__link {
     font-family: 'Inter', sans-serif;
     font-style: normal;

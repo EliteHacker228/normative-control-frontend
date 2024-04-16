@@ -9,7 +9,7 @@ export default function Verilog() {
 
     useEffect(() => {
         (async function () {
-            let authedVerifications = await StudworkService.getListOfAuthedVerifications();
+            let authedVerifications = await StudworkService.getListOfDocuments();
             console.log(authedVerifications);
             setListOfAuthedVerification(authedVerifications);
         })();

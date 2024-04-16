@@ -62,6 +62,12 @@
     margin-top: 75px;
 }
 
+.controls__horizontal {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 .controls__description {
     color: var(--default-dark);
     text-align: center;
@@ -133,6 +139,68 @@
 .controls_download:hover {
     cursor: pointer;
     background: var(--button-background-hover);
+}
+
+.controls_accept {
+    width: fit-content;
+    padding: 20px 50px;
+    margin-top: 16px;
+
+    border: none;
+    border-radius: 20px;
+    background: green;
+
+    color: var(--default-white);
+    text-align: center;
+    font-family: Ubuntu, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 33.598px */
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+}
+
+.controls_accept:hover {
+    cursor: pointer;
+    background: darkgreen;
+}
+
+.controls_decline {
+    width: fit-content;
+    padding: 20px 50px;
+    margin-top: 16px;
+
+    border: none;
+    border-radius: 20px;
+    background: palevioletred;
+
+    color: var(--default-white);
+    text-align: center;
+    font-family: Ubuntu, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 139.99%; /* 33.598px */
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+}
+
+.controls_decline:hover {
+    cursor: pointer;
+    background: darkred;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: palevioletred;
+}
+
+.gray {
+    color: gray;
 }
 
 .errorsList {

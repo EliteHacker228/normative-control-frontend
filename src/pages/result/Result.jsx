@@ -25,16 +25,22 @@ export default function Result() {
     const resultViewRef = useRef();
     const [duplicateResDom, setDuplicateResDom] = useState();
 
+    const [workStatus, setWorkStatus] = useState('NOT_CHECKED');
+
     useEffect(() => {
-        if (AuthService.isUserLocallyAuthenticated()) {
-            StudworkService
-                .getResultOfAuthedVerification(searchParams.get('resultId'))
-                .then((resultHtml) => setResultHtml(resultHtml));
-        } else {
-            StudworkService
-                .getResultOfAnonymousVerification(searchParams.get('resultId'), AuthService.getFingerprint())
-                .then((resultHtml) => setResultHtml(resultHtml));
-        }
+        (async () => {
+            let documentNode = await StudworkService.getDocumentById(searchParams.get('resultId'));
+            setWorkStatus(documentNode.documentVerdict);
+            if (AuthService.isUserLocallyAuthenticated()) {
+                StudworkService
+                    .getResultOfAuthedVerification(searchParams.get('resultId'))
+                    .then((resultHtml) => setResultHtml(resultHtml));
+            } else {
+                StudworkService
+                    .getResultOfAnonymousVerification(searchParams.get('resultId'), AuthService.getFingerprint())
+                    .then((resultHtml) => setResultHtml(resultHtml));
+            }
+        })();
     }, []);
 
     useEffect(() => {
@@ -154,6 +160,20 @@ export default function Result() {
         window.URL.revokeObjectURL(objectUrl);
     };
 
+    const acceptHandler = () => {
+        (async () => {
+            await StudworkService.acceptWorkById(searchParams.get('resultId'));
+            setWorkStatus("ACCEPTED");
+        })();
+    };
+
+    const declineHandler = () => {
+        (async () => {
+            await StudworkService.declineWorkById(searchParams.get('resultId'));
+            setWorkStatus("REJECTED");
+        })();
+    };
+
     return (
         <div>
             <Header/>
@@ -170,18 +190,101 @@ export default function Result() {
                 :
                 <div className={css.content}>
                     <div className={`${css.contentSection} ${css.contentSection_top}`}>
-                        <div className={`${css.controls} ${css.content__topLeftElement}`}>
-                            <p className={css.controls__description}>Ваша работа проверена! Вы можете просмотреть данный
-                                результат повторно в личном кабинете, а также скачать его</p>
-                            {/*<div className={css.textbox}>*/}
-                            {/*    <input className={css.textbox_input} id={'textbox_input'} type={'text'}*/}
-                            {/*           value={textId}/>*/}
-                            {/*    <img className={css.textbox_copy} src={result_copy_ico} onClick={onClickCopy}/>*/}
-                            {/*</div>*/}
-                            <button className={css.controls_download} onClick={downloadingHandler}>Скачать
-                                результат
-                            </button>
-                            <a ref={resultDownloadRef}/>
+                        <div>
+
+                            {AuthService.getUserRole() === "STUDENT" ?
+                                <div>
+                                    {
+                                        workStatus === "NOT_CHECKED" ?
+                                            <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                <p className={css.controls__description}>Ваша работа проверена
+                                                    автоматически! На данный момент она <span className={css.gray}>не проверена</span> нормоконтролером.
+                                                    Вы можете просмотреть данный результат повторно в личном кабинете, а
+                                                    также скачать его</p>
+                                                <button className={css.controls_download}
+                                                        onClick={downloadingHandler}>Скачать
+                                                    результат
+                                                </button>
+                                                <a ref={resultDownloadRef}/>
+                                            </div>
+                                            :
+                                            workStatus === "ACCEPTED" ?
+                                                <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                    <p className={css.controls__description}>Ваша работа проверена
+                                                        автоматически и вручную. Она была <span
+                                                            className={css.red}>отклонена</span> нормоконтролером.
+                                                        Вы можете просмотреть данный результат повторно в личном
+                                                        кабинете, а также скачать его</p>
+                                                    <button className={css.controls_download}
+                                                            onClick={downloadingHandler}>Скачать
+                                                        результат
+                                                    </button>
+                                                    <a ref={resultDownloadRef}/>
+                                                </div>
+                                                :
+                                                <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                    <p className={css.controls__description}>Ваша работа проверена
+                                                        автоматически и вручную. Она была <span className={css.green}>принято</span> нормоконтролером.
+                                                        Вы можете просмотреть данный результат повторно в личном
+                                                        кабинете, а также скачать его</p>
+                                                    <button className={css.controls_download}
+                                                            onClick={downloadingHandler}>Скачать
+                                                        результат
+                                                    </button>
+                                                    <a ref={resultDownloadRef}/>
+                                                </div>
+                                    }
+                                </div>
+                                :
+                                <div>
+                                    {
+                                        workStatus === "NOT_CHECKED" ?
+                                            <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                <p className={css.controls__description}>Данная работа проверена
+                                                    автоматически. Вы
+                                                    можете принять
+                                                    или отклонить её, а также скачать результат проверки.</p>
+                                                <button className={css.controls_download}
+                                                        onClick={downloadingHandler}>Скачать
+                                                    результат
+                                                </button>
+                                                <a ref={resultDownloadRef}/>
+                                                <div className={css.controls__horizontal}>
+                                                    <button className={css.controls_accept}
+                                                            onClick={acceptHandler}>Принять
+                                                    </button>
+                                                    <button className={css.controls_decline}
+                                                            onClick={declineHandler}>Отклонить
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            :
+                                            workStatus === "ACCEPTED" ?
+                                                <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                    <p className={css.controls__description}>Данная работа <span
+                                                        className={css.green}>принята</span>. Вы
+                                                        можете скачать результат проверки.</p>
+                                                    <button className={css.controls_download}
+                                                            onClick={downloadingHandler}>Скачать
+                                                        результат
+                                                    </button>
+                                                    <a ref={resultDownloadRef}/>
+                                                </div>
+                                                :
+                                                <div className={`${css.controls} ${css.content__topLeftElement}`}>
+                                                    <p className={css.controls__description}>Данная работа <span
+                                                        className={css.red}>отклонена</span>. Вы
+                                                        можете скачать результат проверки.</p>
+                                                    <button className={css.controls_download}
+                                                            onClick={downloadingHandler}>Скачать
+                                                        результат
+                                                    </button>
+                                                    <a ref={resultDownloadRef}/>
+                                                </div>
+                                    }
+                                </div>
+                            }
+
                         </div>
                         <div className={`${css.content__topRightElement}`}>
                             <img src={panda_with_laptop_img} alt={'Panda with laptop'}/>

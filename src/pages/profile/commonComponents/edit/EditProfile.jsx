@@ -212,33 +212,35 @@ export default function EditProfile() {
                     {isPersonalDataNotFull() && <p className={css.auth_error}>Имя или Фамилия не могут быть пустыми</p>}
                 </div>
 
-                <div className={css.content__section}>
-                    <p className={css.content__text}>Учебные данные</p>
+                {AuthService.getUserRole() === "STUDENT" &&
+                    <div className={css.content__section}>
+                        <p className={css.content__text}>Учебные данные</p>
 
-                    <select className={css.authForm__select}
-                            name="academicGroupdId"
-                            value={academicGroupdId}
-                            onChange={(e) => setAcademicGroupId(e.target.value)}>
-                        <option value="">-</option>
-                        {
-                            academicGroups.map((academicGroup, index) =>
-                                <option value={academicGroup.id} key={index}>
-                                    {academicGroup.name}
-                                </option>)
-                        }
-                    </select>
+                        <select className={css.authForm__select}
+                                name="academicGroupdId"
+                                value={academicGroupdId}
+                                onChange={(e) => setAcademicGroupId(e.target.value)}>
+                            <option value="">-</option>
+                            {
+                                academicGroups.map((academicGroup, index) =>
+                                    <option value={academicGroup.id} key={index}>
+                                        {academicGroup.name}
+                                    </option>)
+                            }
+                        </select>
 
-                    <select className={css.authForm__select} name="normocontrollerId" value={normocontrollerId}
-                            onChange={(e) => setNormocontrollerId(e.target.value)}>
-                        <option value="">-</option>
-                        {
-                            normocontrollers.map((normocontroller, index) =>
-                                <option value={normocontroller.id} key={index}>
-                                    {`${normocontroller.lastName} ${normocontroller.firstName[0]}. ${normocontroller.lastName[0]}.`}
-                                </option>)
-                        }
-                    </select>
-                </div>
+                        <select className={css.authForm__select} name="normocontrollerId" value={normocontrollerId}
+                                onChange={(e) => setNormocontrollerId(e.target.value)}>
+                            <option value="">-</option>
+                            {
+                                normocontrollers.map((normocontroller, index) =>
+                                    <option value={normocontroller.id} key={index}>
+                                        {`${normocontroller.lastName} ${normocontroller.firstName[0]}. ${normocontroller.lastName[0]}.`}
+                                    </option>)
+                            }
+                        </select>
+                    </div>
+                }
 
                 <button type={'submit'}
                         disabled={isUpdatePending || isEmailWrong || isPasswordsMismatch || isInputEmpty() || isPersonalDataNotFull()}
