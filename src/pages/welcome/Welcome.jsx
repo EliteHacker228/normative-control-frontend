@@ -34,12 +34,12 @@ export default function Welcome() {
     };
 
     let handleFileUploading = (file) => {
-        const _20MB = 20_971_520;
+        const _200MB = 209_715_200;
 
         let fileSize = file.size;
         let fileExtension = file.name.split('.').at(-1);
 
-        if (fileSize > _20MB) {
+        if (fileSize > _200MB) {
             setFileError(fileErrors.fileIsTooBig);
             window.scrollTo(0, document.body.scrollHeight);
             return;
@@ -86,10 +86,9 @@ export default function Welcome() {
             <Header externalOnAuthStatusChanged={externalOnAuthStatusChanged}/>
             <div className={css.content}>
                 <div className={css.content__main}>
-                    <h1 className={css.content__header}>Проверка вашей выпускной квалификационной работы
+                    <h1 className={css.content__header}>Проверка выпускных квалификационных работ
                         на наличие ошибок оформления документа</h1>
-                    <p className={css.content__text}>Сервис поддерживает файлы формата <b>docx</b> объемом
-                        до <b>20МБ.</b></p>
+                    <p className={css.content__text}>Сервис поддерживает файлы формата <b>docx</b></p>
                     {!isUserLocallyAuthed &&
                         <div>
                             <p className={css.content__text}>Для использования сервиса <b>зарегистрируйтесь</b> или <b>войдите</b> в учетную запись</p>
@@ -97,7 +96,7 @@ export default function Welcome() {
                             <p className={css.content__text}>Это бесплатно</p>
                         </div>
                     }
-                    {isUserLocallyAuthed &&
+                    {(isUserLocallyAuthed && AuthService.getUserRole() === "STUDENT") &&
                         <div>
                             <div className={css.content__upload}
                                  onDragEnter={onDragEnter}
@@ -128,11 +127,16 @@ export default function Welcome() {
                             {fileError === fileErrors.fileIsTooBig &&
                                 <p className={`${css.content__hint} ${css.content__hint__error}`}>Слишком большой файл.
                                     Пожалуйста,
-                                    загрузите файл размером <span className={css.bold}>до 20 МБ</span></p>
+                                    загрузите файл размером <span className={css.bold}>до 200 МБ</span></p>
                             }
                             <input type='file' id='upload' ref={fileInputRef} onChange={onFileUpload} style={
                                 {display: 'none'}
                             }/>
+                        </div>
+                    }
+                    {(isUserLocallyAuthed && AuthService.getUserRole() === "NORMOCONTROLLER") &&
+                        <div>
+                            <p className={css.content__text}>Для просмотра студенческих работ - перейдите в <b>личный кабинет</b>. Все отправленные вам работы будут отображены в нём автоматически</p>
                         </div>
                     }
                 </div>
