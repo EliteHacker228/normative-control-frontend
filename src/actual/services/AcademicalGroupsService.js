@@ -9,6 +9,8 @@ export default class AcademicalGroupsService {
         };
 
         let academicalGroupsResponse = await fetch(`${ENV.API_URL}/academical/groups`, requestOptions);
+        if(!academicalGroupsResponse.ok)
+            return [];
         let academicalGroupsResponseBody = await academicalGroupsResponse.json();
         let academicalGroupsResult = academicalGroupsResponseBody.map(academicalGroup => new AcademicalGroupDto(academicalGroup.id, academicalGroup.name));
         return academicalGroupsResult;
