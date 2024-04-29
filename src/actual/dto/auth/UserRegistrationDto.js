@@ -1,16 +1,16 @@
 export default class UserRegistrationDto {
     #email;
-    #firstname;
-    #lastname;
-    #middlename;
+    #firstName;
+    #lastName;
+    #middleName;
     #academicGroupId;
     #password;
 
-    constructor(email, firstname, lastname, middlename, academicGroupId, password) {
+    constructor(email, firstName, lastName, middleName, academicGroupId, password) {
         this.#email = email;
-        this.#firstname = firstname;
-        this.#lastname = lastname;
-        this.#middlename = middlename;
+        this.#firstName = firstName;
+        this.#lastName = lastName;
+        this.#middleName = middleName;
         this.#academicGroupId = academicGroupId;
         this.#password = password;
     }
@@ -19,16 +19,16 @@ export default class UserRegistrationDto {
         return this.#email;
     }
 
-    get firstname() {
-        return this.#firstname;
+    get firstName() {
+        return this.#firstName;
     }
 
-    get lastname() {
-        return this.#lastname;
+    get lastName() {
+        return this.#lastName;
     }
 
-    get middlename() {
-        return this.#middlename;
+    get middleName() {
+        return this.#middleName;
     }
 
     get academicGroupId() {

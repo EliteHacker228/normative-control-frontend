@@ -10,9 +10,9 @@ export default function Registration() {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [middlename, setMiddlename] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [middleName, setMiddleName] = useState('');
     const [academicGroupId, setAcademicGroupId] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepetition, setPasswordRepetition] = useState('');
@@ -22,15 +22,15 @@ export default function Registration() {
     };
 
     const onFirstnameInput = (e) => {
-        setFirstname(e.target.value);
+        setFirstName(e.target.value);
     };
 
     const onLastnameInput = (e) => {
-        setLastname(e.target.value);
+        setLastName(e.target.value);
     };
 
     const onMiddlenameInput = (e) => {
-        setMiddlename(e.target.value);
+        setMiddleName(e.target.value);
     };
 
     const onAcademicGroupIdInput = (e) => {
@@ -52,7 +52,7 @@ export default function Registration() {
         e.preventDefault()
         try {
             let userRegistrationDto = new UserRegistrationDto(
-                email, firstname, lastname, middlename, academicGroupId, password
+                email, firstName, lastName, middleName, academicGroupId, password
             );
             await AuthService.registerUserByUserRegistrationDto(userRegistrationDto);
         } catch (error) {
@@ -86,9 +86,9 @@ export default function Registration() {
             }>
                 <input type='email' placeholder='E-mail' value={email} onInput={onEmailInput} readOnly
                        onFocus={(e) => e.target.removeAttribute('readonly')}/>
-                <input type='text' placeholder='Имя' value={firstname} onInput={onFirstnameInput}/>
-                <input type='text' placeholder='Фамилия' value={lastname} onInput={onLastnameInput}/>
-                <input type='text' placeholder='Отчество (при наличии)' value={middlename} onInput={onMiddlenameInput}/>
+                <input type='text' placeholder='Имя' value={firstName} onInput={onFirstnameInput}/>
+                <input type='text' placeholder='Фамилия' value={lastName} onInput={onLastnameInput}/>
+                <input type='text' placeholder='Отчество (при наличии)' value={middleName} onInput={onMiddlenameInput}/>
                 <select placeholder='Академическая группа' value={academicGroupId} onChange={onAcademicGroupIdInput}>
                     {
                         academicalGroups

@@ -2,6 +2,7 @@ import AuthService from "../../../services/AuthService.js";
 import Header from "../../../components/header/Header.jsx";
 
 export default function Welcome() {
+
     return (
         <div>
             <Header/>
@@ -11,7 +12,7 @@ export default function Welcome() {
                     ?
                     <div>
                         <div>Вы можете загрузить файл на проверку</div>
-                        <button>Загрузка</button>
+                        <input type='file'/>
                     </div>
                     :
                     <div>
