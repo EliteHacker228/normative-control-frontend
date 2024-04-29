@@ -1,16 +1,28 @@
 import AuthService from "../../../services/AuthService.js";
 import {useEffect, useState} from "react";
-import UserAuthenticationDto from "../../../dto/auth/UserAuthenticationDto.js";
 import Header from "../../../components/header/Header.jsx";
+import AccountsService from "../../../services/AccountsService.js";
+import User from "../../../domain/users/User.js";
 
 export default function Profile() {
-    const [userData, setUserData] = useState(AuthService.getLocalUserData());
+    const [user, setUser] = useState(new User());
+
+    useEffect(() => {
+        (async () => {
+            let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
+            setUser(receivedUser);
+        })();
+    }, []);
 
     return (
         <div>
             <Header/>
-            <p>Ваш ID: {userData.id}</p>
-            <p>Ваша роль: {userData.role}</p>
+            <p>Ваш ID: {user.id}</p>
+            <p>Ваша роль: {user.role}</p>
+            <p>Ваш email: {user.email}</p>
+            <p>Ваша фамилия: {user.lastName}</p>
+            <p>Ваше имя: {user.firstName}</p>
+            <p>Ваше отчество: {user.middleName}</p>
         </div>
     );
 }
