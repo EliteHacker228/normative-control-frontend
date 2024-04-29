@@ -3,8 +3,6 @@ import * as jose from "jose";
 import UserAuthenticationDto from "../dto/auth/UserAuthenticationDto.js";
 
 export default class AuthService {
-    static _userIdLocator = "id";
-    static _userRoleLocator = "role";
     static _accessTokenLocator = "accessToken";
     static _refreshTokenLocator = "refreshToken";
 
@@ -59,45 +57,40 @@ export default class AuthService {
     static _locallyAuthenticateUserByTokensPair(tokensPair){
         let accessToken = tokensPair.accessToken;
         let refreshToken = tokensPair.refreshToken;
-        let jwtFields = jose.decodeJwt(accessToken);
-        let userAuthenticationDto = new UserAuthenticationDto(
-            jwtFields.id,
-            jwtFields.role,
-            accessToken,
-            refreshToken
-        );
-        this._locallyAuthenticateUser(userAuthenticationDto);
+        this._locallyAuthenticateUser(accessToken, refreshToken);
     }
 
 
-    static _locallyAuthenticateUser(userAuthenticationDto){
-        localStorage.setItem(this._userIdLocator, userAuthenticationDto.id);
-        localStorage.setItem(this._userRoleLocator, userAuthenticationDto.role);
-        localStorage.setItem(this._accessTokenLocator, userAuthenticationDto.accessToken);
-        localStorage.setItem(this._refreshTokenLocator, userAuthenticationDto.refreshToken);
+    static _locallyAuthenticateUser(accessToken, refreshToken){
+        localStorage.setItem(this._accessTokenLocator, accessToken);
+        localStorage.setItem(this._refreshTokenLocator, refreshToken);
     }
 
     static logoutUser(){
-        localStorage.removeItem(this._userIdLocator);
-        localStorage.removeItem(this._userRoleLocator);
         localStorage.removeItem(this._accessTokenLocator);
         localStorage.removeItem(this._refreshTokenLocator);
     }
 
     static isUserLocallyAuthenticated() {
-        let isUserIdPresents = localStorage.getItem(this._userIdLocator);
-        let isUserRolePresents = localStorage.getItem(this._userRoleLocator);
         let isAccessTokenPresents = localStorage.getItem(this._accessTokenLocator);
         let isRefreshTokenPresents = localStorage.getItem(this._refreshTokenLocator);
-        return isUserIdPresents && isUserRolePresents && isAccessTokenPresents && isRefreshTokenPresents;
+        return isAccessTokenPresents && isRefreshTokenPresents;
     }
 
-    static getUserData() {
+    static getLocalUserData() {
+
+        let accessToken = localStorage.getItem(this._accessTokenLocator);
+        let refreshToken = localStorage.getItem(this._refreshTokenLocator);
+
+        let jwtFields = jose.decodeJwt(accessToken);
+        let userId = jwtFields.id;
+        let userRole = jwtFields.role;
+
         return new UserAuthenticationDto(
-            localStorage.getItem(this._userIdLocator),
-            localStorage.getItem(this._userRoleLocator),
-            localStorage.getItem(this._accessTokenLocator),
-            localStorage.getItem(this._refreshTokenLocator)
+            userId,
+            userRole,
+            accessToken,
+            refreshToken
         );
     }
 }

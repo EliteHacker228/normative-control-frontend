@@ -4,7 +4,7 @@ import UserAuthenticationDto from "../../../dto/auth/UserAuthenticationDto.js";
 import Header from "../../../components/header/Header.jsx";
 
 export default function Profile() {
-    const [userData, setUserData] = useState(AuthService.getUserData());
+    const [userData, setUserData] = useState(AuthService.getLocalUserData());
 
     return (
         <div>
