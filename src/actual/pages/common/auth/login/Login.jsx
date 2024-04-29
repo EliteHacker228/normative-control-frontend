@@ -23,6 +23,9 @@ export default function Login() {
     const onLoginSubmit = async (e) => {
         e.preventDefault()
         try {
+            setIsAuthenticationFailed(false);
+            setAuthenticationFailureReason('');
+
             await AuthService.authenticateUserByEmailAndPassword(email, password);
         } catch (error) {
             setIsAuthenticationFailed(true);

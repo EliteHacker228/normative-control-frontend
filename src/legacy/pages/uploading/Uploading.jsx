@@ -93,7 +93,7 @@ export default function Uploading() {
                         <div className={css.uploadingProgress}>
                             <div className={css.uploadingProgress__finishBanner}>
                                 <img className={css.uploadingProgress__uploadingCompleteImg} src={uploadingComplete}
-                                     alt={'Uploading complete'}/>
+                                     alt={'Progress complete'}/>
                                 <p className={css.uploadingProgress__text}>Проверка окончена!</p>
                             </div>
                             <button

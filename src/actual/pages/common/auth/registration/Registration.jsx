@@ -51,6 +51,9 @@ export default function Registration() {
     const onRegistrationSubmit = async (e) => {
         e.preventDefault()
         try {
+            setIsRegistrationFailed(false);
+            setRegistrationFailureReason('');
+
             let userRegistrationDto = new UserRegistrationDto(
                 email, firstName, lastName, middleName, academicGroupId, password
             );
