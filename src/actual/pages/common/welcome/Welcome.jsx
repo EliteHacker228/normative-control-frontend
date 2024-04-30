@@ -1,5 +1,5 @@
 import AuthService from "../../../services/AuthService.js";
-import Header from "../../../components/header/Header.jsx";
+import Header from "../../../commonComponents/header/Header.jsx";
 import DocumentsService from "../../../services/DocumentsService.js";
 import {useNavigate} from "react-router-dom";
 import DocumentUploadingDto from "../../../dto/documents/DocumentUploadingDto.js";

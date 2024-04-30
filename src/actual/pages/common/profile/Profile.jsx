@@ -1,6 +1,6 @@
 import AuthService from "../../../services/AuthService.js";
 import {useEffect, useState} from "react";
-import Header from "../../../components/header/Header.jsx";
+import Header from "../../../commonComponents/header/Header.jsx";
 import AccountsService from "../../../services/AccountsService.js";
 import User from "../../../domain/users/User.js";
 

@@ -8,8 +8,7 @@ export default class AccountsNetworker {
 
         const requestOptions = {
             method: "GET",
-            headers: headers,
-            redirect: "follow"
+            headers: headers
         };
 
         let accountDataResponse = await fetch(`${ENV.API_URL}/accounts/${accountId}`, requestOptions);

@@ -1,4 +1,4 @@
-import Header from "../../../../components/header/Header.jsx";
+import Header from "../../../../commonComponents/header/Header.jsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
@@ -93,6 +93,7 @@ export default function Registration() {
                 <input type='text' placeholder='Фамилия' value={lastName} onInput={onLastnameInput}/>
                 <input type='text' placeholder='Отчество (при наличии)' value={middleName} onInput={onMiddlenameInput}/>
                 <select placeholder='Академическая группа' value={academicGroupId} onChange={onAcademicGroupIdInput}>
+                    <option value='' disabled>-</option>
                     {
                         academicalGroups
                             .map((academicalGroup, index) =>

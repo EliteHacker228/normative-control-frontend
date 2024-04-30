@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AuthService from "../../../../services/AuthService.js";
-import Header from "../../../../components/header/Header.jsx";
+import Header from "../../../../commonComponents/header/Header.jsx";
 
 export default function Login() {
     const navigate = useNavigate();
