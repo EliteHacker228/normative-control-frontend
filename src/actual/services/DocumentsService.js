@@ -4,6 +4,7 @@ import FileIsTooBigError from "../errors/FileIsTooBigError.js";
 import WrongFileExtensionError from "../errors/WrongFileExtensionError.js";
 import Verification from "../domain/documents/Verification.js";
 import UnknownVerificationResultStatus from "../errors/UnknownVerificationResultStatus.js";
+import DocumentTypes from "../domain/documents/DocumentTypes.js";
 
 export default class DocumentsService {
     static async sendDocumentToVerification(documentUploadingDto) {
@@ -29,5 +30,18 @@ export default class DocumentsService {
             throw new UnknownVerificationResultStatus(`Unknown verification result status ${documentVerificationResult.status}`);
         }
         return documentVerificationResult.status;
+    }
+
+    static async getDocumentHtmlWithMistakesList(documentId) {
+        let getDocumentResult = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.HTML);
+        let documentResultHtml = await getDocumentResult.text();
+        let mistakes = eval(documentResultHtml.slice(documentResultHtml.indexOf('<script>') + 8, documentResultHtml.indexOf('</script>')) + ';mistakes();')
+
+        console.log(mistakes);
+
+        return {
+            "documentHtml": documentResultHtml,
+            "documentMistakes": mistakes
+        };
     }
 }

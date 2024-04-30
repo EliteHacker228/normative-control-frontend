@@ -7,6 +7,7 @@ import {useSearchParams} from "react-router-dom";
 import Verification from "../../../domain/documents/Verification.js";
 import AccessForbiddenError from "../../../errors/AccessForbiddenError.js";
 import InternalServerError from "../../../errors/InternalServerError.js";
+import NotFoundError from "../../../errors/NotFoundError.js";
 
 // TODO: Сделать редирект на страницу с ошибкой при попытке получить доступ к чужому ресурсу
 // TODO: Сделать try/catch на ошибке при получении данных в сервисах через нетворкеры
@@ -27,6 +28,9 @@ export default function Progress() {
                 case AccessForbiddenError:
                     navigate('/errors/403');
                     break;
+                case NotFoundError:
+                    navigate('/errors/404');
+                    break;
                 case InternalServerError:
                     navigate('/errors/500');
                     break;
@@ -37,12 +41,10 @@ export default function Progress() {
     useEffect(() => {
         let intervalId;
         checkDocumentVerificationStatus();
-
         (async () => {
-
                 intervalId = setInterval(async () => {
                     checkDocumentVerificationStatus();
-                }, 5000);
+                }, 1000);
             }
         )();
 
@@ -51,11 +53,20 @@ export default function Progress() {
         };
     }, []);
 
+    const onGoToResultClick = () => {
+        navigate(`/result?documentId=${documentId}`);
+    };
+
     return (
         <div>
             <Header/>
             {documentVerificationResultStatus === Verification.pending && <ProgressBar/>}
-            {documentVerificationResultStatus === Verification.ok && <p>Ваша работа проверена</p>}
+            {documentVerificationResultStatus === Verification.ok &&
+                <div>
+                    <p>Ваша работа проверена</p>
+                    <button onClick={onGoToResultClick}>Просмотреть результат</button>
+                </div>
+            }
             {documentVerificationResultStatus === Verification.error &&
                 <p>При првоерке вашей работы произошла ошибка</p>}
         </div>

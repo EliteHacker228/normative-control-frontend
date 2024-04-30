@@ -4,7 +4,7 @@ import Header from "../../../commonComponents/header/Header.jsx";
 import AccountsService from "../../../services/AccountsService.js";
 import User from "../../../domain/users/User.js";
 
-export default function Profile() {
+export default function StudentProfilePersonal() {
     const [user, setUser] = useState(new User());
 
     useEffect(() => {

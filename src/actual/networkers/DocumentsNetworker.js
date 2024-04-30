@@ -2,6 +2,7 @@ import ENV from "../../config/ENV.js";
 import AuthService from "../services/AuthService.js";
 import AccessForbiddenError from "../errors/AccessForbiddenError.js";
 import InternalServerError from "../errors/InternalServerError.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 export default class DocumentsNetworker {
     static async sendDocumentToVerification({documentName, document}) {
@@ -33,17 +34,37 @@ export default class DocumentsNetworker {
             headers: headers,
         };
 
-        let verificationStatusResponse = await fetch(`${ENV.API_URL}/documents/${documentId}/status`, requestOptions);
-        if (!verificationStatusResponse.ok) {
-            switch (verificationStatusResponse.status){
+        let getVerificationStatusResponse = await fetch(`${ENV.API_URL}/documents/${documentId}/status`, requestOptions);
+        await this._handleResponseStatus(getVerificationStatusResponse);
+        return await getVerificationStatusResponse.json();
+    }
+
+    static async getDocumentByIdOfType(documentId, documentType) {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let getDocumentResponse = await fetch(`${ENV.API_URL}/documents/${documentId}?type=${documentType}`, requestOptions);
+        await this._handleResponseStatus(getDocumentResponse);
+        return getDocumentResponse;
+    }
+
+    static async _handleResponseStatus(getDocumentResponse) {
+        if (!getDocumentResponse.ok) {
+            switch (getDocumentResponse.status) {
                 case 403:
-                    throw new AccessForbiddenError(`You don't have access to the document ${documentId}`);
+                    throw new AccessForbiddenError(`You don't have access to the document`);
+                case 404:
+                    throw new NotFoundError(`Document not found`);
                 case 500:
                     throw new InternalServerError(`Something went wrong. Maybe, server made an error or you provided wrong data`);
                 default:
-                    throw new Error(`Receiving of document's verification status has failed with status: ${verificationStatusResponse.status} and message: ${await verificationStatusResponse.text()}`);
+                    throw new Error(`Getting document has failed with status ${getDocumentResponse.status} and message ${await getDocumentResponse.text()}`)
             }
         }
-        return await verificationStatusResponse.json();
     }
 }

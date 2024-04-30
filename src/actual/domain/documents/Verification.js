@@ -1,3 +1,4 @@
+// TODO: Переписать полей в верхний регистр
 export default class Verification {
     static _ok = 'OK';
     static _error = 'ERROR';

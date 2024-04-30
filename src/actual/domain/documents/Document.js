@@ -1,6 +1,6 @@
 import Student from "../users/Student.js";
 
-export default class    Document {
+export default class Document {
     #id;
     #student;
     #fileName;

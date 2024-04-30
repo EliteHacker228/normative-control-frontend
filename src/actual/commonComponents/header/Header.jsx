@@ -1,27 +1,24 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import AuthService from "../../services/AuthService.js";
+import StudentHeaderElements from "./components/authed/StudentHeaderElements.jsx";
+import NormocontrollerHeaderElements from "./components/authed/NormocontrollerHeaderElements.jsx";
+import AdminHeaderElements from "./components/authed/AdminHeaderElements.jsx";
+import UnauthedUserHeaderElements from "./components/unauthed/UnauthedUserHeaderElements.jsx";
+import Roles from "../../domain/users/Roles.js";
 
 export default function Header() {
-    const navigate = useNavigate();
-
-    const onLogout = () => {
-        try {
-            AuthService.logoutUser();
-        } catch (error) {
-            console.log(error);
-        }
-        navigate('/');
-    }
-
     return (
         <div>
             <NavLink to='/'>Главная</NavLink>
 
-            {!AuthService.isUserLocallyAuthenticated() && <NavLink to='/login'>Вход</NavLink>}
-            {!AuthService.isUserLocallyAuthenticated() && <NavLink to='/registration'>Регистрация</NavLink>}
+            {!AuthService.isUserLocallyAuthenticated() && <UnauthedUserHeaderElements/>}
 
-            {AuthService.isUserLocallyAuthenticated() && <NavLink to='/profile'>Профиль</NavLink>}
-            {AuthService.isUserLocallyAuthenticated() && <span onClick={onLogout}>Выход</span>}
+            {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.STUDENT &&
+                <StudentHeaderElements/>}
+            {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.NORMOCONTROLLER &&
+                <NormocontrollerHeaderElements/>}
+            {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.ADMIN &&
+                <AdminHeaderElements/>}
         </div>
     );
 }
