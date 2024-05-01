@@ -6,19 +6,22 @@
     box-sizing: border-box;
 }
 
+:root {
+    --info-dark-blue: #1E4391;
+    --acceptance-green: #56DC9D;
+    --rejection-red: #EA3029;
+    --bright-purple: #E50079;
+    --default-white: #FFFFFF;
+    --info-blue: #2029FF;
+    --info-soft-violet: #7574FF;
+    --dark-lazuli-shadow: #0380B1;
+}
+
 body {
     margin: 0;
-    --font-color: #1E4391;
-    --default-red: #E50079;
-    --default-red-hover: #E50055;
-    --default-white: #FFF;
-    --default-dark: #292929;
-    --button-background: #6B6AEC;
-    --button-background-hover: #6B6FFF;
-    --button-white: #F2F2F2;
-    --default-gray: #E2E2E2;
 }
 
 p, h1 {
     margin: 0;
 }
+
