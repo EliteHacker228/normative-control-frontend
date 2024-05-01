@@ -1,18 +1,15 @@
-import AuthService from "../../../services/AuthService.js";
 import {useEffect, useState} from "react";
-import Header from "../../../commonComponents/header/Header.jsx";
-import AccountsService from "../../../services/AccountsService.js";
-import AcademicalGroupsService from "../../../services/AcademicalGroupsService.js";
-import PatchAccountDto from "../../../dto/accounts/PatchAccountDto.js";
+import AccountsService from "../../services/AccountsService.js";
+import AcademicalGroupsService from "../../services/AcademicalGroupsService.js";
+import PatchAccountDto from "../../dto/accounts/PatchAccountDto.js";
+import AuthService from "../../services/AuthService.js";
+import Header from "../../commonComponents/header/Header.jsx";
 
-export default function StudentProfilePersonal() {
-    const [academicalGroups, setAcademicalGroups] = useState([]);
-
+export default function NormocontrollerProfilePersonal() {
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [middleName, setMiddleName] = useState('');
-    const [academicGroupId, setAcademicGroupId] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
@@ -32,10 +29,6 @@ export default function StudentProfilePersonal() {
         setMiddleName(e.target.value);
     };
 
-    const onAcademicGroupIdInput = (e) => {
-        setAcademicGroupId(e.target.value);
-    };
-
     const onOldPasswordInput = (e) => {
         setOldPassword(e.target.value);
     };
@@ -47,13 +40,10 @@ export default function StudentProfilePersonal() {
     useEffect(() => {
         (async () => {
             let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
-            setLastName(receivedUser.firstName);
+            setLastName(receivedUser.lastName);
             setFirstName(receivedUser.firstName);
             setMiddleName(receivedUser.middleName);
             setEmail(receivedUser.email);
-            setAcademicGroupId(receivedUser.academicGroup.id);
-            let receivedAcademicalGroups = await AcademicalGroupsService.getAcademicalGroups();
-            setAcademicalGroups(receivedAcademicalGroups);
         })();
     }, []);
 
@@ -67,7 +57,7 @@ export default function StudentProfilePersonal() {
 
     const onPersonalInfoUpdate = async (e) => {
         e.preventDefault();
-        let patchAccountDto = new PatchAccountDto(email, firstName, middleName, lastName, academicGroupId);
+        let patchAccountDto = new PatchAccountDto(email, firstName, middleName, lastName);
         setPersonalDataUpdationComplete(false);
         try {
             setPersonalDataUpdationFailed(false);
@@ -107,16 +97,6 @@ export default function StudentProfilePersonal() {
                 <input type={'text'} placeholder={'Имя'} value={firstName} onInput={onFirstnameInput}/>
                 <input type={'text'} placeholder={'Отчество'} value={middleName} onInput={onMiddlenameInput}/>
                 <input type={'email'} placeholder={'E-mail'} value={email} onInput={onEmailInput}/>
-                <select placeholder='Академическая группа' onChange={onAcademicGroupIdInput}>
-                    <option value='' disabled>-</option>
-                    {
-                        academicalGroups
-                            .map((academicalGroup, index) =>
-                                <option key={index} value={academicalGroup.id}
-                                        selected={academicGroupId === academicalGroup.id}>{academicalGroup.name}</option>
-                            )
-                    }
-                </select>
                 <input type='submit' value={'Обновить'}/>
                 {personalDataUpdationFailed && <p>{personalDataUpdationFailureReason}</p>}
                 {personalDataUpdationComplete && <p>Ваши данные успешно обновлены!</p>}

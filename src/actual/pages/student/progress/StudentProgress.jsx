@@ -11,7 +11,7 @@ import NotFoundError from "../../../errors/NotFoundError.js";
 
 // TODO: Сделать редирект на страницу с ошибкой при попытке получить доступ к чужому ресурсу
 // TODO: Сделать try/catch на ошибке при получении данных в сервисах через нетворкеры
-export default function Progress() {
+export default function StudentProgress() {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();

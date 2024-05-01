@@ -6,7 +6,7 @@ import NotFoundError from "../../../errors/NotFoundError.js";
 import InternalServerError from "../../../errors/InternalServerError.js";
 import Header from "../../../commonComponents/header/Header.jsx";
 
-export default function Result() {
+export default function StudentResult() {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();

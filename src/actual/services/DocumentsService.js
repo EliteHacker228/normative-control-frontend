@@ -59,7 +59,7 @@ export default class DocumentsService {
         };
     }
 
-    static async getDocument(documentId) {
+    static async getDocumentNode(documentId) {
         let getDocumentResult = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.NODE);
         return await getDocumentResult.json();
     }
