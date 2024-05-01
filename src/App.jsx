@@ -17,6 +17,7 @@ import Error403 from "./actual/pages/common/errors/Error403.jsx";
 import Error404 from "./actual/pages/common/errors/Error404.jsx";
 import Error500 from "./actual/pages/common/errors/Error500.jsx";
 import Result from "./actual/pages/student/result/Result.jsx";
+import StudentProfileDocuments from "./actual/pages/common/profile/StudentProfileDocuments.jsx";
 
 function App() {
     useEffect(() => {

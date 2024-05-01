@@ -5,6 +5,7 @@ import WrongFileExtensionError from "../errors/WrongFileExtensionError.js";
 import Verification from "../domain/documents/Verification.js";
 import UnknownVerificationResultStatus from "../errors/UnknownVerificationResultStatus.js";
 import DocumentTypes from "../domain/documents/DocumentTypes.js";
+import Document from "../domain/documents/Document.js";
 
 export default class DocumentsService {
     static async sendDocumentToVerification(documentUploadingDto) {
@@ -43,5 +44,28 @@ export default class DocumentsService {
             "documentHtml": documentResultHtml,
             "documentMistakes": mistakes
         };
+    }
+
+    static async getDocumentDocx(documentId) {
+        let getDocumentResultNode = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.NODE);
+        let getDocumentResultDocx = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.DOCX);
+
+        let getDocumentResultNodeBody = await getDocumentResultNode.json();
+        let getDocumentResultDocxBody = await getDocumentResultDocx.blob();
+
+        return {
+            "documentName": getDocumentResultNodeBody.fileName,
+            "documentBlob": getDocumentResultDocxBody
+        };
+    }
+
+    static async getDocument(documentId) {
+        let getDocumentResult = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.NODE);
+        return await getDocumentResult.json();
+    }
+
+    static async getDocuments() {
+        let getDocumentsResult = await DocumentsNetworker.getDocuments();
+        return getDocumentsResult.map(document => Document.fromPlainObject(document));
     }
 }

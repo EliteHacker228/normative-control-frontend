@@ -53,6 +53,20 @@ export default class DocumentsNetworker {
         return getDocumentResponse;
     }
 
+    static async getDocuments() {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let documentsResponse = await fetch(`${ENV.API_URL}/documents`, requestOptions);
+        await this._handleResponseStatus(documentsResponse);
+        return await documentsResponse.json();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {
