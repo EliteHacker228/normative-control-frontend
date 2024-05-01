@@ -5,9 +5,13 @@ import AuthService from "../../../services/AuthService.js";
 import Header from "../../../commonComponents/header/Header.jsx";
 import DocumentsService from "../../../services/DocumentsService.js";
 import {NavLink} from "react-router-dom";
+import FileUploadButton from "../../../commonComponents/buttons/FileUploadButton.jsx";
 
 export default function StudentProfileDocuments() {
     const [documents, setDocuments] = useState([]);
+
+    const [isUploadingFailed, setIsUploadigFailed] = useState(false);
+    const [uploadingFailureReason, setUploadingFailureReason] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -32,6 +36,9 @@ export default function StudentProfileDocuments() {
                         );
                     })}
                 </div>
+                <FileUploadButton setIsUploadigFailed={setIsUploadigFailed}
+                                  setUploadingFailureReason={setUploadingFailureReason}/>
+                {isUploadingFailed && <p>{uploadingFailureReason}</p>}
             </div>
         </div>
     );
