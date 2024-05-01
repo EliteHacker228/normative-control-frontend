@@ -1,12 +1,13 @@
 import css from "./Welcome.module.css";
 import Header from "../../../commonComponents/header/Header.jsx";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 import pandaHappyWithMagnifier from "./static/panda_happy_with_magnifier.svg";
 import pandaHappyOutOfBox from "./static/pand_happy_out_of_box.svg";
 
 import gostApplicableVerification from "./static/fast_and_accurate_verification.svg";
 import fastAndAccurateVerification from "./static/gost_applicable_verification.svg";
+import AuthService from "../../../services/AuthService.js";
 
 export default function Welcome() {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function Welcome() {
     return (
         <div>
             <Header/>
+            {AuthService.isUserLocallyAuthenticated() && <Navigate to={'/profile'}/>}
             <div className={css.welcome}>
                 <div className={css.aboutService}>
                     <div className={css.aboutService__info}>
