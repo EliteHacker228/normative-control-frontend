@@ -19,6 +19,10 @@ export default class AcademicGroup {
         );
     }
 
+    get id() {
+        return this.#id;
+    }
+
     get name() {
         return this.#name;
     }
