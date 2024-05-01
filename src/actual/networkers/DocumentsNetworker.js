@@ -88,6 +88,20 @@ export default class DocumentsNetworker {
         return await setDocumentVerdictResponse.json();
     }
 
+    static async getDocumentsCsv() {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let documentsCsvResponse = await fetch(`${ENV.API_URL}/documents/csv`, requestOptions);
+        this._handleResponseStatus(documentsCsvResponse);
+        return await documentsCsvResponse.text();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {

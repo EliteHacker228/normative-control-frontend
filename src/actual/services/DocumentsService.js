@@ -74,4 +74,9 @@ export default class DocumentsService {
         let setDocumentVerdictResult = await DocumentsNetworker.setDocumentVerdictById(documentId, verdict, documentComment);
         return Document.fromPlainObject(setDocumentVerdictResult);
     }
+
+    static async getDocumentsListCsv(){
+        let documentsListCsv = await DocumentsNetworker.getDocumentsCsv();
+        return documentsListCsv;
+    }
 }
