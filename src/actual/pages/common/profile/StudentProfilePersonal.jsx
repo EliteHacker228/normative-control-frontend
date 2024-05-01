@@ -57,17 +57,25 @@ export default function StudentProfilePersonal() {
         })();
     }, []);
 
+    const [personalDataUpdationComplete, setPersonalDataUpdationComplete] = useState(false);
     const [personalDataUpdationFailed, setPersonalDataUpdationFailed] = useState(false);
     const [personalDataUpdationFailureReason, setPersonalDataUpdationFailureReason] = useState('');
 
+    const [passwordUpdationComplete, setPasswordUpdationComplete] = useState(false);
     const [passwordUpdationFailed, setPasswordUpdationFailed] = useState(false);
     const [passwordUpdationFailureReason, setPasswordUpdationFailureReason] = useState('');
 
     const onPersonalInfoUpdate = async (e) => {
         e.preventDefault();
         let patchAccountDto = new PatchAccountDto(email, firstName, middleName, lastName, academicGroupId);
+        setPersonalDataUpdationComplete(false);
         try {
+            setPersonalDataUpdationFailed(false);
+            setPersonalDataUpdationFailureReason('');
+
             await AccountsService.patchStudentAccount(AuthService.getLocalUserData().id, patchAccountDto);
+
+            setPersonalDataUpdationComplete(true);
         } catch (e) {
             setPersonalDataUpdationFailed(true);
             setPersonalDataUpdationFailureReason(e.message);
@@ -76,8 +84,14 @@ export default function StudentProfilePersonal() {
 
     const onPasswordUpdate = async (e) => {
         e.preventDefault();
+        setPasswordUpdationComplete(false);
         try {
+            setPasswordUpdationFailed(false);
+            setPasswordUpdationFailureReason('');
+
             await AccountsService.patchAccountPassword(AuthService.getLocalUserData().id, newPassword);
+
+            setPasswordUpdationComplete(true);
         } catch (e) {
             setPasswordUpdationFailed(true);
             setPasswordUpdationFailureReason(e.message);
@@ -105,6 +119,7 @@ export default function StudentProfilePersonal() {
                 </select>
                 <input type='submit' value={'Обновить'}/>
                 {personalDataUpdationFailed && <p>{personalDataUpdationFailureReason}</p>}
+                {personalDataUpdationComplete && <p>Ваши данные успешно обновлены!</p>}
             </form>
             <form onSubmit={onPasswordUpdate}>
                 <p>Пароль</p>
@@ -114,6 +129,7 @@ export default function StudentProfilePersonal() {
                 <a>Не помню пароль</a>
                 <input type='submit' value={'Изменить'}/>
                 {passwordUpdationFailed && <p>{passwordUpdationFailureReason}</p>}
+                {passwordUpdationComplete && <p>Пароль успешно обновлен!</p>}
             </form>
         </div>
     );
