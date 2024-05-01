@@ -6,6 +6,7 @@ import Verification from "../domain/documents/Verification.js";
 import UnknownVerificationResultStatus from "../errors/UnknownVerificationResultStatus.js";
 import DocumentTypes from "../domain/documents/DocumentTypes.js";
 import Document from "../domain/documents/Document.js";
+import Verdicts from "../domain/documents/Verdicts.js";
 
 export default class DocumentsService {
     static async sendDocumentToVerification(documentUploadingDto) {
@@ -67,5 +68,10 @@ export default class DocumentsService {
     static async getDocuments() {
         let getDocumentsResult = await DocumentsNetworker.getDocuments();
         return getDocumentsResult.map(document => Document.fromPlainObject(document));
+    }
+
+    static async setDocumentVerdict(documentId, verdict, documentComment) {
+        let setDocumentVerdictResult = await DocumentsNetworker.setDocumentVerdictById(documentId, verdict, documentComment);
+        return Document.fromPlainObject(setDocumentVerdictResult);
     }
 }

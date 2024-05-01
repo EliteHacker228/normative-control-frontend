@@ -67,6 +67,27 @@ export default class DocumentsNetworker {
         return await documentsResponse.json();
     }
 
+    static async setDocumentVerdictById(documentId, verdict, documentComment) {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const body = JSON.stringify({
+            "verdict": verdict,
+            "comment": documentComment
+        });
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: headers,
+            body: body
+        };
+
+        let setDocumentVerdictResponse = await fetch(`${ENV.API_URL}/documents/${documentId}/verdict`, requestOptions);
+        await this._handleResponseStatus(setDocumentVerdictResponse);
+        return await setDocumentVerdictResponse.json();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {

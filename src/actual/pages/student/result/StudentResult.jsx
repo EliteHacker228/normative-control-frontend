@@ -5,6 +5,8 @@ import AccessForbiddenError from "../../../errors/AccessForbiddenError.js";
 import NotFoundError from "../../../errors/NotFoundError.js";
 import InternalServerError from "../../../errors/InternalServerError.js";
 import Header from "../../../commonComponents/header/Header.jsx";
+import Verdicts from "../../../domain/documents/Verdicts.js";
+import Student from "../../../domain/users/Student.js";
 
 export default function StudentResult() {
     const navigate = useNavigate();
@@ -15,6 +17,9 @@ export default function StudentResult() {
     const [documentHtml, setDocumentHtml] = useState('');
     const [documentMistakes, setDocumentMistakes] = useState([]);
 
+    const [documentComment, setDocumentComment] = useState('');
+    const [documentVerdict, setDocumentVerdict] = useState(Verdicts.NOT_CHECKED);
+
     const resultDownloadRef = useRef();
 
     useEffect(() => {
@@ -23,6 +28,9 @@ export default function StudentResult() {
                 let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
                 setDocumentHtml(documentHtmlWithMistakes.documentHtml);
                 setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
+                let documentNode = await DocumentsService.getDocumentNode(documentId);
+                setDocumentComment(documentNode.comment ?? '');
+                setDocumentVerdict(documentNode.documentVerdict);
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -52,6 +60,13 @@ export default function StudentResult() {
         <div>
             <Header/>
             <p>Результат проверки вашей работы</p>
+            <p>Данная работа имеет статус {documentVerdict}</p>
+            {documentVerdict !== Verdicts.NOT_CHECKED &&
+                <div>
+                    <p>Комментарий от нормоконтролера:</p>
+                    <p>{documentComment}</p>
+                </div>}
+
             <div>
                 <p>Список ошибок</p>
                 <ul>

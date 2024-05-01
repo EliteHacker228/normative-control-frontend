@@ -6,8 +6,9 @@ import AccessForbiddenError from "../../errors/AccessForbiddenError.js";
 import NotFoundError from "../../errors/NotFoundError.js";
 import InternalServerError from "../../errors/InternalServerError.js";
 import Student from "../../domain/users/Student.js";
+import Verdicts from "../../domain/documents/Verdicts.js";
 
-export default function NormocontrollerProfileDocument () {
+export default function NormocontrollerProfileDocument() {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,17 +19,15 @@ export default function NormocontrollerProfileDocument () {
     const [documentHtml, setDocumentHtml] = useState('');
     const [documentMistakes, setDocumentMistakes] = useState([]);
 
+    const [documentComment, setDocumentComment] = useState('');
+    const [documentVerdict, setDocumentVerdict] = useState(Verdicts.NOT_CHECKED);
+
     const resultDownloadRef = useRef();
 
     useEffect(() => {
         (async () => {
             try {
-                let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
-                setDocumentHtml(documentHtmlWithMistakes.documentHtml);
-                setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
-                let documentNode = await DocumentsService.getDocumentNode(documentId);
-                let student = Student.fromPlainObject(documentNode.student);
-                setStudent(student);
+                await getDocumentData();
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -45,6 +44,17 @@ export default function NormocontrollerProfileDocument () {
         })();
     }, []);
 
+    const getDocumentData = async () => {
+        let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
+        setDocumentHtml(documentHtmlWithMistakes.documentHtml);
+        setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
+        let documentNode = await DocumentsService.getDocumentNode(documentId);
+        let student = Student.fromPlainObject(documentNode.student);
+        setStudent(student);
+        setDocumentComment(documentNode.comment ?? '');
+        setDocumentVerdict(documentNode.documentVerdict);
+    };
+
     const onDownloadClick = async () => {
         let documentBlobResult = await DocumentsService.getDocumentDocx(documentId);
         let objectUrl = window.URL.createObjectURL(documentBlobResult.documentBlob);
@@ -54,17 +64,36 @@ export default function NormocontrollerProfileDocument () {
         window.URL.revokeObjectURL(objectUrl);
     }
 
+    const onDocumentCommentInput = (e) => {
+        setDocumentComment(e.target.value);
+    };
+
+    const onAcceptDocument = async () => {
+        await DocumentsService.setDocumentVerdict(documentId, Verdicts.ACCEPTED, documentComment);
+        await getDocumentData();
+    };
+
+    const onRejectDocument = async () => {
+        await DocumentsService.setDocumentVerdict(documentId, Verdicts.REJECTED, documentComment);
+        await getDocumentData();
+    };
+
     return (
         <div>
             <Header/>
             <p>Результат проверки работ студента {`${student.lastName} ${student.firstName} ${student.middleName}`}</p>
-            <button>Принять</button>
-            <button>Отклонить</button>
+            {documentVerdict === Verdicts.NOT_CHECKED && <p>Вы можете принять или отклонить данную работу</p>}
+            {documentVerdict === Verdicts.NOT_CHECKED && <button onClick={onAcceptDocument}>Принять</button>}
+            {documentVerdict === Verdicts.NOT_CHECKED && <button onClick={onRejectDocument}>Отклонить</button>}
+            {documentVerdict === Verdicts.NOT_CHECKED &&
+                <textarea placeholder='Комментарий к работе' value={documentComment} onInput={onDocumentCommentInput}/>}
 
-            <form>
-                <textarea placeholder='Комментарий к работе'/>
-                <input type='submit' value='Сохранить комментарий'/>
-            </form>
+            {documentVerdict !== Verdicts.NOT_CHECKED && <p>Данная работа имеет статус {documentVerdict}</p>}
+            {documentVerdict !== Verdicts.NOT_CHECKED &&
+                <div>
+                    <p>Комментарий от нормоконтролера:</p>
+                    <p>{documentComment}</p>
+                </div>}
 
             <div>
                 <p>Список ошибок</p>
