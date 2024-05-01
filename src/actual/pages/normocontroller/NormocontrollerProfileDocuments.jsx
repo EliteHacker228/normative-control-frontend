@@ -24,7 +24,7 @@ export default function NormocontrollerProfileDocuments() {
 
         let objectUrl = "data:text/plain;charset=CP1251," + encodeCP1251(documentsListText);
         resultDownloadRef.current.href = objectUrl;
-        resultDownloadRef.current.download = `Выгрузка нормоконтроля, ${new Date().toLocaleString(undefined, {year: 'numeric', month: '2-digit', day: '2-digit', weekday:"long", hour: '2-digit', hour12: false, minute:'2-digit', second:'2-digit'})}.csv`;
+        resultDownloadRef.current.download = `Выгрузка нормоконтроля, ${new Date().toLocaleString(undefined, {weekday:"long"})}.csv`;
         resultDownloadRef.current.click();
         window.URL.revokeObjectURL(objectUrl);
     }
