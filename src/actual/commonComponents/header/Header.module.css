@@ -1,0 +1,36 @@
+.header {
+    background-color: var(--info-dark-blue);
+    height: 92px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 1024px;
+}
+
+.header__logo {
+    width: 377.09px;
+    display: flex;
+    gap: 8px;
+}
+
+.header__elements {
+    display: flex;
+    gap: 20px;
+}
+
+.header__link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.05em;
+    color: var(--default-white);
+    text-decoration: none;
+}

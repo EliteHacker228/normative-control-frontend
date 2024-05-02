@@ -41,6 +41,7 @@ function App() {
                 <Route path='/' element={<Welcome/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/registration' element={<Registration/>}/>
+                <Route path='/faq' element={<Faq/>}/>
 
                 <Route path='/profile/student/personal' element={<StudentProfilePersonal/>}/>
                 <Route path='/profile/student/documents' element={<StudentProfileDocuments/>}/>
@@ -50,7 +51,6 @@ function App() {
                 <Route path='/profile/normocontroller/personal' element={<NormocontrollerProfilePersonal/>}/>
                 <Route path='/profile/normocontroller/documents' element={<NormocontrollerProfileDocuments/>}/>
                 <Route path='/profile/normocontroller/document' element={<NormocontrollerProfileDocument/>}/>
-                <Route path='/profile/normocontroller/faq' element={<Faq/>}/>
 
                 <Route path='/errors/403' element={<Error403/>}/>
                 <Route path='/*' element={<Navigate to='/errors/404'/>}/>
