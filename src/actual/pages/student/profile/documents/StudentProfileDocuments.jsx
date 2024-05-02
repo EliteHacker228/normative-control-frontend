@@ -78,12 +78,11 @@ export default function StudentProfileDocuments() {
                                      className={css.documentNode__description}>{document.fileName}</div>
 
                                 <div className={css.documentNode__buttons}>
-                                    <div className={css.documentNode__status}>
-                                        <img src={getDocumentVerdictIco(document)} alt={'Статус работы'}
-                                             title={getDocumentVerdictTitle(document)}/>
+                                    <div className={css.documentNode__status} title={getDocumentVerdictTitle(document)}>
+                                        <img src={getDocumentVerdictIco(document)} alt={'Статус работы'}/>
                                     </div>
-                                    <div className={css.documentNode__button} onClick={onDownloadClick}>
-                                        <img src={downloadIco} alt={'Скачать работу'} title={'Скачать работу'}/>
+                                    <div className={css.documentNode__button} onClick={onDownloadClick} title={'Скачать работу'}>
+                                        <img src={downloadIco} alt={'Скачать работу'}/>
                                     </div>
                                 </div>
                             </NavLink>
