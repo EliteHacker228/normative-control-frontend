@@ -8,6 +8,7 @@ import pandaHappyOutOfBox from "./static/pand_happy_out_of_box.svg";
 import gostApplicableVerification from "./static/fast_and_accurate_verification.svg";
 import fastAndAccurateVerification from "./static/gost_applicable_verification.svg";
 import AuthService from "../../../services/AuthService.js";
+import Footer from "../../../commonComponents/footer/Footer.jsx";
 
 export default function Welcome() {
     const navigate = useNavigate();
@@ -77,6 +78,7 @@ export default function Welcome() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

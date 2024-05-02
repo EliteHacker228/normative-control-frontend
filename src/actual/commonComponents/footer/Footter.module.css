@@ -1,0 +1,25 @@
+.footer {
+    background-color: var(--info-dark-blue);
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 1024px;
+    padding: 0 20px;
+}
+
+.footer__element {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 140%;
+    letter-spacing: 0.05em;
+    text-align: right;
+    color: var(--default-white);
+}
