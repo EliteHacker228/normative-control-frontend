@@ -138,13 +138,18 @@
     align-self: center;
 }
 
-.registrationButton:hover {
+.registrationButton:enabled:hover {
     cursor: pointer;
     filter: brightness(110%);
 }
 
-.registrationButton:active {
+.registrationButton:enabled:active {
     filter: brightness(85%);
+}
+
+.registrationButton:disabled {
+    background-color: var(--disabled-grey);
+    cursor: not-allowed;
 }
 
 .horizontalRuler {

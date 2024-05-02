@@ -15,6 +15,7 @@
     --info-blue: #2029FF;
     --info-soft-violet: #7574FF;
     --dark-lazuli-shadow: #0380B1;
+    --disabled-grey: lightgrey;
 }
 
 body {

@@ -6,6 +6,7 @@ import AcademicalGroupsService from "../../../../services/AcademicalGroupsServic
 import AuthService from "../../../../services/AuthService.js";
 import UserRegistrationDto from "../../../../dto/auth/UserRegistrationDto.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
 
 export default function Registration() {
 
@@ -64,15 +65,19 @@ export default function Registration() {
     const [isRegistrationFailed, setIsRegistrationFailed] = useState(false);
     const [registrationFailureReason, setRegistrationFailureReason] = useState('');
 
+    const getRegistrationDtoFromState = () => {
+        return new UserRegistrationDto(
+            email, firstName, lastName, middleName, academicGroupId, password
+        );
+    };
+
     const onRegistrationSubmit = async (e) => {
         e.preventDefault()
         try {
             setIsRegistrationFailed(false);
             setRegistrationFailureReason('');
 
-            let userRegistrationDto = new UserRegistrationDto(
-                email, firstName, lastName, middleName, academicGroupId, password
-            );
+            let userRegistrationDto = getRegistrationDtoFromState();
             await AuthService.registerUserByUserRegistrationDto(userRegistrationDto);
         } catch (error) {
             setIsRegistrationFailed(true);
@@ -90,6 +95,18 @@ export default function Registration() {
             setAcademicalGroups(recievedAcademicalGroups);
         })();
     }, []);
+
+    const isRegistrationFormCorrect = () => {
+        return CredentialsValidator.validateRegistrationForm({
+            email,
+            firstName,
+            lastName,
+            middleName,
+            academicGroupId,
+            password,
+            passwordRepetition
+        });
+    };
 
     return (
         <div>
@@ -125,7 +142,8 @@ export default function Registration() {
                            value={passwordRepetition}
                            onInput={onPasswordRepetitionInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
-                    <input type='submit' className={css.registrationButton} value='Регистрация'/>
+                    <input type='submit' className={css.registrationButton} value='Регистрация'
+                           disabled={!isRegistrationFormCorrect()}/>
                 </form>
                 <div className={css.registrationErrors}>
                     {isRegistrationFailed &&
