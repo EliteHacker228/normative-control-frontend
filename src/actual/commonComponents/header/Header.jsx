@@ -22,10 +22,10 @@ export default function Header() {
                     {!AuthService.isUserLocallyAuthenticated() && <UnauthedUserHeaderElements/>}
                     {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.STUDENT &&
                         <StudentHeaderElements/>}
-                    {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.NORMOCONTROLLER &&
-                        <NormocontrollerHeaderElements/>}
-                    {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.ADMIN &&
-                        <AdminHeaderElements/>}
+                    {/*{AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.NORMOCONTROLLER &&*/}
+                    {/*    <NormocontrollerHeaderElements/>}*/}
+                    {/*{AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.ADMIN &&*/}
+                    {/*    <AdminHeaderElements/>}*/}
                 </div>
             </div>
         </div>
