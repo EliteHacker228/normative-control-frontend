@@ -1,0 +1,45 @@
+.fileUploadButton {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    width: 404px;
+    height: 74px;
+
+    background-color: var(--bright-purple);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.fileUploadButton:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.fileUploadButton:active {
+    filter: brightness(85%);
+}
+
+.fileUploadButton:enabled:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.fileUploadButton:enabled:active {
+    filter: brightness(85%);
+}
+
+.fileUploadButton:disabled {
+    background-color: var(--disabled-grey);
+    cursor: not-allowed;
+}
+
+.fileInput {
+    display: none;
+}

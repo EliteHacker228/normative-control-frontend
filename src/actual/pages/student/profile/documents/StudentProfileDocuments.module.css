@@ -1,0 +1,97 @@
+.studentDocuments {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 64px;
+    margin-bottom: 28.07px;
+    height: max(calc(100vh - 92px - 84px), 1024px);
+}
+
+.studentDocuments__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.documentsList {
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+    padding: 28px 23px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 591px;
+    margin-top: 14px;
+}
+
+.documentNode {
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    text-decoration: none;
+}
+
+.documentNode__description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.documentNode__buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.documentNode__status {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.documentNode__button {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.documentNode__button:hover {
+    background-color: var(--default-light-grey);
+    border-radius: 5px;
+}
+
+.uploading {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.uploadingErrors {
+
+}
+
+.uploadingErrors__description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    /*text-align: center;*/
+    color: var(--rejection-red);
+    text-align: left;
+    margin-left: 20px;
+}

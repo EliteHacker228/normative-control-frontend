@@ -1,9 +1,12 @@
-import DocumentUploadingDto from "../../dto/documents/DocumentUploadingDto.js";
-import DocumentsService from "../../services/DocumentsService.js";
+import DocumentUploadingDto from "../../../dto/documents/DocumentUploadingDto.js";
+import DocumentsService from "../../../services/DocumentsService.js";
 import {useNavigate} from "react-router-dom";
+import css from './FileUploadButton.module.css';
+import {useRef} from "react";
 
 export default function FileUploadButton({setIsUploadigFailed, setUploadingFailureReason}) {
     const navigate = useNavigate();
+    const fileInputRef = useRef();
 
     const onFileUploading = async (e) => {
         let document = e.target.files[0];
@@ -21,5 +24,14 @@ export default function FileUploadButton({setIsUploadigFailed, setUploadingFailu
         navigate(`/progress?documentId=${documentUploadingResult.id}`);
     };
 
-    return <input type='file' onInput={onFileUploading}/>;
+    const onFileUploadButtonClick = () => {
+        fileInputRef.current.click();
+    };
+
+    return (
+        <div>
+            <button className={css.fileUploadButton} onClick={onFileUploadButtonClick}>Загрузить работу</button>
+            <input type='file' onInput={onFileUploading} className={css.fileInput} ref={fileInputRef}/>
+        </div>
+    );
 }
