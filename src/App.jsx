@@ -17,7 +17,7 @@ import Error403 from "./actual/pages/common/errors/Error403.jsx";
 import Error404 from "./actual/pages/common/errors/Error404.jsx";
 import Error500 from "./actual/pages/common/errors/Error500.jsx";
 import StudentResult from "./actual/pages/student/result/StudentResult.jsx";
-import StudentProfileDocuments from "./actual/pages/student/profile/StudentProfileDocuments.jsx";
+import StudentProfileDocuments from "./actual/pages/student/profile/documents/StudentProfileDocuments.jsx";
 import Faq from "./actual/pages/normocontroller/Faq.jsx";
 import NormocontrollerProfilePersonal from "./actual/pages/normocontroller/NormocontrollerProfilePersonal.jsx";
 import NormocontrollerProfileDocuments from "./actual/pages/normocontroller/NormocontrollerProfileDocuments.jsx";

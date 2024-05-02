@@ -1,0 +1,180 @@
+.login {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 55px;
+    margin-bottom: 28.07px;
+    height: max(calc(100vh - 92px - 84px), 640px);
+}
+
+.login__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.loginForm {
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+    padding: 45px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 16px;
+    width: 682px;
+    margin: 0 auto;
+
+    margin-top: 68px;
+}
+
+.loginForm__textInput {
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+    padding: 10px 20px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: rgba(30, 67, 145, 0.8);
+}
+
+.labeledCheckbox {
+
+}
+
+.labeledCheckbox__content {
+    display: flex;
+    width: fit-content;
+    gap: 10px;
+    align-items: center;
+}
+
+.labeledCheckbox__content:hover {
+    cursor: pointer;
+}
+
+.labeledCheckbox__content *:hover {
+    cursor: pointer;
+}
+
+.labeledCheckbox__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+    user-select: none;
+}
+
+.labeledCheckbox__checkbox {
+    outline: none;
+    appearance: none;
+    content: none;
+}
+
+.labeledCheckbox__checkbox:before {
+    font-family: 'Inter', sans-serif;
+    content: "✓";
+    font-weight: 700;
+    text-align: center;
+    font-size: 26px;
+    color: transparent !important;
+    background: var(--default-white);
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--info-dark-blue);
+}
+
+.labeledCheckbox__checkbox:checked:before {
+    color: var(--default-white) !important;
+    background-color: var(--info-dark-blue) !important;
+}
+
+.forgotPassword {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    /*text-align: center;*/
+    color: var(--bright-purple);
+    text-align: left;
+    margin-left: 20px;
+}
+
+.forgotPassword:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+}
+
+.loginButton {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    width: 208px;
+    height: 54px;
+
+    background-color: var(--bright-purple);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.loginButton:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.loginButton:active {
+    filter: brightness(85%);
+}
+
+.horizontalRuler {
+    width: 586px;
+    height: 0;
+    border-top: 3px solid var(--info-dark-blue);
+}
+
+.noAccount {
+    display: flex;
+    gap: 8px;
+    margin-left: 20px;
+}
+
+.noAccount__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: #1e4391;
+}
+
+.noAccount__link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-blue);
+
+    text-underline-offset: 6px;
+}
+
+.noAccount__link:hover {
+    filter: brightness(150%);
+}

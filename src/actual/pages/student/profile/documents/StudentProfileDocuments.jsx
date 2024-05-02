@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import User from "../../../domain/users/User.js";
-import AccountsService from "../../../services/AccountsService.js";
-import AuthService from "../../../services/AuthService.js";
-import Header from "../../../commonComponents/header/Header.jsx";
-import DocumentsService from "../../../services/DocumentsService.js";
+import User from "../../../../domain/users/User.js";
+import AccountsService from "../../../../services/AccountsService.js";
+import AuthService from "../../../../services/AuthService.js";
+import Header from "../../../../commonComponents/header/Header.jsx";
+import DocumentsService from "../../../../services/DocumentsService.js";
 import {NavLink} from "react-router-dom";
-import FileUploadButton from "../../../commonComponents/buttons/FileUploadButton.jsx";
+import FileUploadButton from "../../../../commonComponents/buttons/FileUploadButton.jsx";
 
 export default function StudentProfileDocuments() {
     const [documents, setDocuments] = useState([]);
