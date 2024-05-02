@@ -4,6 +4,7 @@ import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import AuthService from "../../../../services/AuthService.js";
 import Header from "../../../../commonComponents/header/Header.jsx";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -48,6 +49,10 @@ export default function Login() {
         navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
     };
 
+    const isLoginFormCorrect = () => {
+        return CredentialsValidator.validateLoginForm({email, password});
+    };
+
     return (
         <div>
             <Header/>
@@ -74,7 +79,7 @@ export default function Login() {
                     </div>
 
 
-                    <input type='submit' value='Войти' className={css.loginButton}/>
+                    <input type='submit' value='Войти' className={css.loginButton} disabled={!isLoginFormCorrect()}/>
                     <div className={css.horizontalRuler}/>
                     <div className={css.noAccount}>
                         <p className={css.noAccount__title}>Ещё нет аккаунта?</p>
@@ -83,7 +88,7 @@ export default function Login() {
                 </form>
                 <div className={css.loginErrors}>
                     {isAuthenticationFailed &&
-                        <div className={css.loginErrors__description}>{authenticationFailureReason}</div>}
+                        <div className={css.loginErrors__description}>Вход в систему не удался</div>}
                 </div>
             </div>
             <Footer/>

@@ -1,4 +1,14 @@
 export default class CredentialsValidator {
+    static validateLoginForm({email, password}) {
+        if (email.trim() === '')
+            return false;
+
+        if (password.trim() === '')
+            return false;
+
+        return true;
+    }
+
     static validateRegistrationForm({email, firstName, lastName, academicGroupId, password, passwordRepetition}) {
         if (email.trim() === '')
             return false;
