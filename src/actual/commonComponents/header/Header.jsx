@@ -13,7 +13,7 @@ export default function Header() {
     return (
         <div className={css.header}>
             <div className={css.header__content}>
-                <NavLink to='/' className={`${css.header__logo} ${css.header__link}`}>
+                <NavLink to='/' className={css.header__logo}>
                     <img src={normocontrolLogo} alt={'Логотип сервиса нормоконтроля'}/>
                     <p>Сервис автоматического нормоконтроля</p>
                 </NavLink>
