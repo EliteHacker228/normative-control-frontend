@@ -30,9 +30,6 @@ export default function StudentHeaderElements() {
 
     return (
         <div className={css.header__elements}>
-            {/*<NavLink to={'/profile/student/documents'} className={css.header__link}>Работы</NavLink>*/}
-            {/*<NavLink to={'/profile/student/personal'} className={css.header__link}>Личная информация</NavLink>*/}
-            {/*<CommonAuthedElements/>*/}
             <div className={css.profileWithDropdown}>
                 <div className={css.profile} onClick={onProfileClick}>
                     <img src={headerProfileLogo} alt='Логотип профиля пользователя' className={css.profile__picture}/>
