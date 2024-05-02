@@ -28,7 +28,7 @@ export default function Login() {
         setPassword(e.target.value);
     };
 
-    const onRememberPasswordInput = (e) => {
+    const onRememberPasswordInput = () => {
         setIsAuthenticationFailed(false);
         setAuthenticationFailureReason('');
         setRememberPassword(prevState => !prevState);

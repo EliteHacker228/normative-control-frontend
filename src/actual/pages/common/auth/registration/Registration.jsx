@@ -1,7 +1,7 @@
 import Header from "../../../../commonComponents/header/Header.jsx";
 import css from './Registration.module.css';
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import AuthService from "../../../../services/AuthService.js";
 import UserRegistrationDto from "../../../../dto/auth/UserRegistrationDto.js";
@@ -19,6 +19,7 @@ export default function Registration() {
     const [academicGroupId, setAcademicGroupId] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepetition, setPasswordRepetition] = useState('');
+    const [isEulaAccepted, setIsEulaAccepted] = useState('');
 
     const onEmailInput = (e) => {
         setIsRegistrationFailed(false);
@@ -108,6 +109,12 @@ export default function Registration() {
         });
     };
 
+    const onAcceptEula = () => {
+        setIsRegistrationFailed(false);
+        setRegistrationFailureReason('');
+        setIsEulaAccepted(prevState => !prevState);
+    };
+
     return (
         <div>
             <Header/>
@@ -142,6 +149,16 @@ export default function Registration() {
                            value={passwordRepetition}
                            onInput={onPasswordRepetitionInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
+
+                    <div className={css.labeledCheckbox}>
+                        <div className={css.labeledCheckbox__content}>
+                            <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={isEulaAccepted}
+                                   onInput={onAcceptEula}
+                                   id='rememberPassword'/>
+                            <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Я принимаю условия <NavLink className={css.noAccount__link} to={'/eula'}>Пользовательского соглашения</NavLink> и даю <NavLink className={css.noAccount__link} to={'/pdpa'}>согласие на обработку персональных данных</NavLink></label>
+                        </div>
+                    </div>
+
                     <input type='submit' className={css.registrationButton} value='Регистрация'
                            disabled={!isRegistrationFormCorrect()}/>
                 </form>

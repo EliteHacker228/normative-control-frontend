@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 28.07px;
-    height: max(calc(100vh - 92px - 84px), 900px);
+    height: max(calc(100vh - 92px - 84px), 1024px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,7 +55,7 @@
     display: flex;
     width: fit-content;
     gap: 10px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .labeledCheckbox__content:hover {
