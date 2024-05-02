@@ -105,7 +105,8 @@ export default function Registration() {
             middleName,
             academicGroupId,
             password,
-            passwordRepetition
+            passwordRepetition,
+            isEulaAccepted
         });
     };
 

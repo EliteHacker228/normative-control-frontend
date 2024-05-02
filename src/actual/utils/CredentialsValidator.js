@@ -9,7 +9,7 @@ export default class CredentialsValidator {
         return true;
     }
 
-    static validateRegistrationForm({email, firstName, lastName, academicGroupId, password, passwordRepetition}) {
+    static validateRegistrationForm({email, firstName, lastName, academicGroupId, password, passwordRepetition, isEulaAccepted}) {
         if (email.trim() === '')
             return false;
 
@@ -29,6 +29,9 @@ export default class CredentialsValidator {
             return false;
 
         if (password.trim() !== passwordRepetition.trim())
+            return false;
+
+        if(!isEulaAccepted)
             return false;
 
         return true;
