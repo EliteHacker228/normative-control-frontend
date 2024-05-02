@@ -1,0 +1,77 @@
+.studentProgress {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 152px;
+    margin-bottom: 28.07px;
+    height: max(calc(100vh - 92px - 84px - 152px - 28.07px), 640px);
+}
+
+.mainText {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+
+    margin-top: 5px;
+}
+
+.goToResult {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    width: 478px;
+    height: 74px;
+
+    background-color: var(--bright-purple);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.goToResult:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.goToResult:active {
+    filter: brightness(85%);
+}
+
+.goToResult:enabled:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.goToResult:enabled:active {
+    filter: brightness(85%);
+}
+
+
+.verificationInProgress {
+
+}
+
+.verificationComplete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.verificationComplete__logo {
+    width: 200px;
+    height: 200px;
+}
+
+.verificationFailed {
+
+}

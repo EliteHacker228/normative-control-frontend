@@ -1,0 +1,33 @@
+.progressBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.waitingStatus {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+
+    margin-top: 5px;
+}
+
+.progressWheel {
+    width: 200px;
+    height: 200px;
+    animation: progressWheelSpin 2s linear infinite;
+}
+
+@keyframes progressWheelSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

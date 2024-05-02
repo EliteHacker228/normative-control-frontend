@@ -1,24 +1,11 @@
-import {useEffect, useState} from "react";
-import {useSearchParams} from "react-router-dom";
-import DocumentsService from "../../../../services/DocumentsService.js";
-
+import css from './ProgressBar.module.css';
+import progressBar from '../static/progress_bar.svg';
 
 export default function ProgressBar() {
-    const [repetitionCount, setRepetitionCount] = useState(0);
-
-    useEffect(() => {
-        let timeoutId = setTimeout(() => {
-            setRepetitionCount(prevState => (prevState + 1) % 4);
-        }, 250);
-
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [repetitionCount]);
-
     return (
-        <div>
-            <p>Ожидание{'.'.repeat(repetitionCount)}</p>
+        <div className={css.progressBar}>
+            <img className={css.progressWheel} src={progressBar} alt={'Колесо загрузки'}/>
+            <p className={css.waitingStatus}>Ожидание...</p>
         </div>
     );
 }

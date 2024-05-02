@@ -1,3 +1,4 @@
+import css from './StudentProgress.module.css';
 import Header from "../../../commonComponents/header/Header.jsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -8,6 +9,10 @@ import Verification from "../../../domain/documents/Verification.js";
 import AccessForbiddenError from "../../../errors/AccessForbiddenError.js";
 import InternalServerError from "../../../errors/InternalServerError.js";
 import NotFoundError from "../../../errors/NotFoundError.js";
+import Footer from "../../../commonComponents/footer/Footer.jsx";
+import documentAccepted from './static/document_accepted.svg';
+import pandaSleeps from './static/panda_sleeps.svg';
+import pandaAwake from './static/panda_awake.svg';
 
 // TODO: Сделать редирект на страницу с ошибкой при попытке получить доступ к чужому ресурсу
 // TODO: Сделать try/catch на ошибке при получении данных в сервисах через нетворкеры
@@ -60,15 +65,26 @@ export default function StudentProgress() {
     return (
         <div>
             <Header/>
-            {documentVerificationResultStatus === Verification.pending && <ProgressBar/>}
-            {documentVerificationResultStatus === Verification.ok &&
-                <div>
-                    <p>Ваша работа проверена</p>
-                    <button onClick={onGoToResultClick}>Просмотреть результат</button>
-                </div>
-            }
-            {documentVerificationResultStatus === Verification.error &&
-                <p>При првоерке вашей работы произошла ошибка</p>}
+            <div className={css.studentProgress}>
+                {documentVerificationResultStatus === Verification.pending &&
+                    <div className={css.verificationInProgress}>
+                        <ProgressBar/>
+                    </div>
+                }
+                {documentVerificationResultStatus === Verification.ok &&
+                    <div className={css.verificationComplete}>
+                        <img className={css.verificationComplete__logo} src={documentAccepted} alt={'Ваша работа принято'}/>
+                        <p className={css.mainText}>Ваша работа проверена</p>
+                        <button className={css.goToResult} onClick={onGoToResultClick}>Просмотреть результат</button>
+                    </div>
+                }
+                {documentVerificationResultStatus === Verification.error &&
+                    <div className={css.verificationFailed}>
+                        <p className={css.mainText}>При проверке вашей работы произошла ошибка</p>
+                    </div>
+                }
+            </div>
+            <Footer/>
         </div>
     );
 }
