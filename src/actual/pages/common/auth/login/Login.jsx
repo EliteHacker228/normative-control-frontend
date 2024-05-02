@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import AuthService from "../../../../services/AuthService.js";
 import Header from "../../../../commonComponents/header/Header.jsx";
 
@@ -32,7 +32,7 @@ export default function Login() {
             setAuthenticationFailureReason(error.message);
             return;
         }
-        navigate('/profile');
+        navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
     };
 
     return (

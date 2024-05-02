@@ -63,7 +63,7 @@ export default function Registration() {
             setRegistrationFailureReason(error.message);
             return;
         }
-        navigate('/profile');
+        navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
     };
 
     const [academicalGroups, setAcademicalGroups] = useState([]);
