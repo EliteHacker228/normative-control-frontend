@@ -108,6 +108,7 @@
     color: var(--bright-purple);
     text-align: left;
     margin-left: 20px;
+    user-select: none;
 }
 
 .forgotPassword:hover {
@@ -153,6 +154,7 @@
     display: flex;
     gap: 8px;
     margin-left: 20px;
+    user-select: none;
 }
 
 .noAccount__title {
