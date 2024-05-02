@@ -16,15 +16,21 @@ export default function Login() {
     const [rememberPassword, setRememberPassword] = useState(true);
 
     const onEmailInput = (e) => {
+        setIsAuthenticationFailed(false);
+        setAuthenticationFailureReason('');
         setEmail(e.target.value);
     };
 
     const onPasswordInput = (e) => {
+        setIsAuthenticationFailed(false);
+        setAuthenticationFailureReason('');
         setPassword(e.target.value);
     };
 
     const onRememberPasswordInput = (e) => {
-        setRememberPassword(e.target.value);
+        setIsAuthenticationFailed(false);
+        setAuthenticationFailureReason('');
+        setRememberPassword(prevState => !prevState);
     };
 
     const onLoginSubmit = async (e) => {
@@ -36,7 +42,7 @@ export default function Login() {
             await AuthService.authenticateUserByEmailAndPassword(email, password);
         } catch (error) {
             setIsAuthenticationFailed(true);
-            setAuthenticationFailureReason(error.message);
+            setAuthenticationFailureReason('Не удалось войти');
             return;
         }
         navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
@@ -55,7 +61,8 @@ export default function Login() {
 
                     <div className={css.labeledCheckbox}>
                         <div className={css.labeledCheckbox__content}>
-                            <input className={css.labeledCheckbox__checkbox} type='checkbox' value={rememberPassword}
+                            <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={rememberPassword}
+                                   onInput={onRememberPasswordInput}
                                    id='rememberPassword'/>
                             <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Запомнить
                                 пароль</label>
@@ -74,7 +81,10 @@ export default function Login() {
                         <NavLink className={css.noAccount__link} to={'/registration'}>Создать аккаунт</NavLink>
                     </div>
                 </form>
-                {isAuthenticationFailed && <div>{authenticationFailureReason}</div>}
+                <div className={css.loginErrors}>
+                    {isAuthenticationFailed &&
+                        <div className={css.loginErrors__description}>{authenticationFailureReason}</div>}
+                </div>
             </div>
             <Footer/>
         </div>

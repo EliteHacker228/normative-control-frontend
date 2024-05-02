@@ -3,7 +3,11 @@
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 28.07px;
-    height: max(calc(100vh - 92px - 84px), 640px);
+    height: max(calc(100vh - 92px - 84px), 720px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
 }
 
 .login__header {
@@ -26,8 +30,6 @@
     justify-content: left;
     gap: 16px;
     width: 682px;
-    margin: 0 auto;
-
     margin-top: 68px;
 }
 
@@ -179,4 +181,20 @@
 
 .noAccount__link:hover {
     filter: brightness(150%);
+}
+
+.loginErrors {
+
+}
+
+.loginErrors__description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    /*text-align: center;*/
+    color: var(--rejection-red);
+    text-align: left;
+    margin-left: 20px;
 }
