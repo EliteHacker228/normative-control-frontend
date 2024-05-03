@@ -87,7 +87,12 @@
 }
 
 .commentary__content {
-
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
 }
 
 .section {

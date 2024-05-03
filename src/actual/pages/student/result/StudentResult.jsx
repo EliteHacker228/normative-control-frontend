@@ -29,7 +29,7 @@ export default function StudentResult() {
     const [documentComment, setDocumentComment] = useState('');
     const [documentVerdict, setDocumentVerdict] = useState(Verdicts.NOT_CHECKED);
 
-    const [isCommentAvailable, setIsCommentAvailable] = useState(documentVerdict !== Verdicts.NOT_CHECKED);
+    const [isCommentAvailable, setIsCommentAvailable] = useState(false);
     const [isCommentShowed, setIsCommentShowed] = useState(false);
 
     const onChangeCommentVisibility = () => {
@@ -49,6 +49,7 @@ export default function StudentResult() {
                 let documentNode = await DocumentsService.getDocumentNode(documentId);
                 setDocumentComment(documentNode.comment ?? '');
                 setDocumentVerdict(documentNode.documentVerdict);
+                setIsCommentAvailable(documentNode.documentVerdict !== Verdicts.NOT_CHECKED);
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
