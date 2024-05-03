@@ -28,6 +28,17 @@
     margin-top: 14px;
 }
 
+.documentsList__placeholder {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: var(--info-dark-blue);
+    opacity: 0.5;
+}
+
 .documentNode {
     border: 3px solid var(--info-dark-blue);
     border-radius: 8px;

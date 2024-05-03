@@ -7,11 +7,11 @@ import Header from "../../../../commonComponents/header/Header.jsx";
 import DocumentsService from "../../../../services/DocumentsService.js";
 import {NavLink} from "react-router-dom";
 import FileUploadButton from "../../../../commonComponents/buttons/fileUploadButton/FileUploadButton.jsx";
-import downloadIco from '../static/download_ico.svg';
+import downloadIco from './static/download_ico.svg';
 import Verdicts from "../../../../domain/documents/Verdicts.js";
-import documentAcceptedIco from '../static/document_accepted_ico.svg';
-import documentRejectedIco from '../static/document_rejected.svg';
-import documentNotCheckedIco from '../static/document_reported.svg';
+import documentAcceptedIco from './static/document_accepted_ico.svg';
+import documentRejectedIco from './static/document_rejected.svg';
+import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 
@@ -70,6 +70,7 @@ export default function StudentProfileDocuments() {
             <div className={css.studentDocuments}>
                 <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
                 <div className={css.documentsList}>
+                    {documents.length === 0 && <p className={css.documentsList__placeholder}>Вы пока не загрузжали работы на проверку</p>}
                     {documents.map((document, index) => {
                         return (
                             <NavLink to={`/result?documentId=${document.id}`} key={index} id={document.id}
