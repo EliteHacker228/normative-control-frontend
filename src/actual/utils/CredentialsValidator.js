@@ -9,7 +9,15 @@ export default class CredentialsValidator {
         return true;
     }
 
-    static validateRegistrationForm({email, firstName, lastName, academicGroupId, password, passwordRepetition, isEulaAccepted}) {
+    static validateRegistrationForm({
+                                        email,
+                                        firstName,
+                                        lastName,
+                                        academicGroupId,
+                                        password,
+                                        passwordRepetition,
+                                        isEulaAccepted
+                                    }) {
         if (email.trim() === '')
             return false;
 
@@ -31,7 +39,51 @@ export default class CredentialsValidator {
         if (password.trim() !== passwordRepetition.trim())
             return false;
 
-        if(!isEulaAccepted)
+        if (!isEulaAccepted)
+            return false;
+
+        return true;
+    }
+
+    static validateStudentPersonalDataUpdatingForm({firstName, lastName, email, academicGroupId}) {
+        console.log(firstName);
+        console.log(lastName);
+        console.log(email);
+        console.log(academicGroupId);
+
+        if (email.trim() === '')
+            return false;
+
+        if (firstName.trim() === '')
+            return false;
+
+        if (lastName.trim() === '')
+            return false;
+
+        if (academicGroupId === '')
+            return false;
+
+        return true;
+    }
+
+    static validateNormocontrollerPersonalDataUpdatingForm({firstName, lastName, email}) {
+        if (email.trim() === '')
+            return false;
+
+        if (firstName.trim() === '')
+            return false;
+
+        if (lastName.trim() === '')
+            return false;
+
+        return true;
+    }
+
+    static validatePasswordUpdatingForm({oldPassword, newPassword}) {
+        if (oldPassword.trim() === '')
+            return false;
+
+        if (newPassword.trim() === '')
             return false;
 
         return true;

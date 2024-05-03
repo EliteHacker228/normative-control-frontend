@@ -11,7 +11,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Welcome from "./actual/pages/common/welcome/Welcome.jsx"
 import Login from "./actual/pages/common/auth/login/Login.jsx";
 import Registration from "./actual/pages/common/auth/registration/Registration.jsx";
-import StudentProfilePersonal from "./actual/pages/student/profile/StudentProfilePersonal.jsx";
+import StudentProfilePersonal from "./actual/pages/student/profile/personal/StudentProfilePersonal.jsx";
 import StudentProgress from "./actual/pages/student/progress/StudentProgress.jsx";
 import Error403 from "./actual/pages/common/errors/Error403.jsx";
 import Error404 from "./actual/pages/common/errors/Error404.jsx";
