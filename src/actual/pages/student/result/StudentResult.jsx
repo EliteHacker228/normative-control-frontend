@@ -20,6 +20,8 @@ import Footer from "../../../commonComponents/footer/Footer.jsx";
 export default function StudentResult() {
     const navigate = useNavigate();
 
+    const resultViewRef = useRef();
+
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [documentId, setDocumentId] = useState(searchParams.get('documentId'));
@@ -33,7 +35,7 @@ export default function StudentResult() {
     const [isCommentShowed, setIsCommentShowed] = useState(false);
 
     const onChangeCommentVisibility = () => {
-        if(!isCommentAvailable)
+        if (!isCommentAvailable)
             return;
         setIsCommentShowed(prevState => !prevState);
     };
@@ -97,6 +99,30 @@ export default function StudentResult() {
         }
     };
 
+    const scrollToElementWithId = (mistakeId) => {
+        let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
+        if (elms.length === 0) {
+            return;
+        }
+
+        if (elms.length === 2) {
+            if (elms[0].innerText === '' && elms[1].innerText === '')
+                return elms[0].scrollIntoView();
+
+            if (elms[0].innerText === '')
+                return elms[1].scrollIntoView();
+
+            if (elms[1].innerText === '')
+                return elms[0].scrollIntoView();
+        }
+
+        let elm = elms[0];
+        while (elm.nodeName === 'SPAN')
+            elm = elm.parentNode
+
+        return elm.scrollIntoView();
+    };
+
     return (
         <div>
             <Header/>
@@ -109,8 +135,10 @@ export default function StudentResult() {
                                  alt={getDocumentVerdictTitle(documentVerdict)}/>
                             <div className={css.documentVerdict__controls} onClick={onChangeCommentVisibility}>
                                 <p className={css.documentVerdict__description}>{getDocumentVerdictTitle(documentVerdict)}</p>
-                                {isCommentAvailable && !isCommentShowed && <img className={css.documentVerdict__commentDisplay} src={showCommentIco}/>}
-                                {isCommentAvailable && isCommentShowed && <img className={css.documentVerdict__commentDisplay} src={hideCommentIco}/>}
+                                {isCommentAvailable && !isCommentShowed &&
+                                    <img className={css.documentVerdict__commentDisplay} src={showCommentIco}/>}
+                                {isCommentAvailable && isCommentShowed &&
+                                    <img className={css.documentVerdict__commentDisplay} src={hideCommentIco}/>}
                             </div>
                             {isCommentShowed &&
                                 <div className={css.commentary}>
@@ -130,8 +158,11 @@ export default function StudentResult() {
                                         <div className={css.mistake} id={mistake.id} key={index}>
                                             <p>{mistake.description}</p>
                                             <div className={css.mistake__buttons}>
-                                                <img src={searchIco} alt={'Перейти к ошибке'}/>
-                                                <img src={reportIco} alt={'Доложить о ошибке'}/>
+                                                <img className={css.mistake__button}
+                                                     onClick={() => scrollToElementWithId(mistake.id)} src={searchIco}
+                                                     alt={'Перейти к ошибке'}/>
+                                                <img className={css.mistake__button} src={reportIco}
+                                                     alt={'Доложить о ошибке'}/>
                                             </div>
                                         </div>);
                                 })
@@ -144,7 +175,7 @@ export default function StudentResult() {
                 <div className={css.section}>
                     <h1 className={css.sectionHeader}>Просмотр документа</h1>
                     <div className={css.documentViewer}>
-                        <iframe className={css.documentViewer__document} srcDoc={documentHtml}/>
+                        <iframe className={css.documentViewer__document} ref={resultViewRef} srcDoc={documentHtml}/>
                     </div>
                 </div>
             </div>

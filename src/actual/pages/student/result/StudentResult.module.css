@@ -141,6 +141,14 @@
     align-items: center;
 }
 
+.mistake__button {
+
+}
+
+.mistake__button:hover {
+    cursor: pointer;
+}
+
 .downloadButton {
     color: var(--default-white);
 
