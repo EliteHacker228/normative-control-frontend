@@ -55,9 +55,21 @@
     filter: brightness(85%);
 }
 
+.pandaAwake {
+    position: relative;
+    left: 560px;
+    top: 60px;
+}
+
 
 .verificationInProgress {
 
+}
+
+.pandaSleeps {
+    position: relative;
+    left: 860px;
+    top: 230px;
 }
 
 .verificationComplete {

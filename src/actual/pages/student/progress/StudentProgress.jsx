@@ -69,6 +69,7 @@ export default function StudentProgress() {
                 {documentVerificationResultStatus === Verification.pending &&
                     <div className={css.verificationInProgress}>
                         <ProgressBar/>
+                        <img className={css.pandaSleeps} src={pandaSleeps} alt={'Панда спит'}/>
                     </div>
                 }
                 {documentVerificationResultStatus === Verification.ok &&
@@ -76,6 +77,7 @@ export default function StudentProgress() {
                         <img className={css.verificationComplete__logo} src={documentAccepted} alt={'Ваша работа принято'}/>
                         <p className={css.mainText}>Ваша работа проверена</p>
                         <button className={css.goToResult} onClick={onGoToResultClick}>Просмотреть результат</button>
+                        <img className={css.pandaAwake} src={pandaAwake} alt={'Панда проснулась'}/>
                     </div>
                 }
                 {documentVerificationResultStatus === Verification.error &&
