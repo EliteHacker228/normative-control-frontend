@@ -58,10 +58,11 @@ export default function NormocontrollerProfilePersonal() {
     useEffect(() => {
         (async () => {
             let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
+            setEmail(receivedUser.email);
+            setFio(`${receivedUser.lastName} ${receivedUser.firstName} ${receivedUser.middleName}`);
             setLastName(receivedUser.lastName);
             setFirstName(receivedUser.firstName);
             setMiddleName(receivedUser.middleName);
-            setEmail(receivedUser.email);
         })();
     }, []);
 

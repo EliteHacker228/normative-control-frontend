@@ -69,10 +69,11 @@ export default function StudentProfilePersonal() {
         (async () => {
             let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
             setFio(`${receivedUser.lastName} ${receivedUser.firstName} ${receivedUser.middleName}`);
+            setEmail(receivedUser.email);
             setLastName(receivedUser.lastName);
             setFirstName(receivedUser.firstName);
             setMiddleName(receivedUser.middleName);
-            setEmail(receivedUser.email);
+
             setAcademicGroupId(receivedUser.academicGroup.id);
             setNormocontrollerFullName(`${receivedUser.academicGroup.normocontroller.lastName} ${receivedUser.academicGroup.normocontroller.firstName} ${receivedUser.academicGroup.normocontroller.middleName} `);
             let receivedAcademicalGroups = await AcademicalGroupsService.getAcademicalGroups();
