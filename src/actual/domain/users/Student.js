@@ -5,8 +5,8 @@ export default class Student extends User {
     #academicGroup;
     #documentsLimit;
 
-    constructor(id, email, firstName, middleName, lastName, academicGroup, documentsLimit, role, verified) {
-        super(id, email, firstName, middleName, lastName, role, verified);
+    constructor(id, email, fullName, academicGroup, documentsLimit, role, verified) {
+        super(id, email, fullName, role, verified);
         this.#academicGroup = academicGroup;
         this.#documentsLimit = documentsLimit;
     }
@@ -15,9 +15,7 @@ export default class Student extends User {
         return new Student(
             plainObject.id,
             plainObject.email,
-            plainObject.firstName,
-            plainObject.middleName,
-            plainObject.lastName,
+            plainObject.fullName,
             AcademicGroup.fromPlainObject(plainObject.academicGroup),
             plainObject.documentsLimit,
             plainObject.role,

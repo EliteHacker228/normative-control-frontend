@@ -45,18 +45,11 @@ export default class CredentialsValidator {
         return true;
     }
 
-    static validateStudentPersonalDataUpdatingForm({firstName, lastName, email, academicGroupId}) {
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
-        console.log(academicGroupId);
+    static validateStudentPersonalDataUpdatingForm({fullName, email, academicGroupId}) {
         if (email.trim() === '')
             return false;
 
-        if (firstName.trim() === '')
-            return false;
-
-        if (lastName.trim() === '')
+        if (!this._isFullNameValid(fullName))
             return false;
 
         if (academicGroupId === '')
@@ -65,17 +58,32 @@ export default class CredentialsValidator {
         return true;
     }
 
-    static validateNormocontrollerPersonalDataUpdatingForm({firstName, lastName, email}) {
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
+    // Усовершенствовать алгоритм валидации
+    static validateNormocontrollerPersonalDataUpdatingForm({fullName, email}) {
         if (email.trim() === '')
             return false;
 
-        if (firstName.trim() === '')
+        if (!this._isFullNameValid(fullName))
             return false;
 
-        if (lastName.trim() === '')
+        return true;
+    }
+
+    static _isFullNameValid(fullName) {
+        if (!fullName)
+            return false;
+
+        let cyrillicNamePartRegex = /^(?=.{1,40}$)[а-яёА-ЯЁ]+(?:[-' ][а-яёА-ЯЁ]+)*$/;
+        let nameTokens = fullName.split(' ');
+        let filteredNameTokens = nameTokens.filter(nameToken => {
+                return nameToken.match(cyrillicNamePartRegex);
+            }
+        );
+
+        if (nameTokens.length !== filteredNameTokens.length)
+            return false;
+
+        if (filteredNameTokens.length < 2)
             return false;
 
         return true;

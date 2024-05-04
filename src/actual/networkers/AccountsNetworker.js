@@ -20,15 +20,13 @@ export default class AccountsNetworker {
         return await accountDataResponse.json();
     }
 
-    static async patchAccount(accountId, {firstName, middleName, lastName, academicGroupId}){
+    static async patchAccount(accountId, {fullName, academicGroupId}){
         const headers = new Headers();
         headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
         headers.append("Content-Type", "application/json");
 
         const body = JSON.stringify({
-            "firstName": firstName,
-            "middleName": middleName,
-            "lastName": lastName,
+            "fullName": fullName,
             "academicGroupId": academicGroupId
         });
 

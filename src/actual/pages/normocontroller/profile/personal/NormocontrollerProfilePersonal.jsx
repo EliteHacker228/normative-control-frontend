@@ -2,17 +2,14 @@ import {useEffect, useState} from "react";
 import css from './NormocontrollerProfilePersonal.module.css';
 import AccountsService from "../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
-import PatchAccountDto from "../../../../dto/accounts/PatchAccountDto.js";
+import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
 import AuthService from "../../../../services/AuthService.js";
 import Header from "../../../../commonComponents/header/Header.jsx";
 import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
 
 export default function NormocontrollerProfilePersonal() {
     const [email, setEmail] = useState('');
-    const [fio, setFio] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [middleName, setMiddleName] = useState('');
+    const [fullName, setFullName] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
@@ -20,31 +17,8 @@ export default function NormocontrollerProfilePersonal() {
         setEmail(e.target.value);
     };
 
-    const onFioInput = (e) => {
-        let fio = e.target.value;
-        setFio(e.target.value);
-        let fioPartsIndex1 = fio.indexOf(' ');
-        let fioPartsIndex2 = fio.lastIndexOf(' ');
-
-        let lastName = fio.substring(0, fioPartsIndex1);
-        let firstName = fio.substring(fioPartsIndex1 + 1, fioPartsIndex2);
-        let middleName = fio.substring(fioPartsIndex2 + 1);
-
-        setLastName(lastName);
-        setFirstName(firstName);
-        setMiddleName(middleName);
-    };
-
-    const onFirstnameInput = (e) => {
-        setFirstName(e.target.value);
-    };
-
-    const onLastnameInput = (e) => {
-        setLastName(e.target.value);
-    };
-
-    const onMiddlenameInput = (e) => {
-        setMiddleName(e.target.value);
+    const onFullNameInput = (e) => {
+        setFullName(e.target.value);
     };
 
     const onOldPasswordInput = (e) => {
@@ -57,14 +31,15 @@ export default function NormocontrollerProfilePersonal() {
 
     useEffect(() => {
         (async () => {
-            let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
-            setEmail(receivedUser.email);
-            setFio(`${receivedUser.lastName} ${receivedUser.firstName} ${receivedUser.middleName}`);
-            setLastName(receivedUser.lastName);
-            setFirstName(receivedUser.firstName);
-            setMiddleName(receivedUser.middleName);
+            await fetchUserData();
         })();
     }, []);
+
+    const fetchUserData = async () => {
+        let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
+        setEmail(receivedUser.email);
+        setFullName(receivedUser.fullName);
+    };
 
     const [personalDataUpdationComplete, setPersonalDataUpdationComplete] = useState(false);
     const [personalDataUpdationFailed, setPersonalDataUpdationFailed] = useState(false);
@@ -76,13 +51,14 @@ export default function NormocontrollerProfilePersonal() {
 
     const onPersonalInfoUpdate = async (e) => {
         e.preventDefault();
-        let patchAccountDto = new PatchAccountDto(email, firstName, middleName, lastName);
+        let updateAccountDto = new UpdateAccountDto(email, fullName);
         setPersonalDataUpdationComplete(false);
         try {
             setPersonalDataUpdationFailed(false);
             setPersonalDataUpdationFailureReason('');
 
-            await AccountsService.patchStudentAccount(AuthService.getLocalUserData().id, patchAccountDto);
+            await AccountsService.updateAccountData(AuthService.getLocalUserData().id, updateAccountDto);
+            await fetchUserData();
 
             setPersonalDataUpdationComplete(true);
         } catch (e) {
@@ -109,7 +85,7 @@ export default function NormocontrollerProfilePersonal() {
 
     // TODO: Сделать валидацию email
     const isPersonalDataFormCorrect = () => {
-        return CredentialsValidator.validateNormocontrollerPersonalDataUpdatingForm({firstName, lastName, email});
+        return CredentialsValidator.validateNormocontrollerPersonalDataUpdatingForm({fullName, email});
     };
 
     // TODO: Сделать подтверждение корректности данных с сервера типа password
@@ -126,11 +102,8 @@ export default function NormocontrollerProfilePersonal() {
                         <h1 className={css.section__header}>Личная информация</h1>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>ФИО</p>
-                            <input className={css.inputBlock__input} type={'text'} placeholder={'ФИО'} value={fio}
-                                   onInput={onFioInput}/>
-                            {/*<input type={'text'} placeholder={'Фамилия'} value={lastName} onInput={onLastnameInput}/>*/}
-                            {/*<input type={'text'} placeholder={'Имя'} value={firstName} onInput={onFirstnameInput}/>*/}
-                            {/*<input type={'text'} placeholder={'Отчество'} value={middleName} onInput={onMiddlenameInput}/>*/}
+                            <input className={css.inputBlock__input} type={'text'} placeholder={'ФИО'} value={fullName}
+                                   onInput={onFullNameInput}/>
                         </div>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>Адрес электронной почти</p>

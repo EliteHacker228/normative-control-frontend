@@ -4,17 +4,14 @@ import {useEffect, useState} from "react";
 import Header from "../../../../commonComponents/header/Header.jsx";
 import AccountsService from "../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
-import PatchAccountDto from "../../../../dto/accounts/PatchAccountDto.js";
+import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
 import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
 
 export default function StudentProfilePersonal() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
 
     const [email, setEmail] = useState('');
-    const [fio, setFio] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [middleName, setMiddleName] = useState('');
+    const [fullName, setFullName] = useState('');
     const [academicGroupId, setAcademicGroupId] = useState('');
     const [normocontrollerFullName, setNormocontrollerFullName] = useState('');
     const [oldPassword, setOldPassword] = useState('');
@@ -24,37 +21,14 @@ export default function StudentProfilePersonal() {
         setEmail(e.target.value);
     };
 
-    const onFioInput = (e) => {
-        let fio = e.target.value;
-        setFio(e.target.value);
-        let fioPartsIndex1 = fio.indexOf(' ');
-        let fioPartsIndex2 = fio.lastIndexOf(' ');
-
-        let lastName = fio.substring(0, fioPartsIndex1);
-        let firstName = fio.substring(fioPartsIndex1 + 1, fioPartsIndex2);
-        let middleName = fio.substring(fioPartsIndex2 + 1);
-
-        setLastName(lastName);
-        setFirstName(firstName);
-        setMiddleName(middleName);
-    };
-
-    const onFirstnameInput = (e) => {
-        setFirstName(e.target.value);
-    };
-
-    const onLastnameInput = (e) => {
-        setLastName(e.target.value);
-    };
-
-    const onMiddlenameInput = (e) => {
-        setMiddleName(e.target.value);
+    const onFullNameInput = (e) => {
+        setFullName(e.target.value);
     };
 
     const onAcademicGroupIdInput = (e) => {
         setAcademicGroupId(e.target.value);
         let targetNormocontroller = academicalGroups[e.target.selectedIndex - 1].normocontroller;
-        setNormocontrollerFullName(`${targetNormocontroller.lastName} ${targetNormocontroller.firstName} ${targetNormocontroller.middleName}`);
+        setNormocontrollerFullName(targetNormocontroller.fullName);
     };
 
     const onOldPasswordInput = (e) => {
@@ -67,19 +41,20 @@ export default function StudentProfilePersonal() {
 
     useEffect(() => {
         (async () => {
-            let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
-            setFio(`${receivedUser.lastName} ${receivedUser.firstName} ${receivedUser.middleName}`);
-            setEmail(receivedUser.email);
-            setLastName(receivedUser.lastName);
-            setFirstName(receivedUser.firstName);
-            setMiddleName(receivedUser.middleName);
-
-            setAcademicGroupId(receivedUser.academicGroup.id);
-            setNormocontrollerFullName(`${receivedUser.academicGroup.normocontroller.lastName} ${receivedUser.academicGroup.normocontroller.firstName} ${receivedUser.academicGroup.normocontroller.middleName} `);
-            let receivedAcademicalGroups = await AcademicalGroupsService.getAcademicalGroups();
-            setAcademicalGroups(receivedAcademicalGroups);
+            await fetchUserData();
         })();
     }, []);
+
+    const fetchUserData = async () => {
+        let receivedUser = await AccountsService.getAccountDataById(AuthService.getLocalUserData().id);
+        setFullName(receivedUser.fullName);
+        setEmail(receivedUser.email);
+
+        setAcademicGroupId(receivedUser.academicGroup.id);
+        setNormocontrollerFullName(receivedUser.academicGroup.normocontroller.fullName);
+        let receivedAcademicalGroups = await AcademicalGroupsService.getAcademicalGroups();
+        setAcademicalGroups(receivedAcademicalGroups);
+    };
 
     const [personalDataUpdationComplete, setPersonalDataUpdationComplete] = useState(false);
     const [personalDataUpdationFailed, setPersonalDataUpdationFailed] = useState(false);
@@ -91,13 +66,14 @@ export default function StudentProfilePersonal() {
 
     const onPersonalInfoUpdate = async (e) => {
         e.preventDefault();
-        let patchAccountDto = new PatchAccountDto(email, firstName, middleName, lastName, academicGroupId);
+        let patchAccountDto = new UpdateAccountDto(email, fullName, academicGroupId);
         setPersonalDataUpdationComplete(false);
         try {
             setPersonalDataUpdationFailed(false);
             setPersonalDataUpdationFailureReason('');
 
-            await AccountsService.patchStudentAccount(AuthService.getLocalUserData().id, patchAccountDto);
+            await AccountsService.updateAccountData(AuthService.getLocalUserData().id, patchAccountDto);
+            await fetchUserData();
 
             setPersonalDataUpdationComplete(true);
         } catch (e) {
@@ -124,7 +100,7 @@ export default function StudentProfilePersonal() {
 
     // TODO: Сделать валидацию email
     const isPersonalDataFormCorrect = () => {
-        return CredentialsValidator.validateStudentPersonalDataUpdatingForm({firstName, lastName, email, academicGroupId});
+        return CredentialsValidator.validateStudentPersonalDataUpdatingForm({fullName, email, academicGroupId});
     };
 
     // TODO: Сделать подтверждение корректности данных с сервера типа password и academicGroup
@@ -141,10 +117,7 @@ export default function StudentProfilePersonal() {
                     <form className={`${css.section} ${css.sectionLeft}`} onSubmit={onPersonalInfoUpdate}>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>ФИО</p>
-                            <input className={css.inputBlock__input} type={'text'} placeholder={'ФИО'} value={fio} onInput={onFioInput}/>
-                            {/*<input type={'text'} placeholder={'Фамилия'} value={lastName} onInput={onLastnameInput}/>*/}
-                            {/*<input type={'text'} placeholder={'Имя'} value={firstName} onInput={onFirstnameInput}/>*/}
-                            {/*<input type={'text'} placeholder={'Отчество'} value={middleName} onInput={onMiddlenameInput}/>*/}
+                            <input className={css.inputBlock__input} type={'text'} placeholder={'ФИО'} value={fullName} onInput={onFullNameInput}/>
                         </div>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>Адрес электронной почти</p>

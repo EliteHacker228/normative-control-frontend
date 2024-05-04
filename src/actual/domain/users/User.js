@@ -1,18 +1,14 @@
 export default class User {
     #id;
     #email;
-    #firstName;
-    #middleName;
-    #lastName;
+    #fullName;
     #role;
     #verified;
 
-    constructor(id, email, firstName, middleName, lastName, role, verified) {
+    constructor(id, email, fullName, role, verified) {
         this.#id = id;
         this.#email = email;
-        this.#firstName = firstName;
-        this.#middleName = middleName;
-        this.#lastName = lastName;
+        this.#fullName = fullName;
         this.#role = role;
         this.#verified = verified;
     }
@@ -25,16 +21,8 @@ export default class User {
         return this.#email;
     }
 
-    get firstName() {
-        return this.#firstName;
-    }
-
-    get middleName() {
-        return this.#middleName;
-    }
-
-    get lastName() {
-        return this.#lastName;
+    get fullName() {
+        return this.#fullName;
     }
 
     get role() {

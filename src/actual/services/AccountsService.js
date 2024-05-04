@@ -21,7 +21,7 @@ export default class AccountsService {
         throw new Error('Unknown user role');
     }
 
-    static async patchStudentAccount(accountId, personalData) {
+    static async updateAccountData(accountId, personalData) {
         await AccountsNetworker.patchAccount(accountId, personalData);
         let patchEmailResponse = await AccountsNetworker.patchAccountEmail(accountId, personalData.email);
         AuthService.authnticateUserByJwtTokensPair(patchEmailResponse);
