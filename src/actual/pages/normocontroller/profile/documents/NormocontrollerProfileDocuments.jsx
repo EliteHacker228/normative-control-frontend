@@ -1,7 +1,7 @@
-import Header from "../../commonComponents/header/Header.jsx";
+import Header from "../../../../commonComponents/header/Header.jsx";
 import {useEffect, useRef, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
-import DocumentsService from "../../services/DocumentsService.js";
+import DocumentsService from "../../../../services/DocumentsService.js";
 
 export default function NormocontrollerProfileDocuments() {
     const navigate = useNavigate();

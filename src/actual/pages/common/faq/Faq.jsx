@@ -1,4 +1,4 @@
-import Header from "../../commonComponents/header/Header.jsx";
+import Header from "../../../commonComponents/header/Header.jsx";
 
 export default function Faq(){
     return (

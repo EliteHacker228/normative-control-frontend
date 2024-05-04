@@ -27,6 +27,7 @@ export default class AccountsService {
         AuthService.authnticateUserByJwtTokensPair(patchEmailResponse);
     }
 
+
     static async patchAccountPassword(accountId, password) {
         await AccountsNetworker.patchAccountPassword(accountId, password);
     }

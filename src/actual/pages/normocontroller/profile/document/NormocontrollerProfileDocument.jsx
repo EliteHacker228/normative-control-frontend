@@ -1,12 +1,12 @@
-import Header from "../../commonComponents/header/Header.jsx";
+import Header from "../../../../commonComponents/header/Header.jsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import DocumentsService from "../../services/DocumentsService.js";
-import AccessForbiddenError from "../../errors/AccessForbiddenError.js";
-import NotFoundError from "../../errors/NotFoundError.js";
-import InternalServerError from "../../errors/InternalServerError.js";
-import Student from "../../domain/users/Student.js";
-import Verdicts from "../../domain/documents/Verdicts.js";
+import DocumentsService from "../../../../services/DocumentsService.js";
+import AccessForbiddenError from "../../../../errors/AccessForbiddenError.js";
+import NotFoundError from "../../../../errors/NotFoundError.js";
+import InternalServerError from "../../../../errors/InternalServerError.js";
+import Student from "../../../../domain/users/Student.js";
+import Verdicts from "../../../../domain/documents/Verdicts.js";
 
 export default function NormocontrollerProfileDocument() {
     const navigate = useNavigate();

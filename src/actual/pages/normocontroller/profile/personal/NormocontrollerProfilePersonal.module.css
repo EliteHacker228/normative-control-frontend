@@ -1,0 +1,155 @@
+.studentProfilePersonal {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 16px;
+    margin-bottom: 28.07px;
+}
+
+.studentProfilePersonal__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /*align-items: center;*/
+    gap: 32px;
+    /*height: 467px;*/
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionTop {
+    height: 300px;
+}
+
+.sectionBottom {
+    height: 300px;
+}
+
+.section__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.inputBlock {
+
+}
+
+.inputBlock__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.inputBlock__input {
+    border: 2px solid var(--info-dark-blue);
+    border-radius: 5px;
+    padding: 5px 15px;
+    height: 35px;
+
+    width: 410px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+    background-color: var(--default-white);
+}
+
+.forgotPassword {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    /*text-align: center;*/
+    color: var(--bright-purple);
+    text-align: left;
+    margin-left: 20px;
+    user-select: none;
+}
+
+.forgotPassword:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+}
+
+.applyButton {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    width: 200px;
+    height: 38px;
+
+    background-color: var(--bright-purple);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.applyButton:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.applyButton:active {
+    filter: brightness(85%);
+}
+
+.applyButton:enabled:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.applyButton:enabled:active {
+    filter: brightness(85%);
+}
+
+.applyButton:disabled {
+    background-color: var(--disabled-grey);
+    cursor: not-allowed;
+}
+
+.updateSuccess {
+    color: var(--info-dark-blue);
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-size: 20px;
+}
+
+.updateError {
+    color: var(--bright-purple);
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-size: 20px;
+}

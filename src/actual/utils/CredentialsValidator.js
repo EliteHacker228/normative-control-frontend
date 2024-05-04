@@ -46,11 +46,6 @@ export default class CredentialsValidator {
     }
 
     static validateStudentPersonalDataUpdatingForm({firstName, lastName, email, academicGroupId}) {
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
-        console.log(academicGroupId);
-
         if (email.trim() === '')
             return false;
 
@@ -62,6 +57,20 @@ export default class CredentialsValidator {
 
         if (academicGroupId === '')
             return false;
+
+        return true;
+    }
+
+    static validateNormocontrollerPersonalDataUpdatingForm({firstName, lastName, email}) {
+        if (email.trim() === '')
+            return false;
+
+        if (firstName.trim() === '')
+            return false;
+
+        if (lastName.trim() === '')
+            return false;
+
 
         return true;
     }

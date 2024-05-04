@@ -18,10 +18,10 @@ import Error404 from "./actual/pages/common/errors/Error404.jsx";
 import Error500 from "./actual/pages/common/errors/Error500.jsx";
 import StudentResult from "./actual/pages/student/result/StudentResult.jsx";
 import StudentProfileDocuments from "./actual/pages/student/profile/documents/StudentProfileDocuments.jsx";
-import Faq from "./actual/pages/normocontroller/Faq.jsx";
-import NormocontrollerProfilePersonal from "./actual/pages/normocontroller/NormocontrollerProfilePersonal.jsx";
-import NormocontrollerProfileDocuments from "./actual/pages/normocontroller/NormocontrollerProfileDocuments.jsx";
-import NormocontrollerProfileDocument from "./actual/pages/normocontroller/NormocontrollerProfileDocument.jsx";
+import Faq from "./actual/pages/common/faq/Faq.jsx";
+import NormocontrollerProfilePersonal from "./actual/pages/normocontroller/profile/personal/NormocontrollerProfilePersonal.jsx";
+import NormocontrollerProfileDocuments from "./actual/pages/normocontroller/profile/documents/NormocontrollerProfileDocuments.jsx";
+import NormocontrollerProfileDocument from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
 
 function App() {
     useEffect(() => {
@@ -46,10 +46,12 @@ function App() {
                 <Route path='/profile/student/personal' element={<StudentProfilePersonal/>}/>
                 <Route path='/profile/student/documents' element={<StudentProfileDocuments/>}/>
                 <Route path='/progress' element={<StudentProgress/>}/>
+                {/*TODO: Перенести в /document*/}
                 <Route path='/result' element={<StudentResult/>}/>
 
                 <Route path='/profile/normocontroller/personal' element={<NormocontrollerProfilePersonal/>}/>
                 <Route path='/profile/normocontroller/documents' element={<NormocontrollerProfileDocuments/>}/>
+                {/*TODO: Перенести в /document*/}
                 <Route path='/profile/normocontroller/document' element={<NormocontrollerProfileDocument/>}/>
 
                 <Route path='/errors/403' element={<Error403/>}/>
