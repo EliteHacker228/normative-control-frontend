@@ -39,8 +39,8 @@ export default class CredentialsValidator {
         if (password.trim() !== passwordRepetition.trim())
             return false;
 
-        if (!isEulaAccepted)
-            return false;
+        // if (!isEulaAccepted)
+        //     return false;
 
         return true;
     }

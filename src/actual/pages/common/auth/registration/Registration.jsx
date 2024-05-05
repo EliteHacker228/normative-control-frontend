@@ -151,14 +151,14 @@ export default function Registration() {
                            onInput={onPasswordRepetitionInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
 
-                    <div className={css.labeledCheckbox}>
-                        <div className={css.labeledCheckbox__content}>
-                            <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={isEulaAccepted}
-                                   onInput={onAcceptEula}
-                                   id='rememberPassword'/>
-                            <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Я принимаю условия <NavLink className={css.noAccount__link} to={'/eula'}>Пользовательского соглашения</NavLink> и даю <NavLink className={css.noAccount__link} to={'/pdpa'}>согласие на обработку персональных данных</NavLink></label>
-                        </div>
-                    </div>
+                    {/*<div className={css.labeledCheckbox}>*/}
+                    {/*    <div className={css.labeledCheckbox__content}>*/}
+                    {/*        <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={isEulaAccepted}*/}
+                    {/*               onInput={onAcceptEula}*/}
+                    {/*               id='rememberPassword'/>*/}
+                    {/*        <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Я принимаю условия <NavLink className={css.noAccount__link} to={'/eula'}>Пользовательского соглашения</NavLink> и даю <NavLink className={css.noAccount__link} to={'/pdpa'}>согласие на обработку персональных данных</NavLink></label>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <input type='submit' className={css.registrationButton} value='Регистрация'
                            disabled={!isRegistrationFormCorrect()}/>

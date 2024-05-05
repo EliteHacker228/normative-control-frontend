@@ -64,19 +64,19 @@ export default function Login() {
                     <input className={css.loginForm__textInput} type='password' placeholder='Пароль' value={password}
                            onInput={onPasswordInput}/>
 
-                    <div className={css.labeledCheckbox}>
-                        <div className={css.labeledCheckbox__content}>
-                            <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={rememberPassword}
-                                   onInput={onRememberPasswordInput}
-                                   id='rememberPassword'/>
-                            <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Запомнить
-                                пароль</label>
-                        </div>
-                    </div>
+                    {/*<div className={css.labeledCheckbox}>*/}
+                    {/*    <div className={css.labeledCheckbox__content}>*/}
+                    {/*        <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={rememberPassword}*/}
+                    {/*               onInput={onRememberPasswordInput}*/}
+                    {/*               id='rememberPassword'/>*/}
+                    {/*        <label className={css.labeledCheckbox__label} htmlFor='rememberPassword'>Запомнить*/}
+                    {/*            пароль</label>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
-                    <div>
-                        <span className={css.forgotPassword}>Не помню пароль</span>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <span className={css.forgotPassword}>Не помню пароль</span>*/}
+                    {/*</div>*/}
 
 
                     <input type='submit' value='Войти' className={css.loginButton} disabled={!isLoginFormCorrect()}/>

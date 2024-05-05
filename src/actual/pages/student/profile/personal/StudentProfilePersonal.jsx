@@ -160,7 +160,7 @@ export default function StudentProfilePersonal() {
                                    value={newPassword}
                                    onInput={onNewPasswordInput}/>
                         </div>
-                        <a className={css.forgotPassword}>Не помню пароль</a>
+                        {/*<a className={css.forgotPassword}>Не помню пароль</a>*/}
                         <input className={css.applyButton} disabled={!isPasswordFormCorrect()} type='submit' value={'Изменить'}/>
                         {passwordUpdationFailed && <p className={css.updateError}>Обновление пароля не удалось</p>}
                         {passwordUpdationComplete && <p className={css.updateSuccess}>Пароль успешно обновлен!</p>}
