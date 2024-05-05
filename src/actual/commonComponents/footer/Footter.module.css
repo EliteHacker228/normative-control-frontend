@@ -1,6 +1,6 @@
 .footer {
     background-color: var(--info-dark-blue);
-    height: 84px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,12 +14,27 @@
     padding: 0 20px;
 }
 
-.footer__element {
+.footer__element__left {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 140%;
     letter-spacing: 0.05em;
-    text-align: right;
     color: var(--default-white);
+    text-align: left;
+}
+
+.footer__element__right {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 140%;
+    letter-spacing: 0.05em;
+    color: var(--default-white);
+    text-align: right;
+}
+
+.feedback {
+    color: var(--bright-purple);
+    text-decoration: underline;
 }

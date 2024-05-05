@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 28.07px;
-    height: max(calc(100vh - 92px - 84px), 1024px);
+    height: max(calc(100vh - 92px - 120px), 1024px);
     display: flex;
     flex-direction: column;
     align-items: center;

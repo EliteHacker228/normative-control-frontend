@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 152px;
     margin-bottom: 28.07px;
-    height: max(calc(100vh - 92px - 84px - 152px - 28.07px), 640px);
+    height: max(calc(100vh - 92px - 120px - 152px - 28.07px), 640px);
 }
 
 .mainText {
