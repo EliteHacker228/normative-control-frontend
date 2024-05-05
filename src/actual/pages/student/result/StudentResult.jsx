@@ -12,6 +12,7 @@ import documentAcceptedIco from "../profile/documents/static/document_accepted_i
 import documentRejectedIco from "../profile/documents/static/document_rejected.svg";
 import documentNotCheckedIco from "../profile/documents/static/document_reported.svg";
 import reportIco from './static/reportIco.svg';
+import unreportIco from './static/unreportIco.svg';
 import searchIco from './static/searchIco.svg';
 import showCommentIco from './static/showCommentIco.svg';
 import hideCommentIco from './static/hideCommentIco.svg';
@@ -27,9 +28,29 @@ export default function StudentResult() {
     const [documentId, setDocumentId] = useState(searchParams.get('documentId'));
     const [documentHtml, setDocumentHtml] = useState('');
     const [documentMistakes, setDocumentMistakes] = useState([]);
+    const [reportedMistakesIds, setReportedMistakesIds] = useState(new Set());
+
+    const addMistakeId = (mistakeId) => {
+        setReportedMistakesIds(prev => new Set(prev).add(mistakeId));
+    }
+
+    const removeMistakeId = (mistakeId) => {
+        setReportedMistakesIds(prev => {
+            const next = new Set(prev);
+            next.delete(mistakeId);
+            return next;
+        });
+    }
+
+    const hasMistakeId = (mistakeId) => {
+        return reportedMistakesIds.has(mistakeId);
+    }
 
     const [documentComment, setDocumentComment] = useState('');
     const [documentVerdict, setDocumentVerdict] = useState(Verdicts.NOT_CHECKED);
+
+    const [mistakeCount, setMistakeCount] = useState(0);
+
 
     const [isCommentAvailable, setIsCommentAvailable] = useState(false);
     const [isCommentShowed, setIsCommentShowed] = useState(false);
@@ -48,10 +69,16 @@ export default function StudentResult() {
                 let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
                 setDocumentHtml(documentHtmlWithMistakes.documentHtml);
                 setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
-                let documentNode = await DocumentsService.getDocumentNode(documentId);
+
+                let resultNode = await DocumentsService.getDocumentVerificationResult(documentId);
+                let documentNode = resultNode.document;
                 setDocumentComment(documentNode.comment ?? '');
+                setIsCommentAvailable(Boolean(documentNode.comment));
                 setDocumentVerdict(documentNode.documentVerdict);
-                setIsCommentAvailable(documentNode.documentVerdict !== Verdicts.NOT_CHECKED);
+                console.log('documentNode.reportedMistakesIds')
+                console.log(documentNode.reportedMistakesIds)
+                setReportedMistakesIds(new Set(documentNode.reportedMistakesIds));
+                setMistakeCount(documentHtmlWithMistakes.documentMistakes.length);
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -123,6 +150,16 @@ export default function StudentResult() {
         return elm.scrollIntoView();
     };
 
+    const reportMistake = async (mistakeId) => {
+        // await DocumentsService.reportDocumentByIdWithMistakeId(documentId, mistakeId);
+        addMistakeId(mistakeId);
+    };
+
+    const unreportMistake = async (mistakeId) => {
+        // await DocumentsService.unreportDocumentByIdWithMistake(documentId, mistakeId);
+        removeMistakeId(mistakeId);
+    };
+
     return (
         <div>
             <Header/>
@@ -161,8 +198,14 @@ export default function StudentResult() {
                                                 <img className={css.mistake__button}
                                                      onClick={() => scrollToElementWithId(mistake.id)} src={searchIco}
                                                      alt={'Перейти к ошибке'}/>
-                                                <img className={css.mistake__button} src={reportIco}
-                                                     alt={'Доложить о ошибке'}/>
+                                                {hasMistakeId(mistake.id) &&
+                                                    <img className={css.mistake__button} src={unreportIco}
+                                                         onClick={() => unreportMistake(mistake.id)}
+                                                         alt={'Отменить ошибку'}/>}
+                                                {!hasMistakeId(mistake.id) &&
+                                                    <img className={css.mistake__button} src={reportIco}
+                                                         onClick={() => reportMistake(mistake.id)}
+                                                         alt={'Доложить о ошибке'}/>}
                                             </div>
                                         </div>);
                                 })

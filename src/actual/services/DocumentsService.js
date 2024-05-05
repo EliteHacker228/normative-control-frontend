@@ -26,12 +26,12 @@ export default class DocumentsService {
         return Result.fromPlainObject(documentUploadingResult);
     }
 
-    static async getDocumentVerificationResultStatus(documentId) {
+    static async getDocumentVerificationResult(documentId) {
         let documentVerificationResult = await DocumentsNetworker.getDocumentVerificationResultStatus(documentId);
-        if (!Verification.statuses.has(documentVerificationResult.status)) {
-            throw new UnknownVerificationResultStatus(`Unknown verification result status ${documentVerificationResult.status}`);
+        if (!Verification.statuses.has(documentVerificationResult.verificationStatus)) {
+            throw new UnknownVerificationResultStatus(`Unknown verification result status ${documentVerificationResult.verificationStatus}`);
         }
-        return documentVerificationResult.status;
+        return documentVerificationResult;
     }
 
     static async getDocumentHtmlWithMistakesList(documentId) {

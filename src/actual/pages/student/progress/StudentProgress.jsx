@@ -26,8 +26,8 @@ export default function StudentProgress() {
 
     const checkDocumentVerificationStatus = async () => {
         try {
-            let status = await DocumentsService.getDocumentVerificationResultStatus(documentId);
-            setDocumentVerificationResultStatus(status);
+            let result = await DocumentsService.getDocumentVerificationResult(documentId);
+            setDocumentVerificationResultStatus(result.verificationStatus);
         } catch (error) {
             switch (error.constructor) {
                 case AccessForbiddenError:
