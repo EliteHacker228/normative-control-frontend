@@ -51,6 +51,8 @@ export default function StudentResult() {
 
     const [mistakeCount, setMistakeCount] = useState(0);
 
+    const [isReported, setIsReported] = useState(false);
+    const [isReportAvailable, setIsReportAvailable] = useState(false);
 
     const [isCommentAvailable, setIsCommentAvailable] = useState(false);
     const [isCommentShowed, setIsCommentShowed] = useState(false);
@@ -66,19 +68,7 @@ export default function StudentResult() {
     useEffect(() => {
         (async () => {
             try {
-                let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
-                setDocumentHtml(documentHtmlWithMistakes.documentHtml);
-                setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
-
-                let resultNode = await DocumentsService.getDocumentVerificationResult(documentId);
-                let documentNode = resultNode.document;
-                setDocumentComment(documentNode.comment ?? '');
-                setIsCommentAvailable(Boolean(documentNode.comment));
-                setDocumentVerdict(documentNode.documentVerdict);
-                console.log('documentNode.reportedMistakesIds')
-                console.log(documentNode.reportedMistakesIds)
-                setReportedMistakesIds(new Set(documentNode.reportedMistakesIds));
-                setMistakeCount(documentHtmlWithMistakes.documentMistakes.length);
+                await getPageData();
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -95,6 +85,71 @@ export default function StudentResult() {
         })();
     }, []);
 
+    const getPageData = async () => {
+        let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
+        setDocumentHtml(documentHtmlWithMistakes.documentHtml);
+        setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
+
+        let resultNode = await DocumentsService.getDocumentVerificationResult(documentId);
+        let documentNode = resultNode.document;
+        setIsReported(documentNode.reported);
+        setDocumentComment(documentNode.comment ?? '');
+        setIsCommentAvailable(Boolean(documentNode.comment));
+        setDocumentVerdict(documentNode.documentVerdict);
+        setReportedMistakesIds(new Set(documentNode.reportedMistakesIds));
+        setMistakeCount(documentHtmlWithMistakes.documentMistakes.length);
+    };
+
+    const getDocumentVerdictIco = (documentVerdict) => {
+        if(isReported){
+            switch (documentVerdict) {
+                case Verdicts.ACCEPTED:
+                    return documentAcceptedIco;
+                case Verdicts.REJECTED:
+                    return documentRejectedIco;
+                case Verdicts.NOT_CHECKED:
+                    return documentRejectedIco;
+            }
+        }else{
+            switch (documentVerdict) {
+                case Verdicts.ACCEPTED:
+                    return documentAcceptedIco;
+                case Verdicts.REJECTED:
+                    return documentNotCheckedIco;
+                case Verdicts.NOT_CHECKED:
+                    return documentNotCheckedIco;
+            }
+        }
+    };
+
+    const getDocumentVerdictTitle = (documentVerdict) => {
+        if(isReported){
+            switch (documentVerdict) {
+                case Verdicts.ACCEPTED:
+                    // setIsReportAvailable(false);
+                    return 'Работа принята';
+                case Verdicts.REJECTED:
+                    // setIsReportAvailable(false);
+                    return 'Работа отклонена';
+                case Verdicts.NOT_CHECKED:
+                    // setIsReportAvailable(true);
+                    return 'Работа не проверена';
+            }
+        }else{
+            switch (documentVerdict) {
+                case Verdicts.ACCEPTED:
+                    // setIsReportAvailable(false);
+                    return 'Работа принята';
+                case Verdicts.REJECTED:
+                    // setIsReportAvailable(true);
+                    return 'Работа не проверена';
+                case Verdicts.NOT_CHECKED:
+                    // setIsReportAvailable(false);
+                    return 'Работа отклонена';
+            }
+        }
+    };
+
     const onDownloadClick = async () => {
         let documentBlobResult = await DocumentsService.getDocumentDocx(documentId);
         let objectUrl = window.URL.createObjectURL(documentBlobResult.documentBlob);
@@ -104,27 +159,27 @@ export default function StudentResult() {
         window.URL.revokeObjectURL(objectUrl);
     }
 
-    const getDocumentVerdictIco = (documentVerdict) => {
-        switch (documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return documentAcceptedIco;
-            case Verdicts.REJECTED:
-                return documentRejectedIco;
-            case Verdicts.NOT_CHECKED:
-                return documentNotCheckedIco;
-        }
-    };
+    // const getDocumentVerdictIco = (documentVerdict) => {
+    //     switch (documentVerdict) {
+    //         case Verdicts.ACCEPTED:
+    //             return documentAcceptedIco;
+    //         case Verdicts.REJECTED:
+    //             return documentRejectedIco;
+    //         case Verdicts.NOT_CHECKED:
+    //             return documentNotCheckedIco;
+    //     }
+    // };
 
-    const getDocumentVerdictTitle = (documentVerdict) => {
-        switch (documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return 'Работа принята';
-            case Verdicts.REJECTED:
-                return 'Работа отклонена';
-            case Verdicts.NOT_CHECKED:
-                return 'Работа не проверена';
-        }
-    };
+    // const getDocumentVerdictTitle = (documentVerdict) => {
+    //     switch (documentVerdict) {
+    //         case Verdicts.ACCEPTED:
+    //             return 'Работа принята';
+    //         case Verdicts.REJECTED:
+    //             return 'Работа отклонена';
+    //         case Verdicts.NOT_CHECKED:
+    //             return 'Работа не проверена';
+    //     }
+    // };
 
     const scrollToElementWithId = (mistakeId) => {
         let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
@@ -198,11 +253,11 @@ export default function StudentResult() {
                                                 <img className={css.mistake__button}
                                                      onClick={() => scrollToElementWithId(mistake.id)} src={searchIco}
                                                      alt={'Перейти к ошибке'}/>
-                                                {hasMistakeId(mistake.id) &&
+                                                {isReportAvailable && hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={unreportIco}
                                                          onClick={() => unreportMistake(mistake.id)}
                                                          alt={'Отменить ошибку'}/>}
-                                                {!hasMistakeId(mistake.id) &&
+                                                {isReportAvailable && !hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={reportIco}
                                                          onClick={() => reportMistake(mistake.id)}
                                                          alt={'Доложить о ошибке'}/>}

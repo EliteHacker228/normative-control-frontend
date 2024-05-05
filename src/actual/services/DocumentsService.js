@@ -10,13 +10,13 @@ import Verdicts from "../domain/documents/Verdicts.js";
 
 export default class DocumentsService {
     static async sendDocumentToVerification(documentUploadingDto) {
-        const _200MB = 209_715_200;
+        const _10MB = 10_485_760;
 
         let fileSize = documentUploadingDto.document.size;
         let fileExtension = documentUploadingDto.documentName.split('.').at(-1);
 
-        if (fileSize > _200MB) {
-            throw new FileIsTooBigError(`File is too big. Maximal size is 200 MB, and your file's size is ${fileSize}`);
+        if (fileSize > _10MB) {
+            throw new FileIsTooBigError(`File is too big. Maximal size is 10 MB, and your file's size is ${fileSize}`);
         }
         if (fileExtension !== 'docx') {
             throw new WrongFileExtensionError(`Wrong file extension. Needed .docx, and your file's extension is ${fileExtension}`);
