@@ -3,6 +3,7 @@
     margin: 0 auto;
     margin-top: 16px;
     margin-bottom: 28.07px;
+    height: max(calc(100vh - 92px - 120px - 16px), 720px);
 }
 
 .studentProfilePersonal__header {

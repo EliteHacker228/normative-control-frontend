@@ -6,6 +6,7 @@ import AccountsService from "../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
 import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
+import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 export default function StudentProfilePersonal() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
@@ -166,6 +167,7 @@ export default function StudentProfilePersonal() {
                     </form>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

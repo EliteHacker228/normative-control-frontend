@@ -6,6 +6,7 @@ import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
 import AuthService from "../../../../services/AuthService.js";
 import Header from "../../../../commonComponents/header/Header.jsx";
 import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
+import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 export default function NormocontrollerProfilePersonal() {
     const [email, setEmail] = useState('');
@@ -138,6 +139,7 @@ export default function NormocontrollerProfilePersonal() {
                     </form>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
