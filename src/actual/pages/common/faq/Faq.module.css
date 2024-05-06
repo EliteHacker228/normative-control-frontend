@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+.faq {
+    max-width: 1024px;
+    margin: 64px auto 28px;
+}
+
+.header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+    margin-bottom: 30px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-column-gap: 40px;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cardGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.left__panel {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 40px;
+    align-self: start;
+}
+
+.right__panel {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow-y: auto;
+}
+
+.groupTitle {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.group__left {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+    margin-bottom: 10px;
+}
+
+.groupName__left {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.card__left {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid var(--info-dark-blue);
+    border-radius: 5px;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--info-dark-blue);
+}
+
+.card__left:hover {
+    outline: 2px solid var(--info-dark-blue);
+}
+
+.card__left:visited, .card__left:active {
+    color: var(--info-dark-blue);
+}
+
+.faqCard {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+}
+
+.faqCard:focus {
+    transition: background-color 0.4s;
+    background-color: #ededed;
+}
+
+.faqCard__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.faqCard__description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+}
+
+code {
+    background-color: #dddddd;
+    padding: 2px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+pre {
+    overflow-x: auto;
+    padding: 5px;
+}
+
+.leftTitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+    margin-bottom: 10px;
+}
