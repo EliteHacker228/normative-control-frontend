@@ -112,6 +112,13 @@
     background-color: #ededed;
 }
 
+.faqCard__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
 .faqCard__title {
     font-family: 'Inter', sans-serif;
     font-weight: 600;

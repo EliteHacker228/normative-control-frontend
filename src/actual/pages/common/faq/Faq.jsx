@@ -1,6 +1,7 @@
 import Header from "../../../commonComponents/header/Header.jsx";
 import css from "./Faq.module.css";
 import Footer from "../../../commonComponents/footer/Footer.jsx";
+import infoIco from './static/info_ico.svg';
 
 export default function Faq() {
     const card = (title, description) => {
@@ -56,7 +57,12 @@ export default function Faq() {
             ),
         ],
         "Работа сервиса": [
-            card("Вопрос", "Ответ")
+            card("Вы сохраняете копию моих обработанных файлов?", `<b>Да.</b> Пока ваши файлы находятся на наших серверах, они строго защищены, и никто не может получить к ним доступ, кроме вас и нормоконтролёра. Мы храним файлы на протяжении 2 дней после сдачи, чтобы вы могли их скачать и просмотреть. Сразу после этого они навсегда удаляются с наших серверов. Мы не будем проверять, копировать или анализировать ваши файлы.`),
+            // card("По какому ГОСТу проверяется стаднарт работы?", `Ваша работа проверяется по следующему <a href="">ГОСТу<a/>.`),
+            card("Веб-приложение подчеркивает ошибку где её нет: что мне делать?",
+                `Если веб-приложение подчеркивает ошибку там, где её на самом деле нет, <b>важно</b> рассмотреть контекст и проверить указанное место. Если убедитесь, что ошибки нет, просто наведите курсор на выделенное место и отметьте его. Затем нормоконтролер просмотрит работу и произведёт окончательную проверку, определив наличие или отсутствие ошибки.`),
+            card("Почему пишется, что позиция главы неправильная хотя все главы у меня есть и идут в правильном порядке?",
+                `Проверьте <b>наличие пустых строк</b> с неверными уровнями параграфа (они кстати тоже выделяются как ошибки).`),
         ]
     }
 
@@ -95,8 +101,12 @@ export default function Faq() {
                                     {
                                         cards.map(card => {
                                             return <div key={card.title} id={card.title} className={css.faqCard}>
-                                                <a className={css.faqCard__title} id={card.title}>{card.title}</a>
-                                                <p className={css.faqCard__description} dangerouslySetInnerHTML={{__html: card.description}}></p>
+                                                <div className={css.faqCard__header}>
+                                                    <img src={infoIco} alt={'Иконка заголовка часто задаваемого вопроса'}/>
+                                                    <a className={css.faqCard__title} id={card.title}>{card.title}</a>
+                                                </div>
+                                                <p className={css.faqCard__description}
+                                                   dangerouslySetInnerHTML={{__html: card.description}}></p>
                                             </div>
                                         })
                                     }
