@@ -3,6 +3,7 @@ import ENV from "../../config/ENV.js";
 import AccessForbiddenError from "../errors/AccessForbiddenError.js";
 import NotFoundError from "../errors/NotFoundError.js";
 import InternalServerError from "../errors/InternalServerError.js";
+import UnprocessableEntityError from "../errors/UnprocessableEntityError.js";
 
 export default class AccountsNetworker {
     static async getAccount(accountId){
@@ -61,13 +62,14 @@ export default class AccountsNetworker {
         return await patchAccountEmailResult.json();
     }
 
-    static async patchAccountPassword(accountId, password){
+    static async patchAccountPassword(accountId, oldPassword, newPassword){
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
 
         const raw = JSON.stringify({
-            "password": password
+            "oldPassword": oldPassword,
+            "newPassword": newPassword
         });
 
         const requestOptions = {
@@ -85,13 +87,15 @@ export default class AccountsNetworker {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {
                 case 403:
-                    throw new AccessForbiddenError(`You don't have access to this method`);
+                    throw new AccessForbiddenError(`У вас нет доступа к данному методу`);
                 case 404:
-                    throw new NotFoundError(`User not found`);
+                    throw new NotFoundError(`Пользователь не найден`);
+                case 422:
+                    throw new UnprocessableEntityError('Старый пароль указан неверно');
                 case 500:
-                    throw new InternalServerError(`Something went wrong. Maybe, server made an error or you provided wrong data`);
+                    throw new InternalServerError(`Что-то пошло не так на стороне сервера. Попробуйте снова`);
                 default:
-                    throw new Error(`Getting document has failed with status ${getDocumentResponse.status} and message ${await getDocumentResponse.text()}`)
+                    throw new Error(`Выполнить операцию не удалось`)
             }
         }
     }

@@ -24,11 +24,11 @@ export default class AccountsService {
     static async updateAccountData(accountId, personalData) {
         await AccountsNetworker.patchAccount(accountId, personalData);
         let patchEmailResponse = await AccountsNetworker.patchAccountEmail(accountId, personalData.email);
-        AuthService.authnticateUserByJwtTokensPair(patchEmailResponse);
+        AuthService.authenticateUserByJwtTokensPair(patchEmailResponse);
     }
 
 
-    static async patchAccountPassword(accountId, password) {
-        await AccountsNetworker.patchAccountPassword(accountId, password);
+    static async patchAccountPassword(accountId, oldPassword, newPassword) {
+        await AccountsNetworker.patchAccountPassword(accountId, oldPassword, newPassword);
     }
 }

@@ -94,7 +94,7 @@ export default function StudentProfileDocuments() {
                     <FileUploadButton setIsUploadigFailed={setIsUploadigFailed}
                                       setUploadingFailureReason={setUploadingFailureReason}/>
                     <div className={css.uploadingErrors}>
-                        {isUploadingFailed && <p className={css.uploadingErrors__description}>Не удалось загрузить файл</p>}
+                        {isUploadingFailed && <p className={css.uploadingErrors__description}>{uploadingFailureReason}</p>}
                     </div>
                     <a ref={resultDownloadRef}/>
                 </div>

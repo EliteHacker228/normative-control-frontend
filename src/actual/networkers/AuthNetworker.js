@@ -1,7 +1,12 @@
 import ENV from "../../config/ENV.js";
+import AccessForbiddenError from "../errors/AccessForbiddenError.js";
+import NotFoundError from "../errors/NotFoundError.js";
+import InternalServerError from "../errors/InternalServerError.js";
+import UnauthorizedError from "../errors/UnauthorizedError.js";
+import ConflictError from "../errors/ConflictError.js";
 
 export default class AuthNetworker {
-    static async login(email, password){
+    static async login(email, password) {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
@@ -17,8 +22,16 @@ export default class AuthNetworker {
         };
 
         let loginResponse = await fetch(`${ENV.API_URL}/auth/login`, requestOptions);
-        if(!loginResponse.ok)
-            throw new Error(`Login failed due to: ${loginResponse.statusText}`)
+        if (!loginResponse.ok) {
+            switch (loginResponse.status) {
+                case 401:
+                    throw new UnauthorizedError('Неверный e-mail или пароль');
+                case 500:
+                    throw new InternalServerError(`Не удалось войти. Что-то пошло не так на стороне сервера. Попробуйте снова`);
+                default:
+                    throw new Error(`Не удалось войти. Попробуйте снова`)
+            }
+        }
         return await loginResponse.json();
     }
 
@@ -29,9 +42,7 @@ export default class AuthNetworker {
         const body = JSON.stringify({
             email: email,
             password: password,
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
+            fullName: `${lastName} ${firstName} ${middleName}`,
             academicGroupId: academicGroupId
         });
 
@@ -42,10 +53,16 @@ export default class AuthNetworker {
         };
 
         let registrationResponse = await fetch(`${ENV.API_URL}/auth/register/student`, requestOptions);
-        if(!registrationResponse.ok)
-            throw new Error(`Registration failed due to: ${registrationResponse.statusText}`)
+        if (!registrationResponse.ok) {
+            switch (registrationResponse.status) {
+                case 409:
+                    throw new ConflictError('Пользователь с таким e-mail уже существует');
+                case 500:
+                    throw new InternalServerError(`Регистрация не удалась. Что-то пошло не так на стороне сервера. Попробуйте снова`);
+                default:
+                    throw new Error(`Регистрация не удалась. Попробуйте снова`)
+            }
+        }
         return await registrationResponse.json();
     }
-
-
 }

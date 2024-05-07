@@ -16,7 +16,7 @@ export default class AuthService {
         this._locallyAuthenticateUserByTokensPair(registrationResult);
     }
 
-    static authnticateUserByJwtTokensPair(jwtTokensPair) {
+    static authenticateUserByJwtTokensPair(jwtTokensPair) {
         this._locallyAuthenticateUserByTokensPair(jwtTokensPair);
     }
 

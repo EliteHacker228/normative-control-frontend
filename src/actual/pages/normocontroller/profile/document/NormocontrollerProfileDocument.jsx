@@ -31,13 +31,13 @@ export default function NormocontrollerProfileDocument() {
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
-                        navigate('/errors/403');
+                        navigate('/errors/403', { replace: true });
                         break;
                     case NotFoundError:
-                        navigate('/errors/404');
+                        navigate('/errors/404', { replace: true });
                         break;
                     case InternalServerError:
-                        navigate('/errors/500');
+                        navigate('/errors/500', { replace: true });
                         break;
                 }
             }

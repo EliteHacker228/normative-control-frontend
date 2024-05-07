@@ -90,9 +90,11 @@ export default function StudentProfilePersonal() {
             setPasswordUpdationFailed(false);
             setPasswordUpdationFailureReason('');
 
-            await AccountsService.patchAccountPassword(AuthService.getLocalUserData().id, newPassword);
+            await AccountsService.patchAccountPassword(AuthService.getLocalUserData().id, oldPassword, newPassword);
 
             setPasswordUpdationComplete(true);
+            setOldPassword('');
+            setNewPassword('');
         } catch (e) {
             setPasswordUpdationFailed(true);
             setPasswordUpdationFailureReason(e.message);
@@ -162,7 +164,7 @@ export default function StudentProfilePersonal() {
                         </div>
                         {/*<a className={css.forgotPassword}>Не помню пароль</a>*/}
                         <input className={css.applyButton} disabled={!isPasswordFormCorrect()} type='submit' value={'Изменить'}/>
-                        {passwordUpdationFailed && <p className={css.updateError}>Обновление пароля не удалось</p>}
+                        {passwordUpdationFailed && <p className={css.updateError}>{passwordUpdationFailureReason}</p>}
                         {passwordUpdationComplete && <p className={css.updateSuccess}>Пароль успешно обновлен!</p>}
                     </form>
                 </div>

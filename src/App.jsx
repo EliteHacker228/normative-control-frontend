@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 
 // import Welcome from "./legacy/pages/welcome/Welcome.jsx";
 // import Progress from "./legacy/pages/uploading/Progress.jsx";
@@ -19,9 +19,14 @@ import Error500 from "./actual/pages/common/errors/Error500.jsx";
 import StudentResult from "./actual/pages/student/result/StudentResult.jsx";
 import StudentProfileDocuments from "./actual/pages/student/profile/documents/StudentProfileDocuments.jsx";
 import Faq from "./actual/pages/common/faq/Faq.jsx";
-import NormocontrollerProfilePersonal from "./actual/pages/normocontroller/profile/personal/NormocontrollerProfilePersonal.jsx";
-import NormocontrollerProfileDocuments from "./actual/pages/normocontroller/profile/documents/NormocontrollerProfileDocuments.jsx";
-import NormocontrollerProfileDocument from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
+import NormocontrollerProfilePersonal
+    from "./actual/pages/normocontroller/profile/personal/NormocontrollerProfilePersonal.jsx";
+import NormocontrollerProfileDocuments
+    from "./actual/pages/normocontroller/profile/documents/NormocontrollerProfileDocuments.jsx";
+import NormocontrollerProfileDocument
+    from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
+import AuthService from "./actual/services/AuthService.js";
+import Roles from "./actual/domain/users/Roles.js";
 
 function App() {
     useEffect(() => {
@@ -41,26 +46,67 @@ function App() {
                 <Route path='/' element={<Welcome/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/registration' element={<Registration/>}/>
+
+
                 <Route path='/faq' element={<Faq/>}/>
 
-                <Route path='/profile/student/personal' element={<StudentProfilePersonal/>}/>
-                <Route path='/profile/student/documents' element={<StudentProfileDocuments/>}/>
-                <Route path='/progress' element={<StudentProgress/>}/>
+                <Route path='/profile/student/personal' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProfilePersonal/>
+                    </RoleSecuredRoute>
+                }/>
+                <Route path='/profile/student/documents' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProfileDocuments/>
+                    </RoleSecuredRoute>
+                }/>
+                <Route path='/progress' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProgress/>
+                    </RoleSecuredRoute>
+                }/>
                 {/*TODO: Перенести в /document*/}
-                <Route path='/result' element={<StudentResult/>}/>
+                <Route path='/result' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentResult/>
+                    </RoleSecuredRoute>
+                }/>
 
-                <Route path='/profile/normocontroller/personal' element={<NormocontrollerProfilePersonal/>}/>
-                <Route path='/profile/normocontroller/documents' element={<NormocontrollerProfileDocuments/>}/>
+                <Route path='/profile/normocontroller/personal' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfilePersonal/>
+                    </RoleSecuredRoute>
+
+                }/>
+                <Route path='/profile/normocontroller/documents' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfileDocuments/>
+                    </RoleSecuredRoute>
+
+                }/>
                 {/*TODO: Перенести в /document*/}
-                <Route path='/profile/normocontroller/document' element={<NormocontrollerProfileDocument/>}/>
+                <Route path='/profile/normocontroller/document' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfileDocument/>
+                    </RoleSecuredRoute>
+
+                }/>
 
                 <Route path='/errors/403' element={<Error403/>}/>
-                <Route path='/*' element={<Navigate to='/errors/404'/>}/>
+                <Route path='/*' element={<Navigate to='/errors/404' replace/>}/>
                 <Route path='/errors/404' element={<Error404/>}/>
                 <Route path='/errors/500' element={<Error500/>}/>
             </Routes>
         </BrowserRouter>
     )
+}
+
+function RoleSecuredRoute({targetRole, children}) {
+    if (AuthService.isUserLocallyAuthenticated() && targetRole === AuthService.getLocalUserData().role) {
+        return children;
+    } else {
+        return <Navigate to={'/errors/403'} replace/>;
+    }
 }
 
 export default App

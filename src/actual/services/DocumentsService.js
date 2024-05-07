@@ -16,10 +16,10 @@ export default class DocumentsService {
         let fileExtension = documentUploadingDto.documentName.split('.').at(-1);
 
         if (fileSize > _10MB) {
-            throw new FileIsTooBigError(`File is too big. Maximal size is 10 MB, and your file's size is ${fileSize}`);
+            throw new FileIsTooBigError(`Максимально допустимый объём файла 10 МБ`);
         }
         if (fileExtension !== 'docx') {
-            throw new WrongFileExtensionError(`Wrong file extension. Needed .docx, and your file's extension is ${fileExtension}`);
+            throw new WrongFileExtensionError(`Допускаются только файлы в формате .docx`);
         }
 
         let documentUploadingResult = await DocumentsNetworker.sendDocumentToVerification(documentUploadingDto);

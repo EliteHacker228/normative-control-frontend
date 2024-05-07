@@ -101,12 +101,11 @@ export default function Registration() {
         return CredentialsValidator.validateRegistrationForm({
             email,
             firstName,
-            lastName,
             middleName,
+            lastName,
             academicGroupId,
             password,
             passwordRepetition,
-            isEulaAccepted
         });
     };
 
@@ -122,7 +121,7 @@ export default function Registration() {
             <div className={css.registration}>
                 <p className={css.registration__header}>Регистрация</p>
                 <form className={css.registrationForm} onSubmit={onRegistrationSubmit}>
-                    <input className={css.registrationForm__textInput} type='email' placeholder='E-mail' value={email}
+                    <input className={css.registrationForm__textInput} type='email' placeholder='E-mail @urfu.me или @urfu.ru' value={email}
                            onInput={onEmailInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
                     <input className={css.registrationForm__textInput} type='text' placeholder='Имя' value={firstName}
@@ -151,6 +150,8 @@ export default function Registration() {
                            onInput={onPasswordRepetitionInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
 
+                    {/*На момент тестирования не нужно, но после внедрения будет использоваться*/}
+
                     {/*<div className={css.labeledCheckbox}>*/}
                     {/*    <div className={css.labeledCheckbox__content}>*/}
                     {/*        <input className={css.labeledCheckbox__checkbox} type='checkbox' checked={isEulaAccepted}*/}
@@ -165,7 +166,7 @@ export default function Registration() {
                 </form>
                 <div className={css.registrationErrors}>
                     {isRegistrationFailed &&
-                        <div className={css.registrationErrors__description}>Регистрация не удалась</div>}
+                        <div className={css.registrationErrors__description}>{registrationFailureReason}</div>}
                 </div>
             </div>
             <Footer/>

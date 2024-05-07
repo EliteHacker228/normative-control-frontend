@@ -39,11 +39,10 @@ export default function Login() {
         try {
             setIsAuthenticationFailed(false);
             setAuthenticationFailureReason('');
-
             await AuthService.authenticateUserByEmailAndPassword(email, password);
         } catch (error) {
             setIsAuthenticationFailed(true);
-            setAuthenticationFailureReason('Не удалось войти');
+            setAuthenticationFailureReason(error.message);
             return;
         }
         navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
@@ -63,6 +62,8 @@ export default function Login() {
                            onInput={onEmailInput}/>
                     <input className={css.loginForm__textInput} type='password' placeholder='Пароль' value={password}
                            onInput={onPasswordInput}/>
+
+                    {/*На момент тестирования не нужно, но после внедрения будет использоваться*/}
 
                     {/*<div className={css.labeledCheckbox}>*/}
                     {/*    <div className={css.labeledCheckbox__content}>*/}
@@ -88,7 +89,7 @@ export default function Login() {
                 </form>
                 <div className={css.loginErrors}>
                     {isAuthenticationFailed &&
-                        <div className={css.loginErrors__description}>Вход в систему не удался</div>}
+                        <div className={css.loginErrors__description}>{authenticationFailureReason}</div>}
                 </div>
             </div>
             <Footer/>
