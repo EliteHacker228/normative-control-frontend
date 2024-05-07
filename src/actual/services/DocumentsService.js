@@ -23,7 +23,8 @@ export default class DocumentsService {
         }
 
         let documentUploadingResult = await DocumentsNetworker.sendDocumentToVerification(documentUploadingDto);
-        return Result.fromPlainObject(documentUploadingResult);
+        console.log(documentUploadingResult);
+        return Document.fromPlainObject(documentUploadingResult);
     }
 
     static async getDocumentVerificationResult(documentId) {
