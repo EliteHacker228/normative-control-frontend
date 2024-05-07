@@ -1,4 +1,5 @@
 import Student from "../users/Student.js";
+import Result from "./Result.js";
 import plainObject from "postcss";
 
 export default class Document {
@@ -10,8 +11,9 @@ export default class Document {
     #verificationDate;
     #reported;
     #reportedMistakesIds;
+    #result;
 
-    constructor(id, student, fileName, documentVerdict, comment, verificationDate, reported, reportedMistakesIds) {
+    constructor(id, student, fileName, documentVerdict, comment, verificationDate, reported, reportedMistakesIds, result) {
         this.#id = id;
         this.#student = student;
         this.#fileName = fileName;
@@ -20,6 +22,7 @@ export default class Document {
         this.#verificationDate = verificationDate;
         this.#reported = reported;
         this.#reportedMistakesIds = reportedMistakesIds;
+        this.#result = result;
     }
 
     static fromPlainObject(plainObject) {
@@ -31,7 +34,8 @@ export default class Document {
             plainObject.comment,
             plainObject.verificationDate,
             plainObject.reported,
-            plainObject.reportedMistakesIds
+            plainObject.reportedMistakesIds,
+            Result.fromPlainObject(plainObject.result)
         );
     }
 
@@ -66,5 +70,9 @@ export default class Document {
 
     get reportedMistakesIds() {
         return this.#reportedMistakesIds;
+    }
+
+    get result() {
+        return this.#result;
     }
 }

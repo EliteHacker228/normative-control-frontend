@@ -2,14 +2,12 @@ import Document from "./Document.js";
 
 export default class Result {
     #id;
-    #document;
     #verificationStatus;
     #description;
     #mistakeCount;
 
-    constructor(id, document, verificationStatus, description, mistakeCount) {
+    constructor(id, verificationStatus, description, mistakeCount) {
         this.#id = id;
-        this.#document = document;
         this.#verificationStatus = verificationStatus;
         this.#description = description;
         this.#mistakeCount = mistakeCount;
@@ -18,7 +16,6 @@ export default class Result {
     static fromPlainObject(plainObject) {
         return new Result(
             plainObject.id,
-            Document.fromPlainObject(plainObject.document),
             plainObject.verificationStatus,
             plainObject.description,
             plainObject.mistakeCount
@@ -27,10 +24,6 @@ export default class Result {
 
     get id() {
         return this.#id;
-    }
-
-    get document() {
-        return this.#document;
     }
 
     get verificationStatus() {
