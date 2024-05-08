@@ -1,6 +1,5 @@
 import Student from "../users/Student.js";
 import Result from "./Result.js";
-import plainObject from "postcss";
 
 export default class Document {
     #id;

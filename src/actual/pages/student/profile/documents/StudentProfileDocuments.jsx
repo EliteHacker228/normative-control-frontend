@@ -13,6 +13,7 @@ import documentAcceptedIco from './static/document_accepted_ico.svg';
 import documentRejectedIco from './static/document_rejected.svg';
 import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators.js";
 
 
 export default function StudentProfileDocuments() {
@@ -31,28 +32,6 @@ export default function StudentProfileDocuments() {
         )();
     }, []);
 
-    const getDocumentVerdictIco = (document) => {
-        switch (document.documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return documentAcceptedIco;
-            case Verdicts.REJECTED:
-                return documentRejectedIco;
-            case Verdicts.NOT_CHECKED:
-                return documentNotCheckedIco;
-        }
-    };
-
-    const getDocumentVerdictTitle = (document) => {
-        switch (document.documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return 'Принята';
-            case Verdicts.REJECTED:
-                return 'Отклонена';
-            case Verdicts.NOT_CHECKED:
-                return 'Не проверена';
-        }
-    };
-
     const onDownloadClick = async (e) => {
         e.preventDefault();
         let documentId = e.target.parentElement.parentElement.parentElement.id;
@@ -70,31 +49,47 @@ export default function StudentProfileDocuments() {
             <div className={css.studentDocuments}>
                 <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
                 <div className={css.documentsList}>
-                    {documents.length === 0 && <p className={css.documentsList__placeholder}>Вы пока не загрузжали работы на проверку</p>}
-                    {documents.map((document, index) => {
-                        return (
-                            <NavLink to={`/result?documentId=${document.id}`} key={index} id={document.id}
-                                     className={css.documentNode} title={'Просмотреть результат проверки работы'}>
-                                <div to={`/result?documentId=${document.id}`}
-                                     className={css.documentNode__description}>{document.fileName}</div>
+                    {documents.length === 0 &&
+                        <p className={css.documentsList__placeholder}>Вы пока не загрузжали работы на проверку</p>}
+                    {documents.sort((a, b) => new Date(b.verificationDate).getTime() - new Date(a.verificationDate).getTime())
+                        .map((document, index) => {
+                            return (
+                                <NavLink to={`/result?documentId=${document.id}`} key={index} id={document.id}
+                                         className={css.documentNode} title={'Просмотреть результат проверки работы'}>
 
-                                <div className={css.documentNode__buttons}>
-                                    <div className={css.documentNode__status} title={getDocumentVerdictTitle(document)}>
-                                        <img src={getDocumentVerdictIco(document)} alt={'Статус работы'}/>
+                                    <div className={css.documentNode__header}>
+                                        <div to={`/result?documentId=${document.id}`}
+                                             className={css.documentNode__description}>{document.fileName}</div>
+                                        <div
+                                            className={css.documentNode__description}>{new Date(document.verificationDate).toLocaleString("ru-RU", {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                        })}</div>
                                     </div>
-                                    <div className={css.documentNode__button} onClick={onDownloadClick} title={'Скачать работу'}>
-                                        <img src={downloadIco} alt={'Скачать работу'}/>
+
+                                    <div className={css.documentNode__buttons}>
+                                        <div className={css.documentNode__status}
+                                             title={DocumentVerdictTranslators.getDocumentVerdictTitle(document)}>
+                                            <img src={DocumentVerdictTranslators.getDocumentVerdictIco(document)} alt={'Статус работы'}/>
+                                        </div>
+                                        <div className={css.documentNode__button} onClick={onDownloadClick}
+                                             title={'Скачать работу'}>
+                                            <img src={downloadIco} alt={'Скачать работу'}/>
+                                        </div>
                                     </div>
-                                </div>
-                            </NavLink>
-                        );
-                    })}
+                                </NavLink>
+                            );
+                        })}
                 </div>
                 <div className={css.uploading}>
                     <FileUploadButton setIsUploadigFailed={setIsUploadigFailed}
                                       setUploadingFailureReason={setUploadingFailureReason}/>
                     <div className={css.uploadingErrors}>
-                        {isUploadingFailed && <p className={css.uploadingErrors__description}>{uploadingFailureReason}</p>}
+                        {isUploadingFailed &&
+                            <p className={css.uploadingErrors__description}>{uploadingFailureReason}</p>}
                     </div>
                     <a ref={resultDownloadRef}/>
                 </div>

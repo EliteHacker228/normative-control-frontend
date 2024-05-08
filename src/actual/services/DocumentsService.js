@@ -23,7 +23,6 @@ export default class DocumentsService {
         }
 
         let documentUploadingResult = await DocumentsNetworker.sendDocumentToVerification(documentUploadingDto);
-        console.log(documentUploadingResult);
         return Document.fromPlainObject(documentUploadingResult);
     }
 
@@ -38,10 +37,9 @@ export default class DocumentsService {
     static async getDocumentHtmlWithMistakesList(documentId) {
         let getDocumentResult = await DocumentsNetworker.getDocumentByIdOfType(documentId, DocumentTypes.HTML);
         let documentResultHtml = await getDocumentResult.text();
+        let renderSettings = `<div class='render-settings'><p>Render settings</p><label><input  type="checkbox" onchange="document.querySelector('.container').classList.toggle('bordered');" checked>Hide borders</label></div>`;
+        documentResultHtml = documentResultHtml.replace(renderSettings, '');
         let mistakes = eval(documentResultHtml.slice(documentResultHtml.indexOf('<script>') + 8, documentResultHtml.indexOf('</script>')) + ';mistakes();')
-
-        console.log(mistakes);
-
         return {
             "documentHtml": documentResultHtml,
             "documentMistakes": mistakes
@@ -66,6 +64,16 @@ export default class DocumentsService {
         return await getDocumentResult.json();
     }
 
+    static async reportDocumentByIdWithMistake(documentId, mistakeId) {
+        let reportDocumentResponse = await DocumentsNetworker.reportDocumentByIdWithMistake(documentId, mistakeId);
+        return reportDocumentResponse;
+    }
+
+    static async unreportDocumentByIdWithMistake(documentId, mistakeId) {
+        let reportDocumentResponse = await DocumentsNetworker.unreportDocumentByIdWithMistake(documentId, mistakeId);
+        return reportDocumentResponse;
+    }
+
     static async getDocuments() {
         let getDocumentsResult = await DocumentsNetworker.getDocuments();
         return getDocumentsResult.map(document => Document.fromPlainObject(document));
@@ -76,7 +84,7 @@ export default class DocumentsService {
         return Document.fromPlainObject(setDocumentVerdictResult);
     }
 
-    static async getDocumentsListCsv(){
+    static async getDocumentsListCsv() {
         let documentsListCsv = await DocumentsNetworker.getDocumentsCsv();
         return documentsListCsv;
     }

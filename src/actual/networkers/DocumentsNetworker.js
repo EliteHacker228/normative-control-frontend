@@ -102,6 +102,46 @@ export default class DocumentsNetworker {
         return await documentsCsvResponse.text();
     }
 
+    static async reportDocumentByIdWithMistake(documentId, mistakeId) {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const body = JSON.stringify({
+            "mistakeId": mistakeId
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: headers,
+            body: body
+        };
+
+        let reportDocumentResponse = await fetch(`${ENV.API_URL}/documents/${documentId}/report`, requestOptions);
+        await this._handleResponseStatus(reportDocumentResponse);
+        return await reportDocumentResponse.json();
+    }
+
+    static async unreportDocumentByIdWithMistake(documentId, mistakeId) {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const body = JSON.stringify({
+            "mistakeId": mistakeId
+        });
+
+        const requestOptions = {
+            method: "DELETE",
+            headers: headers,
+            body: body
+        };
+
+        let unreportDocumentResponse = await fetch(`${ENV.API_URL}/documents/${documentId}/report`, requestOptions);
+        await this._handleResponseStatus(unreportDocumentResponse);
+        return await unreportDocumentResponse.json();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {

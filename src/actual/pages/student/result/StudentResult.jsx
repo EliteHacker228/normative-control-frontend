@@ -17,6 +17,7 @@ import searchIco from './static/searchIco.svg';
 import showCommentIco from './static/showCommentIco.svg';
 import hideCommentIco from './static/hideCommentIco.svg';
 import Footer from "../../../commonComponents/footer/Footer.jsx";
+import Document from "../../../domain/documents/Document.js";
 
 export default function StudentResult() {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function StudentResult() {
     const [documentHtml, setDocumentHtml] = useState('');
     const [documentMistakes, setDocumentMistakes] = useState([]);
     const [reportedMistakesIds, setReportedMistakesIds] = useState(new Set());
+    const [documentNode, setDocumentNode] = useState(new Document());
 
     const addMistakeId = (mistakeId) => {
         setReportedMistakesIds(prev => new Set(prev).add(mistakeId));
@@ -72,13 +74,16 @@ export default function StudentResult() {
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
-                        navigate('/errors/403', { replace: true });
+                        navigate('/errors/403', {replace: true});
                         break;
                     case NotFoundError:
-                        navigate('/errors/404', { replace: true });
+                        navigate('/errors/404', {replace: true});
                         break;
                     case InternalServerError:
-                        navigate('/errors/500', { replace: true });
+                        navigate('/errors/500', {replace: true});
+                        break;
+                    default:
+                        console.log(error);
                         break;
                 }
             }
@@ -88,65 +93,60 @@ export default function StudentResult() {
     const getPageData = async () => {
         let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
         setDocumentHtml(documentHtmlWithMistakes.documentHtml);
+        console.log(documentHtmlWithMistakes.documentHtml);
         setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
-
-        let resultNode = await DocumentsService.getDocumentVerificationResult(documentId);
-        let documentNode = resultNode.document;
-        setIsReported(documentNode.reported);
-        setDocumentComment(documentNode.comment ?? '');
-        setIsCommentAvailable(Boolean(documentNode.comment));
-        setDocumentVerdict(documentNode.documentVerdict);
-        setReportedMistakesIds(new Set(documentNode.reportedMistakesIds));
         setMistakeCount(documentHtmlWithMistakes.documentMistakes.length);
+
+        let resultNode = await DocumentsService.getDocumentNode(documentId);
+        resultNode = Document.fromPlainObject(resultNode);
+        setDocumentNode(resultNode);
+        setIsReported(resultNode.reported);
+        setIsCommentAvailable(Boolean(resultNode.comment));
+        setDocumentComment(resultNode.comment ?? '');
+
+        let documentVerdictForUser = getDocumentVerdictForUser(resultNode, documentHtmlWithMistakes.documentMistakes.length, resultNode.reportedMistakesIds.length);
+        setDocumentVerdict(documentVerdictForUser.verdict);
+        setIsReportAvailable(documentVerdictForUser.reportsAvailable);
+        setReportedMistakesIds(new Set(resultNode.reportedMistakesIds));
     };
 
-    const getDocumentVerdictIco = (documentVerdict) => {
-        if(isReported){
-            switch (documentVerdict) {
-                case Verdicts.ACCEPTED:
-                    return documentAcceptedIco;
-                case Verdicts.REJECTED:
-                    return documentRejectedIco;
-                case Verdicts.NOT_CHECKED:
-                    return documentRejectedIco;
-            }
-        }else{
-            switch (documentVerdict) {
-                case Verdicts.ACCEPTED:
-                    return documentAcceptedIco;
-                case Verdicts.REJECTED:
-                    return documentNotCheckedIco;
-                case Verdicts.NOT_CHECKED:
-                    return documentNotCheckedIco;
+    const getDocumentVerdictForUser = (document, mistakesLength, reportedMistakesLength) => {
+        if (mistakesLength === 0) {
+            return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
+        } else {
+            if (document.documentVerdict === Verdicts.NOT_CHECKED) {
+                if (reportedMistakesLength === 0) {
+                    return {verdict: Verdicts.REJECTED, reportsAvailable: true};
+                } else {
+                    return {verdict: Verdicts.NOT_CHECKED, reportsAvailable: true};
+                }
+            } else if (document.documentVerdict === Verdicts.ACCEPTED) {
+                return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
+            } else if (document.documentVerdict === Verdicts.REJECTED) {
+                return {verdict: Verdicts.REJECTED, reportsAvailable: false};
             }
         }
     };
 
+    const getDocumentVerdictIco = (documentVerdict) => {
+        switch (documentVerdict) {
+            case Verdicts.ACCEPTED:
+                return documentAcceptedIco;
+            case Verdicts.REJECTED:
+                return documentRejectedIco;
+            case Verdicts.NOT_CHECKED:
+                return documentNotCheckedIco;
+        }
+    };
+
     const getDocumentVerdictTitle = (documentVerdict) => {
-        if(isReported){
-            switch (documentVerdict) {
-                case Verdicts.ACCEPTED:
-                    // setIsReportAvailable(false);
-                    return 'Работа принята';
-                case Verdicts.REJECTED:
-                    // setIsReportAvailable(false);
-                    return 'Работа отклонена';
-                case Verdicts.NOT_CHECKED:
-                    // setIsReportAvailable(true);
-                    return 'Работа не проверена';
-            }
-        }else{
-            switch (documentVerdict) {
-                case Verdicts.ACCEPTED:
-                    // setIsReportAvailable(false);
-                    return 'Работа принята';
-                case Verdicts.REJECTED:
-                    // setIsReportAvailable(true);
-                    return 'Работа не проверена';
-                case Verdicts.NOT_CHECKED:
-                    // setIsReportAvailable(false);
-                    return 'Работа отклонена';
-            }
+        switch (documentVerdict) {
+            case Verdicts.ACCEPTED:
+                return 'Работа принята';
+            case Verdicts.REJECTED:
+                return 'Работа отклонена';
+            case Verdicts.NOT_CHECKED:
+                return 'Работа не проверена';
         }
     };
 
@@ -181,38 +181,61 @@ export default function StudentResult() {
     //     }
     // };
 
-    const scrollToElementWithId = (mistakeId) => {
+    const scrollAndMarkElementWithId = (mistakeId) => {
         let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
         if (elms.length === 0) {
             return;
         }
 
+        let elm;
         if (elms.length === 2) {
-            if (elms[0].innerText === '' && elms[1].innerText === '')
-                return elms[0].scrollIntoView();
+            if (elms[0].innerText === '' && elms[1].innerText === '') {
+                elm = elms[0].scrollIntoView();
+            }
 
-            if (elms[0].innerText === '')
-                return elms[1].scrollIntoView();
+            if (elms[0].innerText === '') {
+                elm = elms[1].scrollIntoView();
+            }
 
-            if (elms[1].innerText === '')
-                return elms[0].scrollIntoView();
+            if (elms[1].innerText === '') {
+                elm = elms[0].scrollIntoView();
+            }
         }
 
-        let elm = elms[0];
-        while (elm.nodeName === 'SPAN')
-            elm = elm.parentNode
+        elm = elms[0];
+        while (elm.nodeName === 'SPAN') {
+            elm = elm.parentNode;
+        }
 
+        elm.style.borderRadius = '5px';
+        elm.style.backgroundColor = 'rgba(255, 0, 40, 0.1)';
+        elm.style.transition = "background-color 0.2s";
+        setTimeout(() => {
+            elm.style.transition = "background-color 0.2s";
+            elm.style.border = 'none';
+            elm.style.backgroundColor = 'white';
+        }, 2000);
         return elm.scrollIntoView();
     };
 
-    const reportMistake = async (mistakeId) => {
-        // await DocumentsService.reportDocumentByIdWithMistakeId(documentId, mistakeId);
-        addMistakeId(mistakeId);
+    const reportMistake = async (documentId, mistakeId) => {
+        try {
+            await DocumentsService.reportDocumentByIdWithMistake(documentId, mistakeId);
+            await getPageData();
+            addMistakeId(mistakeId);
+        } catch (e) {
+            removeMistakeId(mistakeId);
+        }
     };
 
-    const unreportMistake = async (mistakeId) => {
-        // await DocumentsService.unreportDocumentByIdWithMistake(documentId, mistakeId);
-        removeMistakeId(mistakeId);
+    const unreportMistake = async (documentId, mistakeId) => {
+        try {
+            await DocumentsService.unreportDocumentByIdWithMistake(documentId, mistakeId);
+            await getPageData();
+            removeMistakeId(mistakeId);
+        } catch (e) {
+            addMistakeId(mistakeId);
+        }
     };
 
     return (
@@ -251,15 +274,16 @@ export default function StudentResult() {
                                             <p>{mistake.description}</p>
                                             <div className={css.mistake__buttons}>
                                                 <img className={css.mistake__button}
-                                                     onClick={() => scrollToElementWithId(mistake.id)} src={searchIco}
+                                                     onClick={() => scrollAndMarkElementWithId(mistake.id)}
+                                                     src={searchIco}
                                                      alt={'Перейти к ошибке'}/>
                                                 {isReportAvailable && hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={unreportIco}
-                                                         onClick={() => unreportMistake(mistake.id)}
+                                                         onClick={() => unreportMistake(documentId, mistake.id)}
                                                          alt={'Отменить ошибку'}/>}
                                                 {isReportAvailable && !hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={reportIco}
-                                                         onClick={() => reportMistake(mistake.id)}
+                                                         onClick={() => reportMistake(documentId, mistake.id)}
                                                          alt={'Доложить о ошибке'}/>}
                                             </div>
                                         </div>);

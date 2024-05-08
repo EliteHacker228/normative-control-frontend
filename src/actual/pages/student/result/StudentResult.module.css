@@ -208,3 +208,11 @@
     background-color: var(--default-white);
     border: none;
 }
+
+.selectedMistake {
+    border-style: solid;
+    border-radius: 5px;
+    border-color: red;
+    border-width: 2px;
+    background-color: rgba(255, 0, 40, 0.1);
+}
