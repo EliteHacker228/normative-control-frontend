@@ -13,7 +13,7 @@ import documentAcceptedIco from './static/document_accepted_ico.svg';
 import documentRejectedIco from './static/document_rejected.svg';
 import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
-import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators.js";
+import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 
 
 export default function StudentProfileDocuments() {
@@ -72,8 +72,8 @@ export default function StudentProfileDocuments() {
 
                                     <div className={css.documentNode__buttons}>
                                         <div className={css.documentNode__status}
-                                             title={DocumentVerdictTranslators.getDocumentVerdictTitle(document)}>
-                                            <img src={DocumentVerdictTranslators.getDocumentVerdictIco(document)} alt={'Статус работы'}/>
+                                             title={DocumentVerdictTranslators.getDocumentVerdictTitle(document.documentVerdict)}>
+                                            <img src={DocumentVerdictTranslators.getDocumentVerdictIco(document.documentVerdict)} alt={'Статус работы'}/>
                                         </div>
                                         <div className={css.documentNode__button} onClick={onDownloadClick}
                                              title={'Скачать работу'}>

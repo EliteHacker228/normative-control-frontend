@@ -116,6 +116,16 @@
     padding: 20px;
 }
 
+.mistakes__placeholder {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: var(--info-dark-blue-light);
+}
+
 .mistake {
     border: 1px solid #1e4391;
     border-radius: 5px;

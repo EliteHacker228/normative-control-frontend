@@ -18,6 +18,7 @@ import showCommentIco from './static/showCommentIco.svg';
 import hideCommentIco from './static/hideCommentIco.svg';
 import Footer from "../../../commonComponents/footer/Footer.jsx";
 import Document from "../../../domain/documents/Document.js";
+import DocumentVerdictTranslators from "../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 
 export default function StudentResult() {
     const navigate = useNavigate();
@@ -104,51 +105,54 @@ export default function StudentResult() {
         setIsCommentAvailable(Boolean(resultNode.comment));
         setDocumentComment(resultNode.comment ?? '');
 
-        let documentVerdictForUser = getDocumentVerdictForUser(resultNode, documentHtmlWithMistakes.documentMistakes.length, resultNode.reportedMistakesIds.length);
+        // Применить когда в БД будет актуальное значение ошибок
+        // let documentVerdictForUser = DocumentVerdictTranslators.getDocumentVerdictForUser(resultNode, documentHtmlWithMistakes.documentMistakes.length, resultNode.reportedMistakesIds.length);
+
+        let documentVerdictForUser = DocumentVerdictTranslators.getDocumentVerdictForUser(resultNode.documentVerdict);
         setDocumentVerdict(documentVerdictForUser.verdict);
         setIsReportAvailable(documentVerdictForUser.reportsAvailable);
         setReportedMistakesIds(new Set(resultNode.reportedMistakesIds));
     };
 
-    const getDocumentVerdictForUser = (document, mistakesLength, reportedMistakesLength) => {
-        if (mistakesLength === 0) {
-            return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
-        } else {
-            if (document.documentVerdict === Verdicts.NOT_CHECKED) {
-                if (reportedMistakesLength === 0) {
-                    return {verdict: Verdicts.REJECTED, reportsAvailable: true};
-                } else {
-                    return {verdict: Verdicts.NOT_CHECKED, reportsAvailable: true};
-                }
-            } else if (document.documentVerdict === Verdicts.ACCEPTED) {
-                return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
-            } else if (document.documentVerdict === Verdicts.REJECTED) {
-                return {verdict: Verdicts.REJECTED, reportsAvailable: false};
-            }
-        }
-    };
+    // const getDocumentVerdictForUser = (document, mistakesLength, reportedMistakesLength) => {
+    //     if (mistakesLength === 0) {
+    //         return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
+    //     } else {
+    //         if (document.documentVerdict === Verdicts.NOT_CHECKED) {
+    //             if (reportedMistakesLength === 0) {
+    //                 return {verdict: Verdicts.REJECTED, reportsAvailable: true};
+    //             } else {
+    //                 return {verdict: Verdicts.NOT_CHECKED, reportsAvailable: true};
+    //             }
+    //         } else if (document.documentVerdict === Verdicts.ACCEPTED) {
+    //             return {verdict: Verdicts.ACCEPTED, reportsAvailable: false};
+    //         } else if (document.documentVerdict === Verdicts.REJECTED) {
+    //             return {verdict: Verdicts.REJECTED, reportsAvailable: false};
+    //         }
+    //     }
+    // };
 
-    const getDocumentVerdictIco = (documentVerdict) => {
-        switch (documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return documentAcceptedIco;
-            case Verdicts.REJECTED:
-                return documentRejectedIco;
-            case Verdicts.NOT_CHECKED:
-                return documentNotCheckedIco;
-        }
-    };
+    // const getDocumentVerdictIco = (documentVerdict) => {
+    //     switch (documentVerdict) {
+    //         case Verdicts.ACCEPTED:
+    //             return documentAcceptedIco;
+    //         case Verdicts.REJECTED:
+    //             return documentRejectedIco;
+    //         case Verdicts.NOT_CHECKED:
+    //             return documentNotCheckedIco;
+    //     }
+    // };
 
-    const getDocumentVerdictTitle = (documentVerdict) => {
-        switch (documentVerdict) {
-            case Verdicts.ACCEPTED:
-                return 'Работа принята';
-            case Verdicts.REJECTED:
-                return 'Работа отклонена';
-            case Verdicts.NOT_CHECKED:
-                return 'Работа не проверена';
-        }
-    };
+    // const getDocumentVerdictTitle = (documentVerdict) => {
+    //     switch (documentVerdict) {
+    //         case Verdicts.ACCEPTED:
+    //             return 'Работа принята';
+    //         case Verdicts.REJECTED:
+    //             return 'Работа отклонена';
+    //         case Verdicts.NOT_CHECKED:
+    //             return 'Работа не проверена';
+    //     }
+    // };
 
     const onDownloadClick = async () => {
         let documentBlobResult = await DocumentsService.getDocumentDocx(documentId);
@@ -246,10 +250,10 @@ export default function StudentResult() {
                     <div className={css.section}>
                         <h1 className={css.sectionHeader}>Статус работы</h1>
                         <div className={css.documentVerdict}>
-                            <img className={css.documentVerdict__logo} src={getDocumentVerdictIco(documentVerdict)}
-                                 alt={getDocumentVerdictTitle(documentVerdict)}/>
+                            <img className={css.documentVerdict__logo} src={DocumentVerdictTranslators.getDocumentVerdictIco(documentVerdict)}
+                                 alt={DocumentVerdictTranslators.getDocumentVerdictTitle(documentVerdict)}/>
                             <div className={css.documentVerdict__controls} onClick={onChangeCommentVisibility}>
-                                <p className={css.documentVerdict__description}>{getDocumentVerdictTitle(documentVerdict)}</p>
+                                <p className={css.documentVerdict__description}>{DocumentVerdictTranslators.getDocumentVerdictTitle(documentVerdict)}</p>
                                 {isCommentAvailable && !isCommentShowed &&
                                     <img className={css.documentVerdict__commentDisplay} src={showCommentIco}/>}
                                 {isCommentAvailable && isCommentShowed &&
@@ -267,6 +271,8 @@ export default function StudentResult() {
                     <div className={css.section}>
                         <h1 className={css.sectionHeader}>Список ошибок</h1>
                         <div className={css.mistakes}>
+                            {documentMistakes.length === 0 &&
+                                <p className={css.mistakes__placeholder}>В вашей работе нет ошибок</p>}
                             {
                                 documentMistakes.map((mistake, index) => {
                                     return (
