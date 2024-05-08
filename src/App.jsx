@@ -43,9 +43,23 @@ function App() {
                 {/*<Route path='/legacy/profile/*' element={<Profile/>}/>*/}
                 {/*<Route path='/legacy/faq' element={<Faq/>}/>*/}
 
-                <Route path='/' element={<Welcome/>}/>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/registration' element={<Registration/>}/>
+                <Route path='/' element={
+                    <UnauthedRoute>
+                        <Welcome/>
+                    </UnauthedRoute>
+                }/>
+
+                <Route path='/login' element={
+                    <UnauthedRoute>
+                        <Login/>
+                    </UnauthedRoute>
+                }/>
+
+                <Route path='/registration' element={
+                    <UnauthedRoute>
+                        <Registration/>
+                    </UnauthedRoute>
+                }/>
 
 
                 <Route path='/faq' element={<Faq/>}/>
@@ -99,6 +113,14 @@ function App() {
             </Routes>
         </BrowserRouter>
     )
+}
+
+function UnauthedRoute({children}) {
+    if (!AuthService.isUserLocallyAuthenticated()) {
+        return children;
+    } else {
+        return <Navigate to={`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`}/>;
+    }
 }
 
 function RoleSecuredRoute({targetRole, children}) {

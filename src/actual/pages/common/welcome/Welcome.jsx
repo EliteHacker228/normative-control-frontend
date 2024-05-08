@@ -20,7 +20,6 @@ export default function Welcome() {
     return (
         <div>
             <Header/>
-            {AuthService.isUserLocallyAuthenticated() && <Navigate to={`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`}/>}
             <div className={css.welcome}>
                 <div className={css.aboutService}>
                     <div className={css.aboutService__info}>
