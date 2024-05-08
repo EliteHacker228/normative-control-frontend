@@ -54,11 +54,11 @@ export default function StudentProfileDocuments() {
                     {documents.sort((a, b) => new Date(b.verificationDate).getTime() - new Date(a.verificationDate).getTime())
                         .map((document, index) => {
                             return (
-                                <NavLink to={`/result?documentId=${document.id}`} key={index} id={document.id}
+                                <NavLink to={`/profile/student/document?documentId=${document.id}`} key={index} id={document.id}
                                          className={css.documentNode} title={'Просмотреть результат проверки работы'}>
 
                                     <div className={css.documentNode__header}>
-                                        <div to={`/result?documentId=${document.id}`}
+                                        <div to={`/profile/student/document?documentId=${document.id}`}
                                              className={css.documentNode__description}>{document.fileName}</div>
                                         <div
                                             className={css.documentNode__description}>{new Date(document.verificationDate).toLocaleString("ru-RU", {

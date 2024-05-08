@@ -74,13 +74,13 @@ function App() {
                         <StudentProfileDocuments/>
                     </RoleSecuredRoute>
                 }/>
-                <Route path='/progress' element={
+                <Route path='/profile/student/progress' element={
                     <RoleSecuredRoute targetRole={Roles.STUDENT}>
                         <StudentProgress/>
                     </RoleSecuredRoute>
                 }/>
                 {/*TODO: Перенести в /document*/}
-                <Route path='/result' element={
+                <Route path='/profile/student/document' element={
                     <RoleSecuredRoute targetRole={Roles.STUDENT}>
                         <StudentResult/>
                     </RoleSecuredRoute>

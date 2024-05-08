@@ -59,7 +59,7 @@ export default function StudentProgress() {
     }, []);
 
     const onGoToResultClick = () => {
-        navigate(`/result?documentId=${documentId}`);
+        navigate(`/profile/student/document?documentId=${documentId}`);
     };
 
     return (

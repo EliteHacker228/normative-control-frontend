@@ -21,7 +21,7 @@ export default function FileUploadButton({setIsUploadigFailed, setUploadingFailu
             setIsUploadigFailed(true);
             setUploadingFailureReason(error.message);
         }
-        navigate(`/progress?documentId=${documentUploadingResult.id}`);
+        navigate(`/profile/student/progress?documentId=${documentUploadingResult.id}`);
     };
 
     const onFileUploadButtonClick = () => {
