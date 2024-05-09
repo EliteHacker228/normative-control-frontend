@@ -79,6 +79,11 @@ export default class DocumentsService {
         return getDocumentsResult.map(document => Document.fromPlainObject(document));
     }
 
+    static async getActualDocuments() {
+        let getDocumentsResult = await DocumentsNetworker.getActualDocuments();
+        return getDocumentsResult.map(document => Document.fromPlainObject(document));
+    }
+
     static async setDocumentVerdict(documentId, verdict, documentComment) {
         let setDocumentVerdictResult = await DocumentsNetworker.setDocumentVerdictById(documentId, verdict, documentComment);
         return Document.fromPlainObject(setDocumentVerdictResult);

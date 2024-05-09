@@ -1,26 +1,26 @@
-import css from './StudentResult.module.css';
+import css from './StudentDocument.module.css';
 import {useEffect, useRef, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import DocumentsService from "../../../services/DocumentsService.js";
-import AccessForbiddenError from "../../../errors/AccessForbiddenError.js";
-import NotFoundError from "../../../errors/NotFoundError.js";
-import InternalServerError from "../../../errors/InternalServerError.js";
-import Header from "../../../commonComponents/header/Header.jsx";
-import Verdicts from "../../../domain/documents/Verdicts.js";
-import Student from "../../../domain/users/Student.js";
-import documentAcceptedIco from "../profile/documents/static/document_accepted_ico.svg";
-import documentRejectedIco from "../profile/documents/static/document_rejected.svg";
-import documentNotCheckedIco from "../profile/documents/static/document_reported.svg";
+import DocumentsService from "../../../../services/DocumentsService.js";
+import AccessForbiddenError from "../../../../errors/AccessForbiddenError.js";
+import NotFoundError from "../../../../errors/NotFoundError.js";
+import InternalServerError from "../../../../errors/InternalServerError.js";
+import Header from "../../../../commonComponents/header/Header.jsx";
+import Verdicts from "../../../../domain/documents/Verdicts.js";
+import Student from "../../../../domain/users/Student.js";
+import documentAcceptedIco from "../documents/static/document_accepted_ico.svg";
+import documentRejectedIco from "../documents/static/document_rejected.svg";
+import documentNotCheckedIco from "../documents/static/document_reported.svg";
 import reportIco from './static/reportIco.svg';
 import unreportIco from './static/unreportIco.svg';
 import searchIco from './static/searchIco.svg';
 import showCommentIco from './static/showCommentIco.svg';
 import hideCommentIco from './static/hideCommentIco.svg';
-import Footer from "../../../commonComponents/footer/Footer.jsx";
-import Document from "../../../domain/documents/Document.js";
-import DocumentVerdictTranslators from "../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import Document from "../../../../domain/documents/Document.js";
+import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 
-export default function StudentResult() {
+export default function StudentDocument() {
     const navigate = useNavigate();
 
     const resultViewRef = useRef();

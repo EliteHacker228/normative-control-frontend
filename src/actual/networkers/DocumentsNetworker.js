@@ -67,6 +67,20 @@ export default class DocumentsNetworker {
         return await documentsResponse.json();
     }
 
+    static async getActualDocuments() {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let documentsResponse = await fetch(`${ENV.API_URL}/documents/actual`, requestOptions);
+        await this._handleResponseStatus(documentsResponse);
+        return await documentsResponse.json();
+    }
+
     static async setDocumentVerdictById(documentId, verdict, documentComment) {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
