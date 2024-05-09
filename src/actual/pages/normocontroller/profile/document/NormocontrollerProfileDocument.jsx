@@ -7,6 +7,11 @@ import NotFoundError from "../../../../errors/NotFoundError.js";
 import InternalServerError from "../../../../errors/InternalServerError.js";
 import Student from "../../../../domain/users/Student.js";
 import Verdicts from "../../../../domain/documents/Verdicts.js";
+import css from "../../../student/profile/document/StudentDocument.module.css";
+import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import searchIco from "../../../student/profile/document/static/searchIco.svg";
+import whiteDownloadIco from './static/downloadIcoWhite.svg';
+import reportIco from "./static/reportIco.svg";
 
 export default function NormocontrollerProfileDocument() {
     const navigate = useNavigate();
@@ -22,7 +27,14 @@ export default function NormocontrollerProfileDocument() {
     const [documentComment, setDocumentComment] = useState('');
     const [documentVerdict, setDocumentVerdict] = useState(Verdicts.NOT_CHECKED);
 
+    const [reportedMistakesIds, setReportedMistakesIds] = useState(new Set());
+
     const resultDownloadRef = useRef();
+    const resultViewRef = useRef();
+
+    const hasMistakeId = (mistakeId) => {
+        return reportedMistakesIds.has(mistakeId);
+    }
 
     useEffect(() => {
         (async () => {
@@ -31,13 +43,13 @@ export default function NormocontrollerProfileDocument() {
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
-                        navigate('/errors/403', { replace: true });
+                        navigate('/errors/403', {replace: true});
                         break;
                     case NotFoundError:
-                        navigate('/errors/404', { replace: true });
+                        navigate('/errors/404', {replace: true});
                         break;
                     case InternalServerError:
-                        navigate('/errors/500', { replace: true });
+                        navigate('/errors/500', {replace: true});
                         break;
                 }
             }
@@ -47,12 +59,15 @@ export default function NormocontrollerProfileDocument() {
     const getDocumentData = async () => {
         let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
         setDocumentHtml(documentHtmlWithMistakes.documentHtml);
-        setDocumentMistakes(documentHtmlWithMistakes.documentMistakes);
+
         let documentNode = await DocumentsService.getDocumentNode(documentId);
         let student = Student.fromPlainObject(documentNode.student);
         setStudent(student);
         setDocumentComment(documentNode.comment ?? '');
         setDocumentVerdict(documentNode.documentVerdict);
+        let reportedMistakes = new Set(documentNode.reportedMistakesIds);
+        setReportedMistakesIds(reportedMistakes);
+        setDocumentMistakes(documentHtmlWithMistakes.documentMistakes.sort((a, b) => reportedMistakes.has(b.id) - reportedMistakes.has(a.id)));
     };
 
     const onDownloadClick = async () => {
@@ -78,43 +93,127 @@ export default function NormocontrollerProfileDocument() {
         await getDocumentData();
     };
 
+    const scrollAndMarkElementWithId = (mistakeId) => {
+        let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
+        if (elms.length === 0) {
+            return;
+        }
+
+        let elm;
+        if (elms.length === 2) {
+            if (elms[0].innerText === '' && elms[1].innerText === '') {
+                elm = elms[0].scrollIntoView();
+            }
+
+            if (elms[0].innerText === '') {
+                elm = elms[1].scrollIntoView();
+            }
+
+            if (elms[1].innerText === '') {
+                elm = elms[0].scrollIntoView();
+            }
+        }
+
+        elm = elms[0];
+        while (elm.nodeName === 'SPAN') {
+            elm = elm.parentNode;
+        }
+
+        elm.style.borderRadius = '5px';
+        elm.style.backgroundColor = 'rgba(255, 0, 40, 0.1)';
+        elm.style.transition = "background-color 0.2s";
+        setTimeout(() => {
+            elm.style.transition = "background-color 0.2s";
+            elm.style.border = 'none';
+            elm.style.backgroundColor = 'white';
+        }, 2000);
+        return elm.scrollIntoView();
+    };
+
+    const getVerdictClass = (documentVerdict) => {
+        switch (documentVerdict) {
+            case Verdicts.NOT_CHECKED:
+                return `${css.documentVerdict__text} ${css.documentVerdict_notChecked}`;
+            case Verdicts.ACCEPTED:
+                return `${css.documentVerdict__text} ${css.documentVerdict_accepted}`;
+            case Verdicts.REJECTED:
+                return `${css.documentVerdict__text} ${css.documentVerdict_rejected}`;
+        }
+    };
+
     return (
         <div>
             <Header/>
-            <p>Результат проверки работ студента {`${student.lastName} ${student.firstName} ${student.middleName}`}</p>
-            {documentVerdict === Verdicts.NOT_CHECKED && <p>Вы можете принять или отклонить данную работу</p>}
-            {documentVerdict === Verdicts.NOT_CHECKED && <button onClick={onAcceptDocument}>Принять</button>}
-            {documentVerdict === Verdicts.NOT_CHECKED && <button onClick={onRejectDocument}>Отклонить</button>}
-            {documentVerdict === Verdicts.NOT_CHECKED &&
-                <textarea placeholder='Комментарий к работе' value={documentComment} onInput={onDocumentCommentInput}/>}
+            <div className={css.studentResult}>
+                <div className={css.section}>
+                    <div className={css.section}>
+                        <h1 className={css.sectionHeader}>Статус работы</h1>
+                        <div className={css.documentVerdict}>
+                            <p className={css.documentVerdict__text}>Результат автоматической проверки работы
+                                студента</p>
+                            <p className={css.documentVerdict__studentName}>{`${student.fullName}`}</p>
+                            <div className={css.documentVerdict__status}>
+                                <p className={getVerdictClass(documentVerdict)}>{DocumentVerdictTranslators.getDocumentVerdictTitle(documentVerdict)}</p>
+                                <img className={css.documentVerdict__logo}
+                                     src={DocumentVerdictTranslators.getDocumentVerdictIco(documentVerdict)}
+                                     alt={DocumentVerdictTranslators.getDocumentVerdictTitle(documentVerdict)}/>
+                            </div>
+                            {
+                                documentVerdict === Verdicts.NOT_CHECKED &&
+                                <p className={css.documentVerdict__text}>Вы можете принять или отклонить данную
+                                    работу</p>
+                            }
+                            <textarea className={css.documentVerdict__comment}
+                                      placeholder='Комментарий к работе' value={documentComment}
+                                      onInput={onDocumentCommentInput}
+                                      disabled={documentVerdict !== Verdicts.NOT_CHECKED}/>
+                            {documentVerdict === Verdicts.NOT_CHECKED &&
+                                <div className={css.documentVerdict__buttons}>
+                                    <button className={css.acceptButton} onClick={onAcceptDocument}>Принять</button>
+                                    <button className={css.rejectButton} onClick={onRejectDocument}>Отклонить</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
 
-            {documentVerdict !== Verdicts.NOT_CHECKED && <p>Данная работа имеет статус {documentVerdict}</p>}
-            {documentVerdict !== Verdicts.NOT_CHECKED &&
-                <div>
-                    <p>Комментарий от нормоконтролера:</p>
-                    <p>{documentComment}</p>
-                </div>}
-
-            <div>
-                <p>Список ошибок</p>
-                <ul>
-                    {
-                        documentMistakes.map((mistake, index) => {
-                            return (
-                                <div id={mistake.id} key={index}>
-                                    <b>{mistake.mistakeReason}</b>
-                                    <p>{mistake.description}</p>
-                                </div>);
-                        })
-                    }
-                </ul>
+                    <div className={css.section}>
+                        <h1 className={css.sectionHeader}>Список ошибок</h1>
+                        <div className={css.mistakes}>
+                            {documentMistakes.length === 0 &&
+                                <p className={css.mistakes__placeholder}>В вашей работе нет ошибок</p>}
+                            {
+                                documentMistakes.map((mistake, index) => {
+                                    return (
+                                        <div className={css.mistake} id={mistake.id} key={index}>
+                                            <p>{mistake.description}</p>
+                                            <div className={css.mistake__buttons}>
+                                                <img className={css.mistake__button}
+                                                     onClick={() => scrollAndMarkElementWithId(mistake.id)}
+                                                     src={searchIco}
+                                                     alt={'Перейти к ошибке'}/>
+                                                {hasMistakeId(mistake.id) &&
+                                                    <img className={css.mistake__button} src={reportIco}
+                                                         onClick={() => scrollAndMarkElementWithId(mistake.id)}
+                                                         alt={'Доложить о ошибке'}/>}
+                                            </div>
+                                        </div>);
+                                })
+                            }
+                        </div>
+                        <div onClick={onDownloadClick} className={css.downloadButton}>
+                            <p>Скачать работу</p>
+                            <img className={css.downloadButton__arrow} src={whiteDownloadIco} alt={'Скачать работу'}/>
+                        </div>
+                        <a ref={resultDownloadRef}/>
+                    </div>
+                </div>
+                <div className={css.section}>
+                    <h1 className={css.sectionHeader}>Просмотр документа</h1>
+                    <div className={css.documentViewer}>
+                        <iframe className={css.documentViewer__document} ref={resultViewRef} srcDoc={documentHtml}/>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p>Просмотр документа</p>
-                <iframe srcDoc={documentHtml}/>
-            </div>
-            <button onClick={onDownloadClick}>Скачать работу</button>
-            <a ref={resultDownloadRef}/>
         </div>
     );
 }

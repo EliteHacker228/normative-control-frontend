@@ -185,11 +185,11 @@ export default function NormocontrollerProfileDocuments() {
                         </div>
                     </div>
                     <div className={css.downloadCsv}>
-                        <div className={css.downloadCsvButton}>
-                            <div onClick={onDocumentsListCsvDownload}>Скачать
+                        <div className={css.downloadCsvButton} onClick={onDocumentsListCsvDownload}>
+                            <p>Скачать
                                 список
                                 всех работ
-                            </div>
+                            </p>
                             <img src={whiteDownloadIco} alt={'Скачать'}/>
                         </div>
                         <a ref={resultDownloadRef}/>

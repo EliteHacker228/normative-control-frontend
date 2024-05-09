@@ -92,7 +92,7 @@ export default class DocumentsNetworker {
         });
 
         const requestOptions = {
-            method: "PATCH",
+            method: "POST",
             headers: headers,
             body: body
         };

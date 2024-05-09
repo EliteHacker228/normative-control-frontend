@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 64px;
     margin-bottom: 28.07px;
-    height: max(calc(100vh - 92px - 120px - 64px), 1024px);
+    /*height: max(calc(100vh - 92px - 120px - 64px), 1024px);*/
 
     display: flex;
     gap: 66px;
@@ -21,21 +21,93 @@
 
 .documentVerdict {
     display: flex;
-    gap: 40px;
+    gap: 4px;
+    flex-direction: column;
+    padding: 10px;
     justify-content: center;
     align-items: center;
 
     width: 579px;
-    height: 98px;
+    /*height: 98px;*/
     border: 1px solid var(--info-dark-blue);
     border-radius: 5px;
 
     position: relative;
 }
 
+.documentVerdict__text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.documentVerdict_notChecked {
+    color: var(--bright-purple);
+}
+
+
+.documentVerdict_accepted {
+    color: var(--acceptance-green);
+}
+
+
+.documentVerdict_rejected {
+    color: var(--rejection-red);
+}
+
+.documentVerdict__comment {
+    display: block;
+    width: 100%;
+    height: 128px;
+    resize: none;
+
+    padding: 10px;
+
+    border: 1px solid var(--info-dark-blue);
+    border-radius: 5px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.documentVerdict__comment:disabled {
+    background-color: var(--default-light-grey);
+}
+
+.documentVerdict__buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.documentVerdict__studentName {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.documentVerdict__status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
 .documentVerdict__logo {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     user-select: none;
 }
 
@@ -66,6 +138,60 @@
     user-select: none;
 }
 
+.acceptButton {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    padding: 8px 16px;
+
+    background-color: var(--acceptance-green);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.acceptButton:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.acceptButton:active {
+    filter: brightness(85%);
+}
+
+.rejectButton {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    padding: 8px 16px;
+
+    background-color: var(--rejection-red);
+    border: none;
+    border-radius: 10px;
+
+    align-self: center;
+}
+
+.rejectButton:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.rejectButton:active {
+    filter: brightness(85%);
+}
+
 .commentary {
     position: absolute;
     top: 100%;
@@ -74,7 +200,7 @@
     border: 1px solid var(--info-dark-blue);
     border-radius: 5px;
     padding: 10px;
-    height: 540px;
+    /*height: 540px;*/
     overflow-y: auto;
 }
 
@@ -107,13 +233,15 @@
     border: 1px solid var(--info-dark-blue);
     border-radius: 5px;
     width: 577px;
-    height: 439px;
-    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 20px;
+
+    height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .mistakes__placeholder {
@@ -164,13 +292,18 @@
     color: var(--default-white);
 
     font-family: 'Inter', sans-serif;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 140%;
     letter-spacing: 1.5%;
 
-    width: 404px;
-    height: 74px;
+    width: 380px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
     background-color: var(--acceptance-green);
     border: none;
@@ -202,19 +335,24 @@
     cursor: not-allowed;
 }
 
+.downloadButton__arrow {
+    width: 24px;
+    height: 24px;
+}
+
 .documentViewer {
     border: none;
     background-color: var(--default-light-grey);
     border-radius: 10px;
     width: 535px;
-    /*height: 595px;*/
+    height: 810px;
     display: flex;
     justify-content: center;
 }
 
 .documentViewer__document {
     width: 505px;
-    height: 633px;
+    /*height: 633px;*/
     background-color: var(--default-white);
     border: none;
 }
