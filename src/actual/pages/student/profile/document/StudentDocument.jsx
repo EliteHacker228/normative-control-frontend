@@ -19,6 +19,8 @@ import hideCommentIco from './static/hideCommentIco.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import Document from "../../../../domain/documents/Document.js";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import whiteDownloadIco from "./static/downloadIcoWhite.svg";
+
 
 export default function StudentDocument() {
     const navigate = useNavigate();
@@ -296,7 +298,10 @@ export default function StudentDocument() {
                                 })
                             }
                         </div>
-                        <button onClick={onDownloadClick} className={css.downloadButton}>Скачать работу</button>
+                        <div onClick={onDownloadClick} className={css.downloadButton}>
+                            <p>Скачать работу</p>
+                            <img src={whiteDownloadIco} alt={'Скачать'}/>
+                        </div>
                         <a ref={resultDownloadRef}/>
                     </div>
                 </div>
