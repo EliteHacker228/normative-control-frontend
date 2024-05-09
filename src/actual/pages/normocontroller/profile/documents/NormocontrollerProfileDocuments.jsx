@@ -10,6 +10,7 @@ import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import Verdicts from "../../../../domain/documents/Verdicts.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import AuthService from "../../../../services/AuthService.js";
+import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 export default function NormocontrollerProfileDocuments() {
     const navigate = useNavigate();
@@ -231,6 +232,7 @@ export default function NormocontrollerProfileDocuments() {
                         })}
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

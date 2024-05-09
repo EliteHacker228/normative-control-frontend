@@ -1,4 +1,5 @@
 import Header from "../../../../commonComponents/header/Header.jsx";
+import css from "./NormocontrollerProfileDocument.module.css";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import DocumentsService from "../../../../services/DocumentsService.js";
@@ -7,11 +8,11 @@ import NotFoundError from "../../../../errors/NotFoundError.js";
 import InternalServerError from "../../../../errors/InternalServerError.js";
 import Student from "../../../../domain/users/Student.js";
 import Verdicts from "../../../../domain/documents/Verdicts.js";
-import css from "../../../student/profile/document/StudentDocument.module.css";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 import searchIco from "../../../student/profile/document/static/searchIco.svg";
 import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import reportIco from "./static/reportIco.svg";
+import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 export default function NormocontrollerProfileDocument() {
     const navigate = useNavigate();
@@ -214,6 +215,7 @@ export default function NormocontrollerProfileDocument() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
