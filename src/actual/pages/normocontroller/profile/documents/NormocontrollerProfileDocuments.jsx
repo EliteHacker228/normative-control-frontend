@@ -121,11 +121,11 @@ export default function NormocontrollerProfileDocuments() {
 
     const updateFilteredDocuments = (localSearchInput, localSelectedVerdicts, localSelectedGroups) => {
         let filteredDocuments = documents.filter(document => document.student.fullName.includes(localSearchInput));
-        if (selectedVerdicts.size > 0) {
-            filteredDocuments = filteredDocuments.filter(document => selectedVerdicts.has(document.documentVerdict));
+        if (localSelectedVerdicts.size > 0) {
+            filteredDocuments = filteredDocuments.filter(document => localSelectedVerdicts.has(document.documentVerdict));
         }
-        if (selectedGroups.size > 0) {
-            filteredDocuments = filteredDocuments.filter(document => selectedGroups.has(document.student.academicGroup.name));
+        if (localSelectedGroups.size > 0) {
+            filteredDocuments = filteredDocuments.filter(document => localSelectedGroups.has(document.student.academicGroup.name));
         }
         setFilteredDocuments(filteredDocuments);
     };
