@@ -208,6 +208,10 @@
     width: 50%;
     max-height: 430px;
     overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .documents__header {
