@@ -27,7 +27,6 @@ import NormocontrollerProfileDocument
     from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
 import AuthService from "./actual/services/AuthService.js";
 import Roles from "./actual/domain/users/Roles.js";
-import ENV from "./config/ENV.js";
 
 function App() {
     useEffect(() => {
@@ -35,7 +34,7 @@ function App() {
     }, []);
 
     return (
-        <BrowserRouter basename={`${ENV.WEB_PREFIX ?? '/'}`}>
+        <BrowserRouter>
             <Routes>
                 {/*<Route path='/legacy' element={<WelcomeLegacy/>}/>*/}
                 {/*<Route path='/legacy/welcome' element={<WelcomeLegacy/>}/>*/}
