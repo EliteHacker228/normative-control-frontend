@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 // import Welcome from "./legacy/pages/welcome/Welcome.jsx";
 // import Progress from "./legacy/pages/uploading/Progress.jsx";
@@ -27,6 +27,7 @@ import NormocontrollerProfileDocument
     from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
 import AuthService from "./actual/services/AuthService.js";
 import Roles from "./actual/domain/users/Roles.js";
+import ENV from "./config/ENV.js";
 
 function App() {
     useEffect(() => {
@@ -34,7 +35,7 @@ function App() {
     }, []);
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={`${ENV.WEB_PREFIX ?? '/'}`}>
             <Routes>
                 {/*<Route path='/legacy' element={<WelcomeLegacy/>}/>*/}
                 {/*<Route path='/legacy/welcome' element={<WelcomeLegacy/>}/>*/}
