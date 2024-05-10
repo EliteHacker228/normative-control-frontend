@@ -268,10 +268,12 @@
     letter-spacing: 0.01em;
     color: var(--info-dark-blue);
 
-    max-width: 250px;
-    max-height: 28px;
+    width: 200px;
+    max-width: 200px;
+    max-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .documentNode__buttons {
