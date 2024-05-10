@@ -54,6 +54,12 @@
     text-align: center;
 }
 
+.filtersGroup__content {
+    height: 70px;
+    max-height: 70px;
+    overflow-y: auto;
+}
+
 .filterCheckbox {
     display: flex;
     gap: 4px;

@@ -150,6 +150,7 @@ export default function NormocontrollerProfileDocuments() {
                         <h1 className={css.filters__header}>Фильтры подбора</h1>
                         <div className={css.filtersGroup}>
                             <h1 className={css.filtersGroup__header}>Группы</h1>
+                            <div className={css.filtersGroup__content}>
                             {groups.map((group, index) => {
                                 return (
                                     <div className={css.filterCheckbox} key={index}>
@@ -161,6 +162,7 @@ export default function NormocontrollerProfileDocuments() {
                                     </div>
                                 );
                             })}
+                            </div>
 
                             {/*<div className={css.filterCheckbox}>*/}
                             {/*    <input className={css.filterCheckbox__input} type='checkbox'/>*/}
