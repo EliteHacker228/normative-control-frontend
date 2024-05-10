@@ -5,7 +5,7 @@ export default class CredentialsValidator {
         if(!EmailValidator.validateEmail(email))
             return false;
 
-        if (password === '')
+        if (password === '' || password.length < 8)
             return false;
 
         return true;
@@ -37,10 +37,10 @@ export default class CredentialsValidator {
         if (!academicGroupId.match(/\d+/))
             return false;
 
-        if (password === '')
+        if (password === '' || password.length < 8)
             return false;
 
-        if (passwordRepetition === '')
+        if(passwordRepetition === '' || passwordRepetition.length < 8)
             return false;
 
         if (password !== passwordRepetition)
@@ -98,10 +98,10 @@ export default class CredentialsValidator {
     }
 
     static validatePasswordUpdatingForm({oldPassword, newPassword}) {
-        if (oldPassword === '')
+        if (oldPassword === '' || oldPassword.length < 8)
             return false;
 
-        if (newPassword === '')
+        if (newPassword === '' || newPassword.length < 8)
             return false;
 
         return true;

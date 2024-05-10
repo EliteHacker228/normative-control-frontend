@@ -142,7 +142,7 @@ export default function Registration() {
                         }
                     </select>
 
-                    <input className={css.registrationForm__textInput} type='password' placeholder='Пароль'
+                    <input className={css.registrationForm__textInput} type='password' placeholder='Пароль (минимум 8 символов)'
                            value={password} onInput={onPasswordInput} readOnly
                            onFocus={(e) => e.target.removeAttribute('readonly')}/>
                     <input className={css.registrationForm__textInput} type='password' placeholder='Повторите пароль'

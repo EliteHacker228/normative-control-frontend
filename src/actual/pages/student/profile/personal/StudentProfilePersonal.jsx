@@ -158,7 +158,7 @@ export default function StudentProfilePersonal() {
                         </div>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>Введите новый пароль</p>
-                            <input className={css.inputBlock__input} type={'password'} placeholder={'Новый пароль'}
+                            <input className={css.inputBlock__input} type={'password'} placeholder={'Новый пароль (минимум 8 символов)'}
                                    value={newPassword}
                                    onInput={onNewPasswordInput}/>
                         </div>
