@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM node:22 as builder
 
 ARG VITE_REACT_API_URL=http://localhost:8080
 
