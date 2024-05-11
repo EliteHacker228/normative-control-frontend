@@ -181,7 +181,7 @@ export default function NormocontrollerProfileDocument() {
                         <h1 className={css.sectionHeader}>Список ошибок</h1>
                         <div className={css.mistakes}>
                             {documentMistakes.length === 0 &&
-                                <p className={css.mistakes__placeholder}>В вашей работе нет ошибок</p>}
+                                <p className={css.mistakes__placeholder}>В работе студента нет ошибок</p>}
                             {
                                 documentMistakes.map((mistake, index) => {
                                     return (

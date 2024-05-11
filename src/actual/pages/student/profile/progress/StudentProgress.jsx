@@ -75,7 +75,7 @@ export default function StudentProgress() {
                 {documentVerificationResultStatus === Verification.ok &&
                     <div className={css.verificationComplete}>
                         <img className={css.verificationComplete__logo} src={documentAccepted} alt={'Ваша работа принято'}/>
-                        <p className={css.mainText}>Ваша работа проверена</p>
+                        <p className={css.mainText}>Автоматическая проверка окончена</p>
                         <button className={css.goToResult} onClick={onGoToResultClick}>Просмотреть результат</button>
                         <img className={css.pandaAwake} src={pandaAwake} alt={'Панда проснулась'}/>
                     </div>
