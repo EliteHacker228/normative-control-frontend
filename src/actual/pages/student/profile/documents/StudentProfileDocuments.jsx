@@ -14,6 +14,7 @@ import documentRejectedIco from './static/document_rejected.svg';
 import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import refreshIco from './static/refreshIco.svg';
 
 
 export default function StudentProfileDocuments() {
@@ -25,12 +26,13 @@ export default function StudentProfileDocuments() {
     const [uploadingFailureReason, setUploadingFailureReason] = useState('');
 
     useEffect(() => {
-        (async () => {
-                let documents = await DocumentsService.getDocuments();
-                setDocuments(documents);
-            }
-        )();
+        getPageData();
     }, []);
+
+    const getPageData = async () => {
+        let documents = await DocumentsService.getDocuments();
+        setDocuments(documents);
+    };
 
     const onDownloadClick = async (e) => {
         e.preventDefault();
@@ -43,18 +45,35 @@ export default function StudentProfileDocuments() {
         window.URL.revokeObjectURL(objectUrl);
     };
 
+    const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
+
+    const onRefreshClick = async () => {
+        setIsRefreshDisabled(true);
+        await getPageData();
+
+        setTimeout(() => {
+            setIsRefreshDisabled(false);
+        }, 5000);
+    };
+
+
     return (
         <div>
             <Header/>
             <div className={css.studentDocuments}>
-                <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
+                <div className={css.headerContainer}>
+                    <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
+                    <button className={css.search__refresh} onClick={onRefreshClick}
+                            disabled={isRefreshDisabled} title={'Обновить результаты'}/>
+                </div>
                 <div className={css.documentsList}>
                     {documents.length === 0 &&
                         <p className={css.documentsList__placeholder}>Вы пока не загрузжали работы на проверку</p>}
                     {documents.sort((a, b) => new Date(b.verificationDate).getTime() - new Date(a.verificationDate).getTime())
                         .map((document, index) => {
                             return (
-                                <NavLink to={`/profile/student/document?documentId=${document.id}`} key={index} id={document.id}
+                                <NavLink to={`/profile/student/document?documentId=${document.id}`} key={index}
+                                         id={document.id}
                                          className={css.documentNode} title={'Просмотреть результат проверки работы'}>
 
                                     <div className={css.documentNode__header}>
@@ -73,7 +92,9 @@ export default function StudentProfileDocuments() {
                                     <div className={css.documentNode__buttons}>
                                         <div className={css.documentNode__status}
                                              title={DocumentVerdictTranslators.getDocumentVerdictTitle(document.documentVerdict)}>
-                                            <img src={DocumentVerdictTranslators.getDocumentVerdictIco(document.documentVerdict)} alt={'Статус работы'}/>
+                                            <img
+                                                src={DocumentVerdictTranslators.getDocumentVerdictIco(document.documentVerdict)}
+                                                alt={'Статус работы'}/>
                                         </div>
                                         <div className={css.documentNode__button} onClick={onDownloadClick}
                                              title={'Скачать работу'}>

@@ -93,6 +93,13 @@
 
 }
 
+.headerContainer {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
 .search__header {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
@@ -101,6 +108,22 @@
     letter-spacing: 0.01em;
     color: var(--info-dark-blue);
     text-align: center;
+}
+
+.search__refresh {
+    border: none;
+    background: url("./static/refreshIco.svg");
+    width: 24px;
+    height: 24px;
+}
+
+.search__refresh:hover {
+    cursor: pointer;
+}
+
+.search__refresh:disabled {
+    cursor: not-allowed;
+    filter: invert(76%) sepia(0%) saturate(85%) hue-rotate(159deg) brightness(103%) contrast(117%);
 }
 
 .searchField {

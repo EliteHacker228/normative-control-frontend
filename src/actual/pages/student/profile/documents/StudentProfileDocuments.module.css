@@ -6,6 +6,13 @@
     height: max(calc(100vh - 92px - 120px), 1024px);
 }
 
+.headerContainer {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
 .studentDocuments__header {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
@@ -14,6 +21,22 @@
     letter-spacing: 0.01em;
     text-align: center;
     color: var(--info-dark-blue);
+}
+
+.search__refresh {
+    border: none;
+    background: url("./static/refreshIco.svg");
+    width: 40px;
+    height: 40px;
+}
+
+.search__refresh:hover {
+    cursor: pointer;
+}
+
+.search__refresh:disabled {
+    cursor: not-allowed;
+    filter: invert(76%) sepia(0%) saturate(85%) hue-rotate(159deg) brightness(103%) contrast(117%);
 }
 
 .documentsList {

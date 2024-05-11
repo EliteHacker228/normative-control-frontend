@@ -11,6 +11,7 @@ import Verdicts from "../../../../domain/documents/Verdicts.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import AuthService from "../../../../services/AuthService.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import refreshIco from './static/refreshIco.svg';
 
 export default function NormocontrollerProfileDocuments() {
     const navigate = useNavigate();
@@ -131,6 +132,17 @@ export default function NormocontrollerProfileDocuments() {
         setFilteredDocuments(filteredDocuments);
     };
 
+    const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
+
+    const onRefreshClick = async () => {
+        setIsRefreshDisabled(true);
+        await getPageData();
+
+        setTimeout(() => {
+            setIsRefreshDisabled(false);
+        }, 5000);
+    };
+
     return (
         <div>
             <Header/>
@@ -138,7 +150,11 @@ export default function NormocontrollerProfileDocuments() {
                 <div className={css.controls}>
                     <div className={css.filters}>
                         <div className={css.search}>
-                            <h1 className={css.search__header}>Поиск</h1>
+                            <div className={css.headerContainer}>
+                                <h1 className={css.search__header}>Поиск</h1>
+                                <button className={css.search__refresh} onClick={onRefreshClick}
+                                        disabled={isRefreshDisabled} title={'Обновить результаты'}/>
+                            </div>
                             <div className={css.searchField}>
                                 <input className={css.searchField__input} type='text'
                                        placeholder={'Введите ФИО обучающегося'} value={searchInput}
@@ -151,17 +167,17 @@ export default function NormocontrollerProfileDocuments() {
                         <div className={css.filtersGroup}>
                             <h1 className={css.filtersGroup__header}>Группы</h1>
                             <div className={css.filtersGroup__content}>
-                            {groups.map((group, index) => {
-                                return (
-                                    <div className={css.filterCheckbox} key={index}>
-                                        <input className={css.filterCheckbox__input} id={group.name}
-                                               type='checkbox' checked={selectedGroups.has(group.name)}
-                                               onChange={onGroupSelect}/>
-                                        <label className={css.filterCheckbox__label}
-                                               htmlFor={group.name}>{group.name}</label>
-                                    </div>
-                                );
-                            })}
+                                {groups.map((group, index) => {
+                                    return (
+                                        <div className={css.filterCheckbox} key={index}>
+                                            <input className={css.filterCheckbox__input} id={group.name}
+                                                   type='checkbox' checked={selectedGroups.has(group.name)}
+                                                   onChange={onGroupSelect}/>
+                                            <label className={css.filterCheckbox__label}
+                                                   htmlFor={group.name}>{group.name}</label>
+                                        </div>
+                                    );
+                                })}
                             </div>
 
                             {/*<div className={css.filterCheckbox}>*/}
