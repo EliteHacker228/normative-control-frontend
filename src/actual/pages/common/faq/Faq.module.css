@@ -136,6 +136,10 @@
     letter-spacing: 0.01em;
 }
 
+.faqCard__image {
+    width: 650px;
+}
+
 code {
     background-color: #dddddd;
     padding: 2px;
