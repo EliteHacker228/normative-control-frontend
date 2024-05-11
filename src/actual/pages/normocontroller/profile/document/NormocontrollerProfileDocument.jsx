@@ -94,41 +94,34 @@ export default function NormocontrollerProfileDocument() {
         await getDocumentData();
     };
 
-    const scrollAndMarkElementWithId = (mistakeId) => {
-        let elms = resultViewRef.current.contentDocument.querySelectorAll(`[id='${mistakeId}']`);
+    const scrollAndMarkElementWithId = (mistakeClass) => {
+        let elms = resultViewRef.current.contentDocument.querySelectorAll(`.${mistakeClass}`);
         if (elms.length === 0) {
             return;
         }
 
         let elm;
-        if (elms.length === 2) {
-            if (elms[0].innerText === '' && elms[1].innerText === '') {
-                elm = elms[0].scrollIntoView();
-            }
-
-            if (elms[0].innerText === '') {
-                elm = elms[1].scrollIntoView();
-            }
-
-            if (elms[1].innerText === '') {
-                elm = elms[0].scrollIntoView();
-            }
-        }
-
-        elm = elms[0];
-        while (elm.nodeName === 'SPAN') {
-            elm = elm.parentNode;
+        if (elms.length === 2 && elms[0].innerText === '') {
+            elm = elms[1];
+        } else {
+            elm = elms[0];
         }
 
         elm.style.borderRadius = '5px';
-        elm.style.backgroundColor = 'rgba(255, 0, 40, 0.1)';
-        elm.style.transition = "background-color 0.2s";
+        elm.style.backgroundColor = 'rgba(255, 0, 40, 0.5)';
+        elm.style.transition = "background-color 1s";
         setTimeout(() => {
-            elm.style.transition = "background-color 0.2s";
+            elm.style.transition = "background-color 1s";
             elm.style.border = 'none';
             elm.style.backgroundColor = 'white';
         }, 2000);
-        return elm.scrollIntoView();
+        let pos = document.documentElement.scrollTop;
+        let iframeScroll = resultViewRef.current.getBoundingClientRect().top;
+        if(iframeScroll < 0) {
+            pos = pos + iframeScroll - 150;
+        }
+        elm.scrollIntoView({behavior: "smooth"});
+        document.documentElement.scrollTo({left: 0, top: pos, behavior: "smooth"});
     };
 
     const getVerdictClass = (documentVerdict) => {
