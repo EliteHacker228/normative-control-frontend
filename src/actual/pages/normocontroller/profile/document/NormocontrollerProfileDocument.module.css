@@ -46,7 +46,7 @@
 }
 
 .documentVerdict_notChecked {
-    color: var(--bright-purple);
+    color: var(--rejection-red);
 }
 
 
@@ -56,7 +56,7 @@
 
 
 .documentVerdict_rejected {
-    color: var(--rejection-red);
+    color: var(--bright-purple);
 }
 
 .documentVerdict__comment {
