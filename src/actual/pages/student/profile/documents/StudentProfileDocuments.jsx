@@ -68,7 +68,7 @@ export default function StudentProfileDocuments() {
                 </div>
                 <div className={css.documentsList}>
                     {documents.length === 0 &&
-                        <p className={css.documentsList__placeholder}>Вы пока не загрузжали работы на проверку</p>}
+                        <p className={css.documentsList__placeholder}>Вы пока не загружали работы на проверку</p>}
                     {documents.sort((a, b) => new Date(b.verificationDate).getTime() - new Date(a.verificationDate).getTime())
                         .map((document, index) => {
                             return (
