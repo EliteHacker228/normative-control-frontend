@@ -20,12 +20,13 @@ import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import Document from "../../../../domain/documents/Document.js";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 import whiteDownloadIco from "./static/downloadIcoWhite.svg";
-
+import {scrollBy, scrollIntoView, scrollTo} from "seamless-scroll-polyfill";
 
 export default function StudentDocument() {
     const navigate = useNavigate();
 
     const resultViewRef = useRef();
+    const resultViewHeaderRef = useRef();
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -146,13 +147,12 @@ export default function StudentDocument() {
             elm.style.border = 'none';
             elm.style.backgroundColor = 'white';
         }, 2000);
-        let pos = document.documentElement.scrollTop;
-        let iframeScroll = resultViewRef.current.getBoundingClientRect().top;
-        if(iframeScroll < 0) {
-            pos = pos + iframeScroll - 150;
+        scrollIntoView(elm, {behavior: "smooth"});
+        if(resultViewRef.current.getBoundingClientRect().top > 0) {
+            scrollIntoView(resultViewRef.current, {behavior: "smooth"}, {duration: Number.POSITIVE_INFINITY});
+        }else{
+            scrollIntoView(resultViewRef.current, {behavior: "smooth"});
         }
-        elm.scrollIntoView({behavior: "smooth"});
-        document.documentElement.scrollTo({left: 0, top: pos, behavior: "smooth"});
     };
 
     const reportMistake = async (documentId, mistakeId) => {
@@ -249,7 +249,7 @@ export default function StudentDocument() {
                     </div>
                 </div>
                 <div className={css.section}>
-                    <h1 className={css.sectionHeader}>Просмотр документа</h1>
+                    <h1 className={css.sectionHeader} ref={resultViewHeaderRef}>Просмотр документа</h1>
                     <div className={css.documentViewer}>
                         <iframe className={css.documentViewer__document} ref={resultViewRef} srcDoc={documentHtml}/>
                     </div>

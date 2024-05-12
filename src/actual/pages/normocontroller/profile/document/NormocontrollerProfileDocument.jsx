@@ -13,6 +13,7 @@ import searchIco from "../../../student/profile/document/static/searchIco.svg";
 import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import reportIco from "./static/reportIco.svg";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
+import {scrollIntoView} from "seamless-scroll-polyfill";
 
 export default function NormocontrollerProfileDocument() {
     const navigate = useNavigate();
@@ -32,6 +33,8 @@ export default function NormocontrollerProfileDocument() {
 
     const resultDownloadRef = useRef();
     const resultViewRef = useRef();
+    const resultViewHeaderRef = useRef();
+
 
     const hasMistakeId = (mistakeId) => {
         return reportedMistakesIds.has(mistakeId);
@@ -115,13 +118,12 @@ export default function NormocontrollerProfileDocument() {
             elm.style.border = 'none';
             elm.style.backgroundColor = 'white';
         }, 2000);
-        let pos = document.documentElement.scrollTop;
-        let iframeScroll = resultViewRef.current.getBoundingClientRect().top;
-        if(iframeScroll < 0) {
-            pos = pos + iframeScroll - 150;
+        scrollIntoView(elm, {behavior: "smooth"});
+        if(resultViewRef.current.getBoundingClientRect().top > 0) {
+            scrollIntoView(resultViewRef.current, {behavior: "smooth"}, {duration: Number.POSITIVE_INFINITY});
+        }else{
+            scrollIntoView(resultViewRef.current, {behavior: "smooth"});
         }
-        elm.scrollIntoView({behavior: "smooth"});
-        document.documentElement.scrollTo({left: 0, top: pos, behavior: "smooth"});
     };
 
     const getVerdictClass = (documentVerdict) => {
@@ -202,7 +204,7 @@ export default function NormocontrollerProfileDocument() {
                     </div>
                 </div>
                 <div className={css.section}>
-                    <h1 className={css.sectionHeader}>Просмотр документа</h1>
+                    <h1 className={css.sectionHeader} ref={resultViewHeaderRef}>Просмотр документа</h1>
                     <div className={css.documentViewer}>
                         <iframe className={css.documentViewer__document} ref={resultViewRef} srcDoc={documentHtml}/>
                     </div>
