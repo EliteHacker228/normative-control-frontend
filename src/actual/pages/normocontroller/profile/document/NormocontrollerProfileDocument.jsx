@@ -186,11 +186,13 @@ export default function NormocontrollerProfileDocument() {
                                                 <img className={css.mistake__button}
                                                      onClick={() => scrollAndMarkElementWithId(mistake.id)}
                                                      src={searchIco}
-                                                     alt={'Перейти к ошибке'}/>
+                                                     alt={'Перейти к ошибке'}
+                                                     title={'Перейти к ошибке'}/>
                                                 {hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={reportIco}
                                                          onClick={() => scrollAndMarkElementWithId(mistake.id)}
-                                                         alt={'Доложить о ошибке'}/>}
+                                                         alt={'Ошибка отмечена как сомнительная'}
+                                                         title={'Ошибка отмечена как сомнительная'}/>}
                                             </div>
                                         </div>);
                                 })

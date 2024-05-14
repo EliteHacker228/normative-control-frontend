@@ -227,15 +227,15 @@ export default function StudentDocument() {
                                                 <img className={css.mistake__button}
                                                      onClick={() => scrollAndMarkElementWithId(mistake.id)}
                                                      src={searchIco}
-                                                     alt={'Перейти к ошибке'}/>
+                                                     alt={'Перейти к ошибке'} title={'Перейти к ошибке'}/>
                                                 {isReportAvailable && hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={unreportIco}
                                                          onClick={() => unreportMistake(documentId, mistake.id)}
-                                                         alt={'Отменить ошибку'}/>}
+                                                         alt={'Отменить ошибку'} title={'Отменить пометку ошибки как сомнительную'}/>}
                                                 {isReportAvailable && !hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={reportIco}
                                                          onClick={() => reportMistake(documentId, mistake.id)}
-                                                         alt={'Доложить о ошибке'}/>}
+                                                         alt={'Доложить о ошибке'} title={'Отметить ошибку как сомнительную'}/>}
                                             </div>
                                         </div>);
                                 })
