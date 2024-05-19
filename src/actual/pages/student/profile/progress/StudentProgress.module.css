@@ -18,6 +18,10 @@
     margin-top: 5px;
 }
 
+.mainText_error {
+    color: var(--rejection-red);
+}
+
 .goToResult {
     color: var(--default-white);
 

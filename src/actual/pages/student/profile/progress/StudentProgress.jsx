@@ -23,11 +23,13 @@ export default function StudentProgress() {
 
     const [documentId, setDocumentId] = useState(searchParams.get('documentId'));
     const [documentVerificationResultStatus, setDocumentVerificationResultStatus] = useState(Verification.pending);
+    const [documentVerificationResultDescription, setDocumentVerificationResultDescription] = useState({});
 
     const checkDocumentVerificationStatus = async () => {
         try {
             let result = await DocumentsService.getDocumentVerificationResult(documentId);
             setDocumentVerificationResultStatus(result.verificationStatus);
+            setDocumentVerificationResultDescription(result.description);
         } catch (error) {
             switch (error.constructor) {
                 case AccessForbiddenError:
@@ -83,6 +85,7 @@ export default function StudentProgress() {
                 {documentVerificationResultStatus === Verification.error &&
                     <div className={css.verificationFailed}>
                         <p className={css.mainText}>При проверке вашей работы произошла ошибка</p>
+                        <p className={`${css.mainText} ${css.mainText_error}`}>{documentVerificationResultDescription}</p>
                     </div>
                 }
             </div>
