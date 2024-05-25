@@ -19,6 +19,7 @@
     --dark-lazuli-shadow: #0380B1;
     --disabled-grey: lightgrey;
     --default-light-grey: lightgrey;
+    --default-transparent-dark-blue: rgba(30, 67, 145, 0.2);
 }
 
 body {
