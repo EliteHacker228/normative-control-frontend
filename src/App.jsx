@@ -27,92 +27,87 @@ import NormocontrollerProfileDocument
     from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
 import AuthService from "./actual/services/AuthService.js";
 import Roles from "./actual/domain/users/Roles.js";
-import GiveFeedbackPopUp from "./actual/popups/giveFeedback/GiveFeedbackPopUp.jsx";
-import FeedbackService from "./actual/services/FeedbackService.js";
 
 function App() {
     return (
-        <div>
-            {AuthService.isUserLocallyAuthenticated() && !FeedbackService.isFeedbackShowedBefore() && <GiveFeedbackPopUp/>}
-            <BrowserRouter>
-                <Routes>
-                    {/*<Route path='/legacy' element={<WelcomeLegacy/>}/>*/}
-                    {/*<Route path='/legacy/welcome' element={<WelcomeLegacy/>}/>*/}
-                    {/*<Route path='/legacy/uploading' element={<Progress/>}/>*/}
-                    {/*<Route path='/legacy/document' element={<Result/>}/>*/}
-                    {/*<Route path='/legacy/profile/*' element={<Profile/>}/>*/}
-                    {/*<Route path='/legacy/faq' element={<Faq/>}/>*/}
+        <BrowserRouter>
+            <Routes>
+                {/*<Route path='/legacy' element={<WelcomeLegacy/>}/>*/}
+                {/*<Route path='/legacy/welcome' element={<WelcomeLegacy/>}/>*/}
+                {/*<Route path='/legacy/uploading' element={<Progress/>}/>*/}
+                {/*<Route path='/legacy/document' element={<Result/>}/>*/}
+                {/*<Route path='/legacy/profile/*' element={<Profile/>}/>*/}
+                {/*<Route path='/legacy/faq' element={<Faq/>}/>*/}
 
-                    <Route path='/' element={
-                        <UnauthedRoute>
-                            <Welcome/>
-                        </UnauthedRoute>
-                    }/>
+                <Route path='/' element={
+                    <UnauthedRoute>
+                        <Welcome/>
+                    </UnauthedRoute>
+                }/>
 
-                    <Route path='/login' element={
-                        <UnauthedRoute>
-                            <Login/>
-                        </UnauthedRoute>
-                    }/>
+                <Route path='/login' element={
+                    <UnauthedRoute>
+                        <Login/>
+                    </UnauthedRoute>
+                }/>
 
-                    <Route path='/registration' element={
-                        <UnauthedRoute>
-                            <Registration/>
-                        </UnauthedRoute>
-                    }/>
+                <Route path='/registration' element={
+                    <UnauthedRoute>
+                        <Registration/>
+                    </UnauthedRoute>
+                }/>
 
 
-                    <Route path='/faq' element={<Faq/>}/>
+                <Route path='/faq' element={<Faq/>}/>
 
-                    <Route path='/profile/student/personal' element={
-                        <RoleSecuredRoute targetRole={Roles.STUDENT}>
-                            <StudentProfilePersonal/>
-                        </RoleSecuredRoute>
-                    }/>
-                    <Route path='/profile/student/documents' element={
-                        <RoleSecuredRoute targetRole={Roles.STUDENT}>
-                            <StudentProfileDocuments/>
-                        </RoleSecuredRoute>
-                    }/>
-                    <Route path='/profile/student/progress' element={
-                        <RoleSecuredRoute targetRole={Roles.STUDENT}>
-                            <StudentProgress/>
-                        </RoleSecuredRoute>
-                    }/>
-                    {/*TODO: Перенести в /document*/}
-                    <Route path='/profile/student/document' element={
-                        <RoleSecuredRoute targetRole={Roles.STUDENT}>
-                            <StudentDocument/>
-                        </RoleSecuredRoute>
-                    }/>
+                <Route path='/profile/student/personal' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProfilePersonal/>
+                    </RoleSecuredRoute>
+                }/>
+                <Route path='/profile/student/documents' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProfileDocuments/>
+                    </RoleSecuredRoute>
+                }/>
+                <Route path='/profile/student/progress' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentProgress/>
+                    </RoleSecuredRoute>
+                }/>
+                {/*TODO: Перенести в /document*/}
+                <Route path='/profile/student/document' element={
+                    <RoleSecuredRoute targetRole={Roles.STUDENT}>
+                        <StudentDocument/>
+                    </RoleSecuredRoute>
+                }/>
 
-                    <Route path='/profile/normocontroller/personal' element={
-                        <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
-                            <NormocontrollerProfilePersonal/>
-                        </RoleSecuredRoute>
+                <Route path='/profile/normocontroller/personal' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfilePersonal/>
+                    </RoleSecuredRoute>
 
-                    }/>
-                    <Route path='/profile/normocontroller/documents' element={
-                        <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
-                            <NormocontrollerProfileDocuments/>
-                        </RoleSecuredRoute>
+                }/>
+                <Route path='/profile/normocontroller/documents' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfileDocuments/>
+                    </RoleSecuredRoute>
 
-                    }/>
-                    {/*TODO: Перенести в /document*/}
-                    <Route path='/profile/normocontroller/document' element={
-                        <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
-                            <NormocontrollerProfileDocument/>
-                        </RoleSecuredRoute>
+                }/>
+                {/*TODO: Перенести в /document*/}
+                <Route path='/profile/normocontroller/document' element={
+                    <RoleSecuredRoute targetRole={Roles.NORMOCONTROLLER}>
+                        <NormocontrollerProfileDocument/>
+                    </RoleSecuredRoute>
 
-                    }/>
+                }/>
 
-                    <Route path='/errors/403' element={<Error403/>}/>
-                    <Route path='/*' element={<Navigate to='/errors/404' replace/>}/>
-                    <Route path='/errors/404' element={<Error404/>}/>
-                    <Route path='/errors/500' element={<Error500/>}/>
-                </Routes>
-            </BrowserRouter>
-        </div>
+                <Route path='/errors/403' element={<Error403/>}/>
+                <Route path='/*' element={<Navigate to='/errors/404' replace/>}/>
+                <Route path='/errors/404' element={<Error404/>}/>
+                <Route path='/errors/500' element={<Error500/>}/>
+            </Routes>
+        </BrowserRouter>
     )
 }
 

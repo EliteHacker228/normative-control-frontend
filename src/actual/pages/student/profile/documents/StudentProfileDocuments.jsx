@@ -15,6 +15,8 @@ import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 import refreshIco from './static/refreshIco.svg';
+import FeedbackService from "../../../../services/FeedbackService.js";
+import GiveFeedbackPopUp from "../../../../popups/giveFeedback/GiveFeedbackPopUp.jsx";
 
 
 export default function StudentProfileDocuments() {
@@ -60,6 +62,7 @@ export default function StudentProfileDocuments() {
     return (
         <div>
             <Header/>
+            {!FeedbackService.isFeedbackShowedBefore() && documents.length > 0 && <GiveFeedbackPopUp/>}
             <div className={css.studentDocuments}>
                 <div className={css.headerContainer}>
                     <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
