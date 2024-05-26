@@ -5,8 +5,8 @@ import closeIco from './static/close_ico.svg';
 import scrollLock from 'scroll-lock';
 import FeedbackService from "../../services/FeedbackService.js";
 
-export default function GiveFeedbackPopUp({isPopUpShowed = true}) {
-    const [isShowed, setIsShowed] = useState(isPopUpShowed);
+export default function GiveFeedbackPopUp() {
+    const [isShowed, setIsShowed] = useState(true);
 
     const feedbackRef = useRef();
 
