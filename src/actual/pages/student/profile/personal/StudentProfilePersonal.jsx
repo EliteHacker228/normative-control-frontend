@@ -123,7 +123,7 @@ export default function StudentProfilePersonal() {
                             <input className={css.inputBlock__input} type={'text'} placeholder={'ФИО'} value={fullName} onInput={onFullNameInput}/>
                         </div>
                         <div className={css.inputBlock}>
-                            <p className={css.inputBlock__header}>Адрес электронной почти</p>
+                            <p className={css.inputBlock__header}>Адрес электронной почты</p>
                             <input className={css.inputBlock__input} type={'email'} placeholder={'E-mail'} value={email} onInput={onEmailInput}/>
                         </div>
                         <div className={css.inputBlock}>
