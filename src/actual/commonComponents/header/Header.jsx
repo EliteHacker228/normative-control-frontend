@@ -24,8 +24,8 @@ export default function Header() {
                         <StudentHeaderElements/>}
                     {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.NORMOCONTROLLER &&
                         <NormocontrollerHeaderElements/>}
-                    {/*{AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.ADMIN &&*/}
-                    {/*    <AdminHeaderElements/>}*/}
+                    {AuthService.isUserLocallyAuthenticated() && AuthService.getLocalUserData().role === Roles.ADMIN &&
+                        <AdminHeaderElements/>}
                 </div>
             </div>
         </div>

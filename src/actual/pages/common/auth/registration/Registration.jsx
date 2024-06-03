@@ -6,7 +6,8 @@ import AcademicalGroupsService from "../../../../services/AcademicalGroupsServic
 import AuthService from "../../../../services/AuthService.js";
 import UserRegistrationDto from "../../../../dto/auth/UserRegistrationDto.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
-import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
+import CredentialsValidator from "../../../../utils/Validators/CredentialsValidator.js";
+import AfterAuthNavigator from "../../../../utils/AfterAuthNavigator/AfterAuthNavigator.js";
 
 export default function Registration() {
 
@@ -85,7 +86,7 @@ export default function Registration() {
             setRegistrationFailureReason(error.message);
             return;
         }
-        navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
+        navigate(AfterAuthNavigator.getAfterAuthRoute());
     };
 
     const [academicalGroups, setAcademicalGroups] = useState([]);

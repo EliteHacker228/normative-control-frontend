@@ -27,6 +27,9 @@ import NormocontrollerProfileDocument
     from "./actual/pages/normocontroller/profile/document/NormocontrollerProfileDocument.jsx";
 import AuthService from "./actual/services/AuthService.js";
 import Roles from "./actual/domain/users/Roles.js";
+import AfterAuthNavigator from "./actual/utils/AfterAuthNavigator/AfterAuthNavigator.js";
+import AcademicalGroups from "./actual/pages/admin/profile/academicalGroups/AcademicalGroups.jsx";
+import AdminProfilePersonal from "./actual/pages/admin/profile/personal/AdminProfilePersonal.jsx";
 
 function App() {
     return (
@@ -102,6 +105,18 @@ function App() {
 
                 }/>
 
+                <Route path='/profile/admin/groups' element={
+                    <RoleSecuredRoute targetRole={Roles.ADMIN}>
+                        <AcademicalGroups/>
+                    </RoleSecuredRoute>
+                }/>
+
+                <Route path='/profile/admin/personal' element={
+                    <RoleSecuredRoute targetRole={Roles.ADMIN}>
+                        <AdminProfilePersonal/>
+                    </RoleSecuredRoute>
+                }/>
+
                 <Route path='/errors/403' element={<Error403/>}/>
                 <Route path='/*' element={<Navigate to='/errors/404' replace/>}/>
                 <Route path='/errors/404' element={<Error404/>}/>
@@ -115,7 +130,7 @@ function UnauthedRoute({children}) {
     if (!AuthService.isUserLocallyAuthenticated()) {
         return children;
     } else {
-        return <Navigate to={`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`}/>;
+        return <Navigate to={AfterAuthNavigator.getAfterAuthRoute()}/>;
     }
 }
 

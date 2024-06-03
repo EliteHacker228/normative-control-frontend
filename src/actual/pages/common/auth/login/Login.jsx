@@ -4,7 +4,8 @@ import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import AuthService from "../../../../services/AuthService.js";
 import Header from "../../../../commonComponents/header/Header.jsx";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
-import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
+import CredentialsValidator from "../../../../utils/Validators/CredentialsValidator.js";
+import AfterAuthNavigator from "../../../../utils/AfterAuthNavigator/AfterAuthNavigator.js";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function Login() {
             setAuthenticationFailureReason(error.message);
             return;
         }
-        navigate(`/profile/${AuthService.getLocalUserData().role.toLowerCase()}/documents`);
+        navigate(AfterAuthNavigator.getAfterAuthRoute());
     };
 
     const isLoginFormCorrect = () => {

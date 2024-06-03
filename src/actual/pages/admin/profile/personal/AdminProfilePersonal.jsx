@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import css from './NormocontrollerProfilePersonal.module.css';
+import css from './AdminProfilePersonal.module.css';
 import AccountsService from "../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
@@ -8,7 +8,7 @@ import Header from "../../../../commonComponents/header/Header.jsx";
 import CredentialsValidator from "../../../../utils/Validators/CredentialsValidator.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
-export default function NormocontrollerProfilePersonal() {
+export default function AdminProfilePersonal() {
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [oldPassword, setOldPassword] = useState('');
@@ -97,7 +97,7 @@ export default function NormocontrollerProfilePersonal() {
     return (
         <div>
             <Header/>
-            <div className={css.normocontrollerProfilePersonal}>
+            <div className={css.adminProfilePersonal}>
                 <div className={css.sections}>
                     <form className={`${css.section} ${css.sectionTop}`} onSubmit={onPersonalInfoUpdate}>
                         <h1 className={css.section__header}>Личная информация</h1>
@@ -127,8 +127,7 @@ export default function NormocontrollerProfilePersonal() {
                         </div>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>Введите новый пароль</p>
-                            <input className={css.inputBlock__input} type={'password'}
-                                   placeholder={'Новый пароль (минимум 8 символов)'}
+                            <input className={css.inputBlock__input} type={'password'} placeholder={'Новый пароль (минимум 8 символов)'}
                                    value={newPassword}
                                    onInput={onNewPasswordInput}/>
                         </div>
