@@ -145,7 +145,7 @@ export default function NormocontrollerProfileDocuments() {
     return (
         <div>
             <Header/>
-            <div className={css.studentDocuments}>
+            <div className={css.normocontrollerDocuments}>
                 <div className={css.controls}>
                     <div className={css.filters}>
                         <div className={css.search}>
