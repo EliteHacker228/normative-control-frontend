@@ -38,8 +38,6 @@ export default function NormocontrollerProfileDocuments() {
         setDocuments(documents);
         setFilteredDocuments(documents);
         let groups = await AcademicalGroupsService.getAcademicalGroups();
-        console.log('groups');
-        console.log(groups);
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.filter(group => group.normocontroller.id === AuthService.getLocalUserData().id).sort((a, b) => collator.compare(a.name, b.name));
         setGroups(groups);
