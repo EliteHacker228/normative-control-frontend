@@ -5,7 +5,7 @@ import Header from "../../../../commonComponents/header/Header.jsx";
 import AccountsService from "../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import UpdateAccountDto from "../../../../dto/accounts/UpdateAccountDto.js";
-import CredentialsValidator from "../../../../utils/CredentialsValidator.js";
+import CredentialsValidator from "../../../../utils/Validators/CredentialsValidator.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 
 export default function StudentProfilePersonal() {
