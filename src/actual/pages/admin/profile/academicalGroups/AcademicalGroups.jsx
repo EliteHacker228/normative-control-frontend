@@ -41,6 +41,8 @@ export default function AcademicalGroups() {
                                onChange={onSearchInput}/>
                     </div>
                     <div className={css.searchResults}>
+                        {filteredAcademicalGroups.length === 0 &&
+                            <p className={css.searchResults__placeholder}>Группы не найдены</p>}
                         {filteredAcademicalGroups.map((academicalGroup, index) => {
                                 return <div key={index} className={css.searchResult}>
                                     <div className={css.searchResult__text}>{academicalGroup.name}</div>
