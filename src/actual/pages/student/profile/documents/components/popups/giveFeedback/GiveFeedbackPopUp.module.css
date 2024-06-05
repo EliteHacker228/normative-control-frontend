@@ -10,8 +10,12 @@
     justify-content: center;
     align-items: center;
 
-    cursor: pointer;
     z-index: 999;
+    cursor: pointer;
+}
+
+.displayNone {
+    display: none;
 }
 
 .popup {
@@ -26,15 +30,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 16px;
 
-    cursor: default;
+    cursor: auto;
+    word-break: break-word;
 }
 
-.hidden {
-    display: none;
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    align-items: center;
 }
 
-.popup__header {
+.header__text {
     text-align: center;
 
     font-family: 'Inter', sans-serif;
@@ -43,13 +52,15 @@
     letter-spacing: 0.01em;
     text-align: center;
     color: var(--info-dark-blue);
+
+    flex-grow: 1;
 }
 
-.popup__closeButton {
-    position: relative;
-    left: 250px;
-    top: -35px;
+.header__closeButton {
     cursor: pointer;
+    user-select: none;
+    flex-shrink: 1;
+    position: absolute;
 }
 
 .popup__text {
@@ -62,42 +73,38 @@
     color: var(--info-dark-blue);
 }
 
+.popup__link {
+    color: var(--bright-purple);
+    text-decoration: underline;
+}
+
 .popup__image {
     height: 200px;
     width: 200px;
 }
 
-.popup__link {
-    color: var(--bright-purple);
-    text-decoration: underline;
+.popup__controls {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
 }
 
 .popup__button {
     color: var(--default-white);
 
     font-family: 'Inter', sans-serif;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 140%;
     letter-spacing: 1.5%;
 
-    width: 404px;
-    height: 74px;
+    padding: 8px 64px;
 
-    background-color: var(--bright-purple);
     border: none;
     border-radius: 10px;
 
-    align-self: center;
-}
-
-.popup__button:hover {
-    cursor: pointer;
-    filter: brightness(110%);
-}
-
-.popup__button:active {
-    filter: brightness(85%);
+    background: var(--bright-purple);
 }
 
 .popup__button:enabled:hover {
@@ -108,3 +115,4 @@
 .popup__button:enabled:active {
     filter: brightness(85%);
 }
+

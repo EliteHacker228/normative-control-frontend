@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import pandaWithHeartImg from './static/panda_with_hear.png';
 import closeIco from './static/close_ico.svg';
 import scrollLock from 'scroll-lock';
-import FeedbackService from "../../services/FeedbackService.js";
+import FeedbackService from "../../../../../../../services/FeedbackService.js";
 
 export default function GiveFeedbackPopUp() {
     const [isShowed, setIsShowed] = useState(true);
@@ -12,10 +12,10 @@ export default function GiveFeedbackPopUp() {
 
     useEffect(() => {
         FeedbackService.setFeedbackIsShowedBefore();
-        if(isShowed) {
+        if (isShowed) {
             scrollLock.disablePageScroll();
             window.document.addEventListener('keydown', onEscapePressed);
-        }else{
+        } else {
             window.document.removeEventListener('keydown', onEscapePressed);
             scrollLock.enablePageScroll();
         }
@@ -41,11 +41,13 @@ export default function GiveFeedbackPopUp() {
     };
 
     return (
-        <div className={`${isShowed ? css.popupPage : css.hidden}`} onClick={closePopUp}>
+        <div className={`${isShowed ? css.popupPage : css.displayNone}`} onClick={closePopUp}>
             <div className={css.popup} onClick={clickPropagationBlock}>
-                <h1 className={css.popup__header}>Обратная связь</h1>
-                <img className={css.popup__closeButton} src={closeIco} onClick={closePopUp} title={'Закрыть'}
-                     alt={'Закрыть'}/>
+                <div className={css.header}>
+                    <h1 className={css.header__text}>Обратная связь</h1>
+                    <img className={css.header__closeButton} src={closeIco} onClick={closePopUp} title={'Закрыть'}
+                         alt={'Закрыть'}/>
+                </div>
                 <p className={css.popup__text}>Данный сервис всё ещё находится в разработке, и мы бы хотели услышать <a
                     className={css.popup__link} rel="noopener noreferrer" target="_blank"
                     ref={feedbackRef}

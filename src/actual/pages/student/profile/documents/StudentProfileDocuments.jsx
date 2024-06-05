@@ -16,7 +16,7 @@ import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
 import refreshIco from './static/refreshIco.svg';
 import FeedbackService from "../../../../services/FeedbackService.js";
-import GiveFeedbackPopUp from "../../../../popups/giveFeedback/GiveFeedbackPopUp.jsx";
+import GiveFeedbackPopUp from "./components/popups/giveFeedback/GiveFeedbackPopUp.jsx";
 
 
 export default function StudentProfileDocuments() {
