@@ -14,7 +14,6 @@
     cursor: pointer;
 }
 
-/*TODO: Поменять курсор на попапе обратной связи*/
 .popup {
     background-color: var(--default-white);
     border: 3px solid var(--info-dark-blue);
