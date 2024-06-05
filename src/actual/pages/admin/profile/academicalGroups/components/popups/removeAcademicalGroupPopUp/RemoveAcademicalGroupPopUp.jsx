@@ -23,7 +23,7 @@ export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup,
             window.document.removeEventListener('keydown', onEscapePressed);
             scrollLock.enablePageScroll();
         };
-    });
+    }, []);
 
     const onEscapePressed = (e) => {
         if (e.key === "Escape") {
