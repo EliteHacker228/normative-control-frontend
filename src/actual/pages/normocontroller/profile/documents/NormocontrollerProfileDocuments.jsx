@@ -129,6 +129,7 @@ export default function NormocontrollerProfileDocuments() {
                         <div className={css.filtersGroup}>
                             <h1 className={css.filtersGroup__header}>Группы</h1>
                             <div className={css.filtersGroup__content}>
+                                {groups.length === 0 && <p className={css.filtersGroup__placeholder}>Вам пока не назначены группы</p>}
                                 {groups.map((group, index) => {
                                     return (
                                         <div className={css.filterCheckbox} key={index}>
