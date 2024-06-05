@@ -1,16 +1,19 @@
 import Header from "../../../../commonComponents/header/Header.jsx";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import AcademicalGroupsService from "../../../../services/AcademicalGroupsService.js";
 import css from "./AcademicalGroups.module.css";
 import searchIco from './static/search_ico.svg';
 import whiteDownloadIco from './static/downloadIcoWhite.svg';
+import CsvDocumentsListDownloader from "../../../../utils/Downloaders/CsvDocumentsListDowloader.js";
 
 
 export default function AcademicalGroups() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
     const [filteredAcademicalGroups, setFilteredAcademicalGroups] = useState([]);
     const [searchRequest, setSearchRequest] = useState('');
+
+    const resultDownloadRef = useRef();
 
     useEffect(() => {
         (async () => {
@@ -25,6 +28,11 @@ export default function AcademicalGroups() {
         setSearchRequest(searchRequest);
         setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
     };
+
+    const onDocumentsListCsvDownload = () => {
+        CsvDocumentsListDownloader.download(resultDownloadRef);
+        // console.log('asdasd');
+    }
 
     return (
         <div>
@@ -63,11 +71,13 @@ export default function AcademicalGroups() {
                     </div>
                     <div className={css.search__controls}>
                         <button className={`${css.search__button} ${css.search__button_add}`}>Добавить</button>
-                        <div className={`${css.search__button} ${css.search__button_download}`}>
+                        <div className={`${css.search__button} ${css.search__button_download}`}
+                             onClick={onDocumentsListCsvDownload}>
                             <p>Скачать список всех работ</p>
                             <img className={css.downloadImage} src={whiteDownloadIco}
                                  alt={'Кнопка скачивания списка работ'} title={'Скачать'}/>
                         </div>
+                        <a ref={resultDownloadRef}/>
                     </div>
                 </div>
             </div>

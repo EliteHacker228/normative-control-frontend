@@ -12,6 +12,8 @@ import AcademicalGroupsService from "../../../../services/AcademicalGroupsServic
 import AuthService from "../../../../services/AuthService.js";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import refreshIco from './static/refreshIco.svg';
+import Cp1251Encoder from "../../../../utils/Encoders/Cp1251Encoder.js";
+import CsvDocumentsListDownloader from "../../../../utils/Downloaders/CsvDocumentsListDowloader.js";
 
 export default function NormocontrollerProfileDocuments() {
     const navigate = useNavigate();
@@ -43,48 +45,9 @@ export default function NormocontrollerProfileDocuments() {
         setGroups(groups);
     }
 
-    const onDocumentsListCsvDownload = async () => {
-        let documentsListText = await DocumentsService.getDocumentsListCsv();
-
-        let objectUrl = "data:text/plain;charset=CP1251," + encodeCP1251(documentsListText);
-        resultDownloadRef.current.href = objectUrl;
-        resultDownloadRef.current.download = `Выгрузка нормоконтроля, ${new Date().toLocaleString(undefined, {weekday: "long"})}.csv`;
-        resultDownloadRef.current.click();
-        window.URL.revokeObjectURL(objectUrl);
+    const onDocumentsListCsvDownload = () => {
+        CsvDocumentsListDownloader.download(resultDownloadRef);
     }
-
-    let encodeCP1251 = function (string) {
-        function encodeChar(c) {
-            let isKyr = function (str) {
-                return /[а-я]/i.test(str);
-            }
-            let cp1251 = 'ЂЃ‚ѓ„…†‡€‰Љ‹ЊЌЋЏђ‘’“”•–—�™љ›њќћџ ЎўЈ¤Ґ¦§Ё©Є«¬*®Ї°±Ііґµ¶·\
-ё№є»јЅѕїАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя';
-            let p = isKyr(c) ? (cp1251.indexOf(c) + 128) : c.charCodeAt(0);
-            let h = p.toString(16);
-            if (h == 'a') {
-                h = '0A';
-            }
-            return '%' + h;
-        }
-
-        let res = '';
-        for (let i = 0; i < string.length; i++) {
-            res += encodeChar(string.charAt(i));
-        }
-        return res;
-    }
-
-    const onDownloadClick = async (e) => {
-        e.preventDefault();
-        let documentId = e.target.parentElement.parentElement.parentElement.id;
-        let documentBlobResult = await DocumentsService.getDocumentDocx(documentId);
-        let objectUrl = window.URL.createObjectURL(documentBlobResult.documentBlob);
-        resultDownloadRef.current.href = objectUrl;
-        resultDownloadRef.current.download = documentBlobResult.documentName;
-        resultDownloadRef.current.click();
-        window.URL.revokeObjectURL(objectUrl);
-    };
 
     const onSearchInput = (e) => {
         let newSearchInput = e.target.value;
