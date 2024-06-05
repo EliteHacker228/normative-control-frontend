@@ -1,0 +1,179 @@
+.academicalGroups {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 16px;
+    margin-bottom: 28.07px;
+    height: max(calc(100vh - 92px - 120px - 16px), 720px);
+}
+
+.academicalGroups__header {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+}
+
+.search {
+    border: 1px solid var(--info-dark-blue);
+    border-radius: 8px;
+    width: 764px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 7px;
+}
+
+.searchHeader {
+    display: flex;
+    gap: 10px;
+    padding: 7px 16px;
+}
+
+.searchHeader__ico {
+    width: 20px;
+    height: 20px;
+}
+
+.searchHeader__text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.searchInput {
+
+}
+
+.searchInput__field {
+    border: 1px solid var(--info-dark-blue);
+    border-radius: 8px;
+    padding: 3px 20px;
+    width: 100%;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+/*TODO: Сделать так же всем классам*/
+.searchInput__field::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+}
+
+.searchResults {
+    border: 1px solid var(--info-dark-blue);
+    display: flex;
+    flex-direction: column;
+    height: 289px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.searchResult {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    gap: 20px;
+}
+
+.searchResult__text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: var(--info-dark-blue);
+    width: 236px;
+}
+
+.searchResult__controls {
+    display: flex;
+    gap: 20px;
+}
+
+.search__button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--default-white);
+
+    border-radius: 40px;
+    border: none;
+
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.search__button:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.search__button:active {
+    filter: brightness(85%);
+}
+
+.search__button_open {
+    background-color: var(--acceptance-green);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 130px;
+}
+
+.search__button_edit {
+    background-color: var(--edition-yellow);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 130px;
+}
+
+.search__button_remove {
+    background-color: var(--rejection-red);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 130px;
+}
+
+.search__button_add {
+    background-color: var(--bright-purple);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 265px;
+}
+
+.search__button_download {
+    background-color: var(--acceptance-green);
+    padding: 10px 20px;
+    width: 265px;
+    display: flex;
+    gap: 4px
+}
+
+.search__controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.downloadImage {
+    width: 21px;
+    height: 21px;
+}
