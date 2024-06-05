@@ -52,7 +52,7 @@ export default function GiveFeedbackPopUp() {
                     href={'https://forms.gle/hewHJgWNdH91eakYA'}>ваше
                     мнение о нём</a>, чтобы сделать его ещё лучше!</p>
                 <img className={css.popup__image} src={pandaWithHeartImg} alt={'Панда с сердечком'}/>
-                <button className={css.popup__button} onClick={onGiveFeedbackClick}>Пройти</button>
+                <button className={css.popup__button} onClick={onGiveFeedbackClick}>Пройти опрос</button>
             </div>
         </div>
     );
