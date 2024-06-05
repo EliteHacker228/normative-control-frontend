@@ -6,22 +6,28 @@ import css from "./AcademicalGroups.module.css";
 import searchIco from './static/search_ico.svg';
 import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import CsvDocumentsListDownloader from "../../../../utils/Downloaders/CsvDocumentsListDowloader.js";
+import RemoveAcademicalGroupPopUp from "./components/popups/removeAcademicalGroupPopUp/RemoveAcademicalGroupPopUp.jsx";
 
 
 export default function AcademicalGroups() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
     const [filteredAcademicalGroups, setFilteredAcademicalGroups] = useState([]);
     const [searchRequest, setSearchRequest] = useState('');
+    const [academicalGroupOnDeletion, setAcademicalGroupOnDeletion] = useState({});
+
+    const [isPopUpShowed, setIsPopUpShowed] = useState(false);
 
     const resultDownloadRef = useRef();
 
     useEffect(() => {
-        (async () => {
-            let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
-            setAcademicalGroups(academicalGroups);
-            setFilteredAcademicalGroups(academicalGroups);
-        })();
+        updateGroups();
     }, []);
+
+    const updateGroups = async () => {
+        let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
+        setAcademicalGroups(academicalGroups);
+        setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
+    };
 
     const onSearchInput = (e) => {
         let searchRequest = e.target.value;
@@ -34,9 +40,25 @@ export default function AcademicalGroups() {
         // console.log('asdasd');
     }
 
+    const closePopUp = () => {
+        setIsPopUpShowed(false);
+        setAcademicalGroupOnDeletion({});
+    };
+
+    const onDeleteClick = (e) => {
+        setIsPopUpShowed(true);
+        let academicalGroupOnDeletionIndex = e.target.parentNode.parentNode.id;
+        let academicalGroupOnDeletion = filteredAcademicalGroups[academicalGroupOnDeletionIndex];
+        setAcademicalGroupOnDeletion(academicalGroupOnDeletion);
+        console.log(academicalGroupOnDeletion);
+    };
+
     return (
         <div>
             <Header/>
+            {isPopUpShowed &&
+                <RemoveAcademicalGroupPopUp closePopUp={closePopUp} academicalGroup={academicalGroupOnDeletion}
+                                            updateGoups={updateGroups}/>}
             <div className={css.academicalGroups}>
                 <h1 className={css.academicalGroups__header}>Академические группы</h1>
                 <div className={css.search}>
@@ -52,7 +74,7 @@ export default function AcademicalGroups() {
                         {filteredAcademicalGroups.length === 0 &&
                             <p className={css.searchResults__placeholder}>Группы не найдены</p>}
                         {filteredAcademicalGroups.map((academicalGroup, index) => {
-                                return <div key={index} className={css.searchResult}>
+                                return <div id={index} key={index} className={css.searchResult}>
                                     <div className={css.searchResult__text}>{academicalGroup.name}</div>
                                     <div className={css.searchResult__controls}>
                                         <button
@@ -62,7 +84,8 @@ export default function AcademicalGroups() {
                                             className={`${css.search__button} ${css.search__button_edit}`}>Изменить
                                         </button>
                                         <button
-                                            className={`${css.search__button} ${css.search__button_remove}`}>Удалить
+                                            className={`${css.search__button} ${css.search__button_remove}`}
+                                            onClick={onDeleteClick}>Удалить
                                         </button>
                                     </div>
                                 </div>;

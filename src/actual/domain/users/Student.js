@@ -12,11 +12,12 @@ export default class Student extends User {
     }
 
     static fromPlainObject(plainObject) {
+        let academicGroup = plainObject.academicGroup == null ? {} : AcademicGroup.fromPlainObject(plainObject.academicGroup);
         return new Student(
             plainObject.id,
             plainObject.email,
             plainObject.fullName,
-            AcademicGroup.fromPlainObject(plainObject.academicGroup),
+            academicGroup,
             plainObject.documentsLimit,
             plainObject.role,
             plainObject.verified

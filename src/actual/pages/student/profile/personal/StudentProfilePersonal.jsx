@@ -27,9 +27,14 @@ export default function StudentProfilePersonal() {
     };
 
     const onAcademicGroupIdInput = (e) => {
-        setAcademicGroupId(e.target.value);
-        let targetNormocontroller = academicalGroups[e.target.selectedIndex - 1].normocontroller;
-        setNormocontrollerFullName(targetNormocontroller.fullName);
+        let academicGroupId = e.target.value;
+        setAcademicGroupId(academicGroupId);
+        if(academicGroupId) {
+            let targetNormocontroller = academicalGroups[e.target.selectedIndex - 1].normocontroller;
+            setNormocontrollerFullName(targetNormocontroller.fullName);
+        }else{
+            setNormocontrollerFullName('Отсутствует');
+        }
     };
 
     const onOldPasswordInput = (e) => {
@@ -51,8 +56,16 @@ export default function StudentProfilePersonal() {
         setFullName(receivedUser.fullName);
         setEmail(receivedUser.email);
 
-        setAcademicGroupId(receivedUser.academicGroup.id);
-        setNormocontrollerFullName(receivedUser.academicGroup.normocontroller.fullName);
+        if(receivedUser.academicGroup.id)
+            setAcademicGroupId(receivedUser.academicGroup.id);
+        else
+            setAcademicGroupId('');
+
+        if(receivedUser.academicGroup.normocontroller)
+            setNormocontrollerFullName(receivedUser.academicGroup.normocontroller.fullName);
+        else
+            setNormocontrollerFullName('Отсутствует');
+
         let receivedAcademicalGroups = await AcademicalGroupsService.getAcademicalGroups();
         setAcademicalGroups(receivedAcademicalGroups);
     };
@@ -128,13 +141,13 @@ export default function StudentProfilePersonal() {
                         </div>
                         <div className={css.inputBlock}>
                             <p className={css.inputBlock__header}>Группа</p>
-                            <select className={css.inputBlock__input} placeholder='Академическая группа' onChange={onAcademicGroupIdInput}>
-                                <option value='' disabled>-</option>
+                            <select className={css.inputBlock__input} placeholder='Академическая группа' value={academicGroupId}
+                                    onChange={onAcademicGroupIdInput}>
+                                {academicGroupId === '' && <option value='' disabled>-</option>}
                                 {
                                     academicalGroups
                                         .map((academicalGroup, index) =>
-                                            <option id={index} key={index} value={academicalGroup.id}
-                                                    selected={academicGroupId === academicalGroup.id}>{academicalGroup.name}</option>
+                                            <option id={index} key={index} value={academicalGroup.id}>{academicalGroup.name}</option>
                                         )
                                 }
                             </select>

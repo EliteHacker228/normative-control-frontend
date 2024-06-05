@@ -7,4 +7,8 @@ export default class AcademicalGroupsService {
         let academicalGroupsResult = await AcademicalGroupsNetworker.getAcademicalGroups();
         return academicalGroupsResult.map(academicalGroup => AcademicGroup.fromPlainObject(academicalGroup));
     }
+
+    static async deleteAcademicalGroupById(id) {
+        await AcademicalGroupsNetworker.deleteAcademicalGroupById(id);
+    }
 }
