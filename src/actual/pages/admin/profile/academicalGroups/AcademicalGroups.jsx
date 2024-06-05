@@ -9,13 +9,22 @@ import whiteDownloadIco from './static/downloadIcoWhite.svg';
 
 export default function AcademicalGroups() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
+    const [filteredAcademicalGroups, setFilteredAcademicalGroups] = useState([]);
+    const [searchRequest, setSearchRequest] = useState('');
 
     useEffect(() => {
         (async () => {
             let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
             setAcademicalGroups(academicalGroups);
+            setFilteredAcademicalGroups(academicalGroups);
         })();
     }, []);
+
+    const onSearchInput = (e) => {
+        let searchRequest = e.target.value;
+        setSearchRequest(searchRequest);
+        setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
+    };
 
     return (
         <div>
@@ -28,10 +37,11 @@ export default function AcademicalGroups() {
                         <h1 className={css.searchHeader__text}>Поиск</h1>
                     </div>
                     <div className={css.searchInput}>
-                        <input className={css.searchInput__field} type='text' placeholder={'Группа'}/>
+                        <input className={css.searchInput__field} type='text' placeholder='Группа' value={searchRequest}
+                               onChange={onSearchInput}/>
                     </div>
                     <div className={css.searchResults}>
-                        {academicalGroups.map((academicalGroup, index) => {
+                        {filteredAcademicalGroups.map((academicalGroup, index) => {
                                 return <div key={index} className={css.searchResult}>
                                     <div className={css.searchResult__text}>{academicalGroup.name}</div>
                                     <div className={css.searchResult__controls}>
@@ -53,7 +63,8 @@ export default function AcademicalGroups() {
                         <button className={`${css.search__button} ${css.search__button_add}`}>Добавить</button>
                         <div className={`${css.search__button} ${css.search__button_download}`}>
                             <p>Скачать список всех работ</p>
-                            <img className={css.downloadImage} src={whiteDownloadIco} alt={'Кнопка скачивания списка работ'} title={'Скачать'}/>
+                            <img className={css.downloadImage} src={whiteDownloadIco}
+                                 alt={'Кнопка скачивания списка работ'} title={'Скачать'}/>
                         </div>
                     </div>
                 </div>
