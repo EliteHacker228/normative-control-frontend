@@ -1,4 +1,4 @@
-import AcademicGroup from "../academicGroups/AcademicGroup.js";
+import AcademicalGroup from "../academicGroups/AcademicalGroup.js";
 import User from "./User.js";
 
 export default class Student extends User {
@@ -12,7 +12,7 @@ export default class Student extends User {
     }
 
     static fromPlainObject(plainObject) {
-        let academicGroup = plainObject.academicGroup == null ? {} : AcademicGroup.fromPlainObject(plainObject.academicGroup);
+        let academicGroup = plainObject.academicGroup == null ? {} : AcademicalGroup.fromPlainObject(plainObject.academicGroup);
         return new Student(
             plainObject.id,
             plainObject.email,

@@ -7,6 +7,9 @@ export default class Normocontroller extends User {
     }
 
     static fromPlainObject(plainObject) {
+        if(plainObject === null)
+            return null;
+
         return new Normocontroller(
             plainObject.id,
             plainObject.email,

@@ -31,4 +31,9 @@ export default class AccountsService {
     static async patchAccountPassword(accountId, oldPassword, newPassword) {
         await AccountsNetworker.patchAccountPassword(accountId, oldPassword, newPassword);
     }
+
+    static async getNormocontrollers(){
+        let normocontrollersPlainObjectsList = await AccountsNetworker.getNormocontrollers();
+        return normocontrollersPlainObjectsList.map(normocontroller => Normocontroller.fromPlainObject(normocontroller));
+    }
 }

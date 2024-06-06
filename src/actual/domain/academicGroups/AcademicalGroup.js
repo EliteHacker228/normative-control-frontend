@@ -1,6 +1,6 @@
 import Normocontroller from "../users/Normocontroller.js";
 
-export default class AcademicGroup {
+export default class AcademicalGroup {
     #id;
     #name;
     #normocontroller;
@@ -12,7 +12,7 @@ export default class AcademicGroup {
     }
 
     static fromPlainObject(plainObject) {
-        return new AcademicGroup(
+        return new AcademicalGroup(
             plainObject.id,
             plainObject.name,
             Normocontroller.fromPlainObject(plainObject.normocontroller)

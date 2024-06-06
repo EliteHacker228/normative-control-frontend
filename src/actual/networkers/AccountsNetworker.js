@@ -83,6 +83,20 @@ export default class AccountsNetworker {
         return await patchAccountPasswordResult.json();
     }
 
+    static async getNormocontrollers(){
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let normocontrollersResponse = await fetch(`${ENV.API_URL}/accounts/normocontrollers`, requestOptions);
+        await this._handleResponseStatus(normocontrollersResponse);
+        return await normocontrollersResponse.json();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {

@@ -5,7 +5,7 @@ import FeedbackService from "../../../../../../../services/FeedbackService.js";
 import scrollLock from "scroll-lock";
 import AcademicalGroupsService from "../../../../../../../services/AcademicalGroupsService.js";
 
-export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup, updateGoups}) {
+export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup, updateGroups}) {
 
     const [isDeletionFailed, setIsDeletionFailed] = useState(false);
     const [isDeletionSuccessful, setIsDeletionSuccessful] = useState(false);
@@ -46,7 +46,7 @@ export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup,
         setIsDeletionInProgress(false);
         setIsDeletionFailed(false);
         setIsDeletionSuccessful(true);
-        await updateGoups();
+        await updateGroups();
     };
 
     const onPopUpClose = () => {
