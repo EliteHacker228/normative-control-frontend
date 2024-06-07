@@ -27,6 +27,12 @@ export default function AcademicalGroups() {
 
     useEffect(() => {
         updateGroups();
+
+        let intervalId = setInterval(() => {
+            updateGroups();
+        }, 1000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const updateGroups = async () => {
