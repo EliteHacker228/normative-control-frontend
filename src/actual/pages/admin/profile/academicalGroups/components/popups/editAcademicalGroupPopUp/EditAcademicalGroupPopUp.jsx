@@ -8,12 +8,12 @@ import closeIco from "../static/close_ico.svg";
 
 export function EditAcademicalGroupPopUp({closePopUp, academicalGroup, updateGroups}) {
 
-    const initialNormocontrollerId = academicalGroup.normocontroller.id;
+    const initialNormocontrollerId = academicalGroup.normocontroller ? academicalGroup.normocontroller.id : '';
     const initialAcademicGroupName = academicalGroup.name;
 
     const [normocontrollers, setNormocontrollers] = useState([]);
-    const [normocontrollerId, setNormocontrollerId] = useState(academicalGroup.normocontroller.id);
-    const [academicalGroupName, setAcademicalGroupName] = useState(academicalGroup.name);
+    const [normocontrollerId, setNormocontrollerId] = useState(initialNormocontrollerId);
+    const [academicalGroupName, setAcademicalGroupName] = useState(initialAcademicGroupName);
 
     const [isEditionInProgress, setIsEditionInProgress] = useState(false);
     const [isEditionSuccessful, setIsEditionSuccessful] = useState(false);
