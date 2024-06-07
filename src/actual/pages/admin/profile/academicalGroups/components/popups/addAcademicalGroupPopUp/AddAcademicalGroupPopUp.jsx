@@ -1,7 +1,7 @@
-import css from './AddAcademicalGroupPopUp.module.css';
+import css from '../PopUp.module.css';
 import {useEffect, useState} from "react";
 import scrollLock from "scroll-lock";
-import closeIco from './static/close_ico.svg';
+import closeIco from '../static/close_ico.svg';
 import AccountsService from "../../../../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../../../../services/AcademicalGroupsService.js";
 import AcademicalGroupValidator from "../../../../../../../utils/Validators/AcademicalGroupValidator.js";

@@ -1,5 +1,5 @@
-import css from './RemoveAcademicalGroupPopUp.module.css';
-import closeIco from "./static/close_ico.svg";
+import css from '../PopUp.module.css';
+import closeIco from "../static/close_ico.svg";
 import {useEffect, useState} from "react";
 import FeedbackService from "../../../../../../../services/FeedbackService.js";
 import scrollLock from "scroll-lock";

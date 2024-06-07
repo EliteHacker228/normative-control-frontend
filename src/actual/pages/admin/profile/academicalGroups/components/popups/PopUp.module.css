@@ -137,3 +137,6 @@
     background-color: var(--default-light-grey);
 }
 
+.popup__button_delete {
+    background-color: var(--rejection-red);
+}
