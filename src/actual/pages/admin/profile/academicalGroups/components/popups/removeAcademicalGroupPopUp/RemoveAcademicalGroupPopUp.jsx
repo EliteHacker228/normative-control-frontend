@@ -41,6 +41,7 @@ export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup,
             setIsDeletionInProgress(false);
             setIsDeletionFailed(true);
             setIsDeletionSuccessful(false);
+            await updateGroups();
             return;
         }
         setIsDeletionInProgress(false);

@@ -67,6 +67,7 @@
     letter-spacing: 0.01em;
     text-align: left;
     color: var(--info-dark-blue);
+    width: 100%;
 }
 
 .popup__textInput {
@@ -133,8 +134,16 @@
     background-color: var(--acceptance-green);
 }
 
+.popup__button_edit {
+    background-color: var(--edition-yellow);
+}
+
 .popup__button_cancel {
     background-color: var(--default-light-grey);
+}
+
+.popup__button_tryAgain {
+    background-color: var(--bright-purple);
 }
 
 .popup__button_delete {

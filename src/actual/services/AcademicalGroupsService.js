@@ -12,10 +12,15 @@ export default class AcademicalGroupsService {
         await AcademicalGroupsNetworker.deleteAcademicalGroupById(id);
     }
 
-    static async createAcademicalGroup(academicalGroupName, normocontrollerId){
-        if(normocontrollerId  === '')
+    static async createAcademicalGroup(academicalGroupName, normocontrollerId) {
+        if (normocontrollerId === '')
             normocontrollerId = null;
         let createAcademicalGroupResult = await AcademicalGroupsNetworker.createAcademicalGroup(academicalGroupName, normocontrollerId);
         return AcademicalGroup.fromPlainObject(createAcademicalGroupResult);
+    }
+
+    static async editAcademicalGroup(academicalGroupId, academicalGroupName, normocontrollerId) {
+        let editAcademicalGroupResult = await AcademicalGroupsNetworker.editAcademicalGroup(academicalGroupId, academicalGroupName, normocontrollerId);
+        return AcademicalGroup.fromPlainObject(editAcademicalGroupResult);
     }
 }

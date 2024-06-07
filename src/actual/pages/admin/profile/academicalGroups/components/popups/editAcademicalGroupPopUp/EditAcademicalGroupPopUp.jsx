@@ -1,23 +1,26 @@
-import css from '../PopUp.module.css';
 import {useEffect, useState} from "react";
 import scrollLock from "scroll-lock";
-import closeIco from '../static/close_ico.svg';
 import AccountsService from "../../../../../../../services/AccountsService.js";
 import AcademicalGroupsService from "../../../../../../../services/AcademicalGroupsService.js";
 import AcademicalGroupValidator from "../../../../../../../utils/Validators/AcademicalGroupValidator.js";
+import css from "../PopUp.module.css";
+import closeIco from "../static/close_ico.svg";
 
-export default function AddAcademicalGroupPopUp({closePopUp, updateGroups}) {
+export function EditAcademicalGroupPopUp({closePopUp, academicalGroup, updateGroups}) {
+
+    const initialNormocontrollerId = academicalGroup.normocontroller.id;
+    const initialAcademicGroupName = academicalGroup.name;
 
     const [normocontrollers, setNormocontrollers] = useState([]);
-    const [normocontrollerId, setNormocontrollerId] = useState('');
-    const [academicalGroupName, setAcademicalGroupName] = useState('');
+    const [normocontrollerId, setNormocontrollerId] = useState(academicalGroup.normocontroller.id);
+    const [academicalGroupName, setAcademicalGroupName] = useState(academicalGroup.name);
 
-    const [isCreationInProgress, setIsCreationInProgress] = useState(false);
-    const [isCreationSuccessfull, setIsCreationSuccessfull] = useState(false);
-    const [isCreationFailed, setIsCreationFailed] = useState(false);
+    const [isEditionInProgress, setIsEditionInProgress] = useState(false);
+    const [isEditionSuccessful, setIsEditionSuccessful] = useState(false);
+    const [isEditionFailed, setIsEditionFailed] = useState(false);
     const [failureReason, setFailureReason] = useState('');
 
-    const [createdAcademicalGroup, setCreatedAcademicalGroup] = useState({});
+    const [editedAcademicalGroup, setEditedAcademicalGroup] = useState({});
 
     const clickPropagationBlock = (e) => {
         e.stopPropagation();
@@ -52,7 +55,7 @@ export default function AddAcademicalGroupPopUp({closePopUp, updateGroups}) {
     };
 
     const onPopUpClose = () => {
-        if (!isCreationInProgress) {
+        if (!isEditionInProgress) {
             closePopUp();
         }
     };
@@ -62,10 +65,10 @@ export default function AddAcademicalGroupPopUp({closePopUp, updateGroups}) {
     };
 
     const resetPopUp = () => {
-        setIsCreationInProgress(false);
-        setIsCreationFailed(false);
+        setIsEditionInProgress(false);
+        setIsEditionFailed(false);
         setFailureReason('');
-        setIsCreationSuccessfull(false);
+        setIsEditionSuccessful(false);
     };
 
     const onAcademicalGroupNameInput = (e) => {
@@ -75,36 +78,36 @@ export default function AddAcademicalGroupPopUp({closePopUp, updateGroups}) {
     const addAcademicalGroup = async () => {
         let result;
         try {
-            setIsCreationInProgress(true);
-            setIsCreationFailed(false);
-            setIsCreationSuccessfull(false);
+            setIsEditionInProgress(true);
+            setIsEditionFailed(false);
+            setIsEditionSuccessful(false);
 
-            result = await AcademicalGroupsService.createAcademicalGroup(academicalGroupName, normocontrollerId);
-            setCreatedAcademicalGroup(result);
+            result = await AcademicalGroupsService.editAcademicalGroup(academicalGroup.id, academicalGroupName, normocontrollerId);
+            setEditedAcademicalGroup(result);
         } catch (e) {
-            setIsCreationInProgress(false);
-            setIsCreationFailed(true);
+            setIsEditionInProgress(false);
+            setIsEditionFailed(true);
             setFailureReason(e.message);
-            setIsCreationSuccessfull(false);
+            setIsEditionSuccessful(false);
             await updateGroups();
             return;
         }
-        setIsCreationInProgress(false);
-        setIsCreationFailed(false);
-        setIsCreationSuccessfull(true);
+        setIsEditionInProgress(false);
+        setIsEditionFailed(false);
+        setIsEditionSuccessful(true);
         await updateGroups();
     };
 
-    const isGroupCreationFormValid = () => {
-        return AcademicalGroupValidator.isAcademicalGroupCreationFormValid(academicalGroupName, normocontrollerId);
+    const isGroupEditionFormValid = () => {
+        return AcademicalGroupValidator.isAcademicalGroupEditionFormValid(academicalGroupName, normocontrollerId, initialAcademicGroupName, initialNormocontrollerId);
     };
 
     return (
         <div className={css.popupPage} onClick={onPopUpClose}>
-            {!(isCreationFailed || isCreationSuccessfull) && <div className={css.popup} onClick={clickPropagationBlock}>
+            {!(isEditionFailed || isEditionSuccessful) && <div className={css.popup} onClick={clickPropagationBlock}>
                 <div className={css.header}>
-                    <h1 className={css.header__text}>Добавление группы</h1>
-                    {!isCreationInProgress &&
+                    <h1 className={css.header__text}>Изменение группы</h1>
+                    {!isEditionInProgress &&
                         <img className={css.header__closeButton} src={closeIco} onClick={onPopUpClose} title={'Закрыть'}
                              alt={'Закрыть'}/>}
                 </div>
@@ -128,39 +131,46 @@ export default function AddAcademicalGroupPopUp({closePopUp, updateGroups}) {
                     </select>
                 </div>
                 <div className={css.popup__controls}>
-                    <button className={`${css.popup__button} ${css.popup__button_add}`} disabled={isCreationInProgress || !isGroupCreationFormValid()}
-                            onClick={addAcademicalGroup}>Добавить
+                    <button className={`${css.popup__button} ${css.popup__button_edit}`}
+                            disabled={isEditionInProgress || !isGroupEditionFormValid()}
+                            onClick={addAcademicalGroup}>Изменить
                     </button>
                     <button className={`${css.popup__button} ${css.popup__button_cancel}`}
-                            disabled={isCreationInProgress} onClick={onPopUpClose}>Отмена
+                            disabled={isEditionInProgress} onClick={onPopUpClose}>Отмена
                     </button>
                 </div>
             </div>}
-            {isCreationSuccessfull && <div className={css.popup} onClick={clickPropagationBlock}>
+
+            {isEditionSuccessful && <div className={css.popup} onClick={clickPropagationBlock}>
                 <div className={css.header}>
                     <h1 className={css.header__text}>Успешно</h1>
                     <img className={css.header__closeButton} src={closeIco} onClick={onPopUpClose} title={'Закрыть'}
                          alt={'Закрыть'}/>
                 </div>
-                <div>
-                    <p className={css.popup__text}> Группа <b>{academicalGroupName}</b> успешно создана.</p>
-                    {createdAcademicalGroup.normocontroller && <p className={css.popup__text}> Ее нормоконтролером
-                        назначен <b>{createdAcademicalGroup.normocontroller.fullName}, {createdAcademicalGroup.normocontroller.email}</b>
+                <p className={css.popup__text}> Группа <b>{initialAcademicGroupName}</b> успешно изменена.</p>
+                {initialAcademicGroupName !== editedAcademicalGroup.name &&
+                    <p className={css.popup__text}> Ей присвоено название - <b>{editedAcademicalGroup.name}</b>
                     </p>}
-                </div>
+                {editedAcademicalGroup.normocontroller && editedAcademicalGroup.normocontroller.id !== initialNormocontrollerId &&
+                    <p className={css.popup__text}> Ей назначен нормоконтролер
+                        - <b>{editedAcademicalGroup.normocontroller.fullName}, {editedAcademicalGroup.normocontroller.email}</b>
+                    </p>}
                 <div className={css.popup__controls}>
                     <button className={`${css.popup__button} ${css.popup__button_cancel}`}
                             onClick={onPopUpClose}>Закрыть
                     </button>
                 </div>
             </div>}
-            {isCreationFailed && <div className={css.popup} onClick={clickPropagationBlock}>
+
+            {isEditionFailed && <div className={css.popup} onClick={clickPropagationBlock}>
                 <div className={css.header}>
                     <h1 className={css.header__text}>Ошибка</h1>
                     <img className={css.header__closeButton} src={closeIco} onClick={onPopUpClose} title={'Закрыть'}
                          alt={'Закрыть'}/>
                 </div>
-                <p className={css.popup__text}>Создать группу <b>{academicalGroupName}</b> не удалось. {failureReason}</p>
+                <p className={css.popup__text}>Изменить группу <b>{initialAcademicGroupName}</b> не
+                    удалось. {failureReason}
+                </p>
                 <div className={css.popup__controls}>
                     <button className={`${css.popup__button} ${css.popup__button_tryAgain}`}
                             onClick={onTryAgain}>Попробовать снова

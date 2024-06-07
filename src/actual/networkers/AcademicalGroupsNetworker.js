@@ -9,7 +9,7 @@ export default class AcademicalGroupsNetworker {
         };
 
         let getAcademicalGroupsResponse = await fetch(`${ENV.API_URL}/academical/groups`, requestOptions);
-        if(!getAcademicalGroupsResponse.ok)
+        if (!getAcademicalGroupsResponse.ok)
             this._handleAcademicalGroupResponse(getAcademicalGroupsResponse);
         return await getAcademicalGroupsResponse.json();
     }
@@ -24,7 +24,7 @@ export default class AcademicalGroupsNetworker {
         };
 
         let deleteAcademicalGroupsResponse = await fetch(`${ENV.API_URL}/academical/groups/${id}`, requestOptions);
-        if(!deleteAcademicalGroupsResponse.ok)
+        if (!deleteAcademicalGroupsResponse.ok)
             this._handleAcademicalGroupResponse(deleteAcademicalGroupsResponse);
         return await deleteAcademicalGroupsResponse.json();
     }
@@ -46,12 +46,34 @@ export default class AcademicalGroupsNetworker {
         };
 
         let createAcademicalGroupResponse = await fetch(`${ENV.API_URL}/academical/groups`, requestOptions);
-        if(!createAcademicalGroupResponse.ok)
+        if (!createAcademicalGroupResponse.ok)
             this._handleAcademicalGroupResponse(createAcademicalGroupResponse);
         return await createAcademicalGroupResponse.json();
     }
 
-    static _handleAcademicalGroupResponse(academicalGroupOperationResponse){
+    static async editAcademicalGroup(academicalGroupId, academicalGroupName, normocontrollerId) {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const body = JSON.stringify({
+            "name":academicalGroupName,
+            "normocontrollerId": normocontrollerId
+        });
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: headers,
+            body: body
+        };
+
+        let editAcademicalGroupResponse = await fetch(`${ENV.API_URL}/academical/groups/${academicalGroupId}`, requestOptions);
+        if (!editAcademicalGroupResponse.ok)
+            this._handleAcademicalGroupResponse(editAcademicalGroupResponse);
+        return await editAcademicalGroupResponse.json();
+    }
+
+    static _handleAcademicalGroupResponse(academicalGroupOperationResponse) {
         switch (academicalGroupOperationResponse.status) {
             case 409:
                 throw new ConflictError('Академическая группа с таким названием уже существует');

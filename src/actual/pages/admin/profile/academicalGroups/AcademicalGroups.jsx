@@ -8,16 +8,20 @@ import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import CsvDocumentsListDownloader from "../../../../utils/Downloaders/CsvDocumentsListDowloader.js";
 import RemoveAcademicalGroupPopUp from "./components/popups/removeAcademicalGroupPopUp/RemoveAcademicalGroupPopUp.jsx";
 import AddAcademicalGroupPopUp from "./components/popups/addAcademicalGroupPopUp/AddAcademicalGroupPopUp.jsx";
+import {EditAcademicalGroupPopUp} from "./components/popups/editAcademicalGroupPopUp/EditAcademicalGroupPopUp.jsx";
 
 
 export default function AcademicalGroups() {
     const [academicalGroups, setAcademicalGroups] = useState([]);
     const [filteredAcademicalGroups, setFilteredAcademicalGroups] = useState([]);
     const [searchRequest, setSearchRequest] = useState('');
+
     const [academicalGroupOnDeletion, setAcademicalGroupOnDeletion] = useState({});
+    const [academicalGroupOnEdition, setAcademicalGroupOnEdition] = useState({});
 
     const [isDeleteGroupPopUpShowed, setIsDeleteGroupPopUpShowed] = useState(false);
     const [isAddGroupPopUpShowed, setIsAddGroupPopUpShowed] = useState(false);
+    const [isEditGroupPopUpShowed, setIsEditGroupPopUpShowed] = useState(false);
 
     const resultDownloadRef = useRef();
 
@@ -42,24 +46,36 @@ export default function AcademicalGroups() {
         // console.log('asdasd');
     }
 
-    const closeDeleteGroupPopUp = () => {
-        setIsDeleteGroupPopUpShowed(false);
-        setAcademicalGroupOnDeletion({});
+    const openAddGroupPopUp = () => {
+        setIsAddGroupPopUpShowed(true);
     };
 
     const closeAddGroupPopUp = () => {
         setIsAddGroupPopUpShowed(false);
     };
 
-    const onDeleteClick = (e) => {
+    const openDeleteGroupPopUp = (e) => {
         setIsDeleteGroupPopUpShowed(true);
         let academicalGroupOnDeletionIndex = e.target.parentNode.parentNode.id;
         let academicalGroupOnDeletion = filteredAcademicalGroups[academicalGroupOnDeletionIndex];
         setAcademicalGroupOnDeletion(academicalGroupOnDeletion);
     };
 
-    const openAddGroupPopUp = () => {
-        setIsAddGroupPopUpShowed(true);
+    const closeDeleteGroupPopUp = () => {
+        setIsDeleteGroupPopUpShowed(false);
+        setAcademicalGroupOnDeletion({});
+    };
+
+    const openEditGroupPopUp = (e) => {
+        setIsEditGroupPopUpShowed(true);
+        let academicalGroupOnEditionIndex = e.target.parentNode.parentNode.id;
+        let academicalGroupOnEdition = filteredAcademicalGroups[academicalGroupOnEditionIndex];
+        setAcademicalGroupOnEdition(academicalGroupOnEdition);
+    };
+
+    const closeEditGroupPopUp = () => {
+        setIsEditGroupPopUpShowed(false);
+        setAcademicalGroupOnEdition({});
     };
 
     return (
@@ -71,6 +87,9 @@ export default function AcademicalGroups() {
                                             updateGroups={updateGroups}/>}
             {isAddGroupPopUpShowed &&
                 <AddAcademicalGroupPopUp closePopUp={closeAddGroupPopUp} updateGroups={updateGroups}/>}
+            {isEditGroupPopUpShowed &&
+                <EditAcademicalGroupPopUp closePopUp={closeEditGroupPopUp} academicalGroup={academicalGroupOnEdition}
+                                          updateGroups={updateGroups}/>}
             <div className={css.academicalGroups}>
                 <h1 className={css.academicalGroups__header}>Академические группы</h1>
                 <div className={css.search}>
@@ -93,11 +112,12 @@ export default function AcademicalGroups() {
                                             className={`${css.search__button} ${css.search__button_open}`}>Открыть
                                         </button>
                                         <button
-                                            className={`${css.search__button} ${css.search__button_edit}`}>Изменить
+                                            className={`${css.search__button} ${css.search__button_edit}`}
+                                            onClick={openEditGroupPopUp}>Изменить
                                         </button>
                                         <button
                                             className={`${css.search__button} ${css.search__button_remove}`}
-                                            onClick={onDeleteClick}>Удалить
+                                            onClick={openDeleteGroupPopUp}>Удалить
                                         </button>
                                     </div>
                                 </div>;
