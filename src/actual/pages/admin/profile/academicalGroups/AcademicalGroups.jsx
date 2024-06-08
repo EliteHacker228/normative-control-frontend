@@ -28,28 +28,27 @@ export default function AcademicalGroups() {
     useEffect(() => {
         updateGroups();
 
-        let intervalId = setInterval(() => {
-            updateGroups();
-        }, 1000);
+        let intervalId = setInterval(updateGroups, 2000);
 
         return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
+    }, [searchRequest, academicalGroups]);
+
     const updateGroups = async () => {
         let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
         setAcademicalGroups(academicalGroups);
-        setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
     };
 
     const onSearchInput = (e) => {
         let searchRequest = e.target.value;
         setSearchRequest(searchRequest);
-        setFilteredAcademicalGroups(academicalGroups.filter(academicalGroup => academicalGroup.name.includes(searchRequest)));
     };
 
     const onDocumentsListCsvDownload = () => {
         CsvDocumentsListDownloader.download(resultDownloadRef);
-        // console.log('asdasd');
     }
 
     const openAddGroupPopUp = () => {
