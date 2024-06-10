@@ -3,7 +3,7 @@ import css from './NormocontrollerProfileDocuments.module.css';
 import {useEffect, useRef, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import DocumentsService from "../../../../services/DocumentsService.js";
-import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import DocumentVerdictTranslators from "../../../../utils/Translators/DocumentVerdictTranslators.js";
 import searchIco from './static/searchIco.svg';
 import downloadIco from "../../../student/profile/documents/static/download_ico.svg";
 import whiteDownloadIco from './static/downloadIcoWhite.svg';

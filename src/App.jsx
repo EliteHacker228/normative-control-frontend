@@ -30,6 +30,7 @@ import Roles from "./actual/domain/users/Roles.js";
 import AfterAuthNavigator from "./actual/utils/AfterAuthNavigator/AfterAuthNavigator.js";
 import AcademicalGroups from "./actual/pages/admin/profile/academicalGroups/AcademicalGroups.jsx";
 import AdminProfilePersonal from "./actual/pages/admin/profile/personal/AdminProfilePersonal.jsx";
+import Accounts from "./actual/pages/admin/profile/accounts/Accounts.jsx";
 
 function App() {
     return (
@@ -108,6 +109,12 @@ function App() {
                 <Route path='/profile/admin/groups' element={
                     <RoleSecuredRoute targetRole={Roles.ADMIN}>
                         <AcademicalGroups/>
+                    </RoleSecuredRoute>
+                }/>
+
+                <Route path='/profile/admin/accounts' element={
+                    <RoleSecuredRoute targetRole={Roles.ADMIN}>
+                        <Accounts/>
                     </RoleSecuredRoute>
                 }/>
 

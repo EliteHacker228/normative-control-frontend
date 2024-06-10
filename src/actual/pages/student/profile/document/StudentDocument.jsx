@@ -18,7 +18,7 @@ import showCommentIco from './static/showCommentIco.svg';
 import hideCommentIco from './static/hideCommentIco.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import Document from "../../../../domain/documents/Document.js";
-import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import DocumentVerdictTranslators from "../../../../utils/Translators/DocumentVerdictTranslators.js";
 import whiteDownloadIco from "./static/downloadIcoWhite.svg";
 import {scrollBy, scrollIntoView, scrollTo} from "seamless-scroll-polyfill";
 
@@ -109,7 +109,7 @@ export default function StudentDocument() {
         setDocumentComment(resultNode.comment ?? '');
 
         // TODO: Применить когда в БД будет актуальное значение ошибок
-        // let documentVerdictForUser = DocumentVerdictTranslators.getDocumentVerdictForUser(resultNode, documentHtmlWithMistakes.documentMistakes.length, resultNode.reportedMistakesIds.length);
+        // let documentVerdictForUser = Translators.getDocumentVerdictForUser(resultNode, documentHtmlWithMistakes.documentMistakes.length, resultNode.reportedMistakesIds.length);
 
         let documentVerdictForUser = DocumentVerdictTranslators.getDocumentVerdictForUser(resultNode.documentVerdict);
         setDocumentVerdict(documentVerdictForUser.verdict);

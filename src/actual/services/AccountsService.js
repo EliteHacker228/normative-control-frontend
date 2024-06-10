@@ -1,4 +1,5 @@
 import Student from "../domain/users/Student.js";
+import User from "../domain/users/User.js";
 import Normocontroller from "../domain/users/Normocontroller.js";
 import Admin from "../domain/users/Admin.js";
 import AccountsNetworker from "../networkers/AccountsNetworker.js";
@@ -35,5 +36,11 @@ export default class AccountsService {
     static async getNormocontrollers(){
         let normocontrollersPlainObjectsList = await AccountsNetworker.getNormocontrollers();
         return normocontrollersPlainObjectsList.map(normocontroller => Normocontroller.fromPlainObject(normocontroller));
+    }
+
+    static async getAccounts(){
+        let accountsPlainObjectsList = await AccountsNetworker.getAccounts();
+        // return accountsPlainObjectsList.map(account => User.fromPlainObject(account));
+        return accountsPlainObjectsList;
     }
 }

@@ -13,6 +13,16 @@ export default class User {
         this.#verified = verified;
     }
 
+    static fromPlainObject(plainObject){
+        return new User(
+            plainObject.id,
+            plainObject.email,
+            plainObject.fullName,
+            plainObject.role,
+            plainObject.verified
+        );
+    }
+
     get id() {
         return this.#id;
     }

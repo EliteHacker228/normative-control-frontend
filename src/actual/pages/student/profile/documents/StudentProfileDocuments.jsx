@@ -13,7 +13,7 @@ import documentAcceptedIco from './static/document_accepted_ico.svg';
 import documentRejectedIco from './static/document_rejected.svg';
 import documentNotCheckedIco from './static/document_reported.svg';
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
-import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import DocumentVerdictTranslators from "../../../../utils/Translators/DocumentVerdictTranslators.js";
 import refreshIco from './static/refreshIco.svg';
 import FeedbackService from "../../../../services/FeedbackService.js";
 import GiveFeedbackPopUp from "./components/popups/giveFeedback/GiveFeedbackPopUp.jsx";

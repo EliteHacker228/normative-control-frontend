@@ -8,7 +8,7 @@ import NotFoundError from "../../../../errors/NotFoundError.js";
 import InternalServerError from "../../../../errors/InternalServerError.js";
 import Student from "../../../../domain/users/Student.js";
 import Verdicts from "../../../../domain/documents/Verdicts.js";
-import DocumentVerdictTranslators from "../../../../utils/DocumentVerdictTranslators/DocumentVerdictTranslators.js";
+import DocumentVerdictTranslators from "../../../../utils/Translators/DocumentVerdictTranslators.js";
 import searchIco from "../../../student/profile/document/static/searchIco.svg";
 import whiteDownloadIco from './static/downloadIcoWhite.svg';
 import reportIco from "./static/reportIco.svg";

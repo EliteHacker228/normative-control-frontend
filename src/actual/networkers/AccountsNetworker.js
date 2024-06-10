@@ -97,6 +97,20 @@ export default class AccountsNetworker {
         return await normocontrollersResponse.json();
     }
 
+    static async getAccounts(){
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
+        };
+
+        let accountsResponse = await fetch(`${ENV.API_URL}/accounts`, requestOptions);
+        await this._handleResponseStatus(accountsResponse);
+        return await accountsResponse.json();
+    }
+
     static async _handleResponseStatus(getDocumentResponse) {
         if (!getDocumentResponse.ok) {
             switch (getDocumentResponse.status) {

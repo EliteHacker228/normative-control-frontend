@@ -35,7 +35,6 @@ export default class DocumentVerdictTranslators {
             case Verdicts.REJECTED:
                 return {verdict: Verdicts.REJECTED, reportsAvailable: false};
         }
-
     }
 
     static getDocumentVerdictForUserAlt(document, mistakesLength, reportedMistakesLength) {
