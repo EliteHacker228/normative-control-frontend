@@ -1,4 +1,4 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import Roles from "../../../../domain/users/Roles.js";
 import DocumentsService from "../../../../services/DocumentsService.js";
@@ -15,6 +15,7 @@ import AccountsService from "../../../../services/AccountsService.js";
 
 export default function Accounts() {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [accounts, setAccounts] = useState([]);
     const [filteredAccounts, setFilteredAccounts] = useState([]);
@@ -41,6 +42,11 @@ export default function Accounts() {
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.sort((a, b) => collator.compare(a.name, b.name));
         setAcademicalGroups(groups);
+
+        if (searchParams.has('groups')) {
+            setSelectedGroups(new Set(searchParams.get('groups').split(',')));
+            setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set(searchParams.get('groups').split(',')));
+        }
     }
 
     const onSearchInput = (e) => {
@@ -75,6 +81,18 @@ export default function Accounts() {
         }
 
         updateFilteredAccounts(searchInput, updatedRoles, selectedGroups);
+    };
+
+    const setAndUpdateFilteredAccounts = (accounts, academicalGroups, localSearchInput, localSelectedRoles, localSelectedGroups) => {
+        let filteredAccounts = accounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
+        if (localSelectedRoles.size > 0) {
+            filteredAccounts = filteredAccounts.filter(account => localSelectedRoles.has(account.role));
+        }
+        if (localSelectedGroups.size > 0) {
+            let mapped = academicalGroups.filter(academicalGroup => localSelectedGroups.has(academicalGroup.name)).map(academicalGroup => academicalGroup.normocontroller.email);
+            filteredAccounts = filteredAccounts.filter(account => (account.academicGroup && localSelectedGroups.has(account.academicGroup.name)) || mapped.includes(account.email));
+        }
+        setFilteredAccounts(filteredAccounts);
     };
 
     const updateFilteredAccounts = (localSearchInput, localSelectedRoles, localSelectedGroups) => {

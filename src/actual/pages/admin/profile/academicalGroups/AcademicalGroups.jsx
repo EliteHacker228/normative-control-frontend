@@ -9,9 +9,12 @@ import CsvDocumentsListDownloader from "../../../../utils/Downloaders/CsvDocumen
 import RemoveAcademicalGroupPopUp from "./components/popups/removeAcademicalGroupPopUp/RemoveAcademicalGroupPopUp.jsx";
 import AddAcademicalGroupPopUp from "./components/popups/addAcademicalGroupPopUp/AddAcademicalGroupPopUp.jsx";
 import {EditAcademicalGroupPopUp} from "./components/popups/editAcademicalGroupPopUp/EditAcademicalGroupPopUp.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 export default function AcademicalGroups() {
+    const navigate = useNavigate();
+
     const [academicalGroups, setAcademicalGroups] = useState([]);
     const [filteredAcademicalGroups, setFilteredAcademicalGroups] = useState([]);
     const [searchRequest, setSearchRequest] = useState('');
@@ -71,6 +74,12 @@ export default function AcademicalGroups() {
         setAcademicalGroupOnDeletion({});
     };
 
+    const onOpenGroup = (e) => {
+        let academicalGroupOnEditionIndex = e.target.parentNode.parentNode.id;
+        navigate(`/profile/admin/accounts?groups=${filteredAcademicalGroups[academicalGroupOnEditionIndex].name}`);
+        console.log(academicalGroupOnEditionIndex);
+    };
+
     const openEditGroupPopUp = (e) => {
         setIsEditGroupPopUpShowed(true);
         let academicalGroupOnEditionIndex = e.target.parentNode.parentNode.id;
@@ -114,7 +123,8 @@ export default function AcademicalGroups() {
                                     <div className={css.searchResult__text}>{academicalGroup.name}</div>
                                     <div className={css.searchResult__controls}>
                                         <button
-                                            className={`${css.search__button} ${css.search__button_open}`}>Открыть
+                                            className={`${css.search__button} ${css.search__button_open}`}
+                                            onClick={onOpenGroup}>Открыть
                                         </button>
                                         <button
                                             className={`${css.search__button} ${css.search__button_edit}`}
