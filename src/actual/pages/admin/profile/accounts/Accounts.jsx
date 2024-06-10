@@ -83,7 +83,8 @@ export default function Accounts() {
             filteredAccounts = filteredAccounts.filter(account => localSelectedRoles.has(account.role));
         }
         if (localSelectedGroups.size > 0) {
-            filteredAccounts = filteredAccounts.filter(account => account.academicGroup && localSelectedGroups.has(account.academicGroup.name));
+            let mapped = academicalGroups.filter(academicalGroup => localSelectedGroups.has(academicalGroup.name)).map(academicalGroup => academicalGroup.normocontroller.email);
+            filteredAccounts = filteredAccounts.filter(account => (account.academicGroup && localSelectedGroups.has(account.academicGroup.name)) || mapped.includes(account.email));
         }
         setFilteredAccounts(filteredAccounts);
     };
