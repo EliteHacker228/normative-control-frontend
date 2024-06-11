@@ -143,7 +143,7 @@ export default function StudentProfilePersonal() {
                             <p className={css.inputBlock__header}>Группа</p>
                             <select className={css.inputBlock__input} placeholder='Академическая группа' value={academicGroupId}
                                     onChange={onAcademicGroupIdInput}>
-                                {academicGroupId === '' && <option value='' disabled>-</option>}
+                                <option value=''>-</option>
                                 {
                                     academicalGroups
                                         .map((academicalGroup, index) =>

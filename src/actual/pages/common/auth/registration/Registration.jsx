@@ -135,7 +135,7 @@ export default function Registration() {
                     <select className={css.registrationForm__textInput} placeholder='Академическая группа'
                             value={academicGroupId}
                             onChange={onAcademicGroupIdInput}>
-                        <option value='' disabled>-</option>
+                        <option value=''>-</option>
                         {
                             academicalGroups
                                 .map((academicalGroup, index) =>

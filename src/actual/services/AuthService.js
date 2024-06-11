@@ -11,9 +11,15 @@ export default class AuthService {
         this._locallyAuthenticateUserByTokensPair(loginResult);
     }
 
-    static async registerUserByUserRegistrationDto(userRegistrationDto) {
+    static async registerUserByUserRegistrationDto(userRegistrationDto, auth = true) {
         let registrationResult = await AuthNetworker.register(userRegistrationDto);
-        this._locallyAuthenticateUserByTokensPair(registrationResult);
+        if(auth)
+            this._locallyAuthenticateUserByTokensPair(registrationResult);
+    }
+
+    static async registerNormocontroller(userRegistrationDto) {
+        let registrationResult = await AuthNetworker.registerNormocontroller(userRegistrationDto);
+        return registrationResult;
     }
 
     static authenticateUserByJwtTokensPair(jwtTokensPair) {

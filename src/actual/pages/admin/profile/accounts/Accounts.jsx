@@ -12,6 +12,7 @@ import whiteDownloadIco from "./static/downloadIcoWhite.svg";
 import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import RoleTranslator from "../../../../utils/Translators/RoleTranslator.js";
 import AccountsService from "../../../../services/AccountsService.js";
+import AddAccountPopUp from "./components/popups/addAccountPopUp/AddAccountPopUp.jsx";
 
 export default function Accounts() {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ export default function Accounts() {
 
     const roles = [Roles.STUDENT, Roles.NORMOCONTROLLER, Roles.ADMIN];
     const [selectedRoles, setSelectedRoles] = useState(new Set([]));
+
+    const [isAddAccountPopUpShowed, setIsAccountPopUpShowed] = useState(false);
 
     const resultDownloadRef = useRef();
 
@@ -118,9 +121,19 @@ export default function Accounts() {
         }, 5000);
     };
 
+    const openAddAccountPopUp = () => {
+        setIsAccountPopUpShowed(true);
+    };
+
+    const closeAddAccountPopUp = () => {
+        setIsAccountPopUpShowed(false);
+    };
+
     return (
         <div>
             <Header/>
+            {isAddAccountPopUpShowed &&
+                <AddAccountPopUp closePopUp={closeAddAccountPopUp} updateAccounts={getPageData}/>}
             <div className={css.adminAccounts}>
                 <div className={css.controls}>
                     <div className={css.filters}>
@@ -171,7 +184,8 @@ export default function Accounts() {
                             })}
                         </div>
                         <div className={css.downloadCsv}>
-                            <div className={`${css.search__button} ${css.search__button_add}`}>
+                            <div className={`${css.search__button} ${css.search__button_add}`}
+                                 onClick={openAddAccountPopUp}>
                                 <p>Добавить пользователя</p>
                             </div>
                         </div>

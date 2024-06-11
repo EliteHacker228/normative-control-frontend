@@ -2,7 +2,7 @@ import EmailValidator from "./EmailValidator.js";
 
 export default class CredentialsValidator {
     static validateLoginForm({email, password}) {
-        if(!EmailValidator.validateEmail(email))
+        if (!EmailValidator.validateEmail(email))
             return false;
 
         if (password === '' || password.length < 8)
@@ -20,8 +20,7 @@ export default class CredentialsValidator {
                                         password,
                                         passwordRepetition,
                                     }) {
-
-        if(!EmailValidator.validateEmail(email))
+        if (!EmailValidator.validateEmail(email))
             return false;
 
         if (!this.isNamePartValid(firstName))
@@ -34,13 +33,13 @@ export default class CredentialsValidator {
             return false;
 
 
-        if (!academicGroupId.match(/\d+/))
-            return false;
+        // if (!academicGroupId.match(/\d+/))
+        //     return false;
 
         if (password === '' || password.length < 8)
             return false;
 
-        if(passwordRepetition === '' || passwordRepetition.length < 8)
+        if (passwordRepetition === '' || passwordRepetition.length < 8)
             return false;
 
         if (password !== passwordRepetition)
@@ -49,14 +48,36 @@ export default class CredentialsValidator {
         return true;
     }
 
+    static validateNormocontrollerCreationForm({
+                                                   email,
+                                                   firstName,
+                                                   middleName,
+                                                   lastName,
+                                                   password
+                                               }) {
+        if (!EmailValidator.validateEmail(email))
+            return false;
+
+        if (!this.isNamePartValid(firstName))
+            return false;
+
+        if (middleName && !this.isNamePartValid(middleName))
+            return false;
+
+        if (!this.isNamePartValid(lastName))
+            return false;
+
+        if (password === '' || password.length < 8)
+            return false;
+
+        return true;
+    }
+
     static validateStudentPersonalDataUpdatingForm({fullName, email, academicGroupId}) {
-        if(!EmailValidator.validateEmail(email))
+        if (!EmailValidator.validateEmail(email))
             return false;
 
         if (!this._isFullNameValid(fullName))
-            return false;
-
-        if (academicGroupId === '')
             return false;
 
         return true;
@@ -64,7 +85,7 @@ export default class CredentialsValidator {
 
     // Усовершенствовать алгоритм валидации
     static validateNormocontrollerPersonalDataUpdatingForm({fullName, email}) {
-        if(!EmailValidator.validateEmail(email))
+        if (!EmailValidator.validateEmail(email))
             return false;
 
         if (!this._isFullNameValid(fullName))
@@ -92,7 +113,7 @@ export default class CredentialsValidator {
         return true;
     }
 
-    static isNamePartValid(name){
+    static isNamePartValid(name) {
         let cyrillicNamePartRegex = /^(?=.{1,40}$)[а-яёА-ЯЁ]+(?:[-' ][а-яёА-ЯЁ]+)*$/;
         return name.match(cyrillicNamePartRegex)
     }
