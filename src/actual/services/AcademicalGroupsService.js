@@ -12,6 +12,10 @@ export default class AcademicalGroupsService {
         await AcademicalGroupsNetworker.deleteAcademicalGroupById(id);
     }
 
+    static async deleteAccountBy(id){
+        await AcademicalGroupsNetworker.deleteAccountBy(id);
+    }
+
     static async createAcademicalGroup(academicalGroupName, normocontrollerId) {
         if (normocontrollerId === '')
             normocontrollerId = null;

@@ -1,6 +1,8 @@
 import ENV from "../../config/ENV.js";
 import AuthService from "../services/AuthService.js";
 import ConflictError from "../errors/ConflictError.js";
+import AccessForbiddenError from "../errors/AccessForbiddenError.js";
+import InternalServerError from "../errors/InternalServerError.js";
 
 export default class AcademicalGroupsNetworker {
     static async getAcademicalGroups() {
@@ -27,6 +29,21 @@ export default class AcademicalGroupsNetworker {
         if (!deleteAcademicalGroupsResponse.ok)
             this._handleAcademicalGroupResponse(deleteAcademicalGroupsResponse);
         return await deleteAcademicalGroupsResponse.json();
+    }
+
+    static async deleteAccountBy(id) {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const requestOptions = {
+            method: "DELETE",
+            headers: headers
+        };
+
+        let deleteAccountGroupsResponse = await fetch(`${ENV.API_URL}/accounts/${id}`, requestOptions);
+        if (!deleteAccountGroupsResponse.ok)
+            this._handleAcademicalGroupResponse(deleteAccountGroupsResponse);
+        return await deleteAccountGroupsResponse.json();
     }
 
     static async createAcademicalGroup(academicalGroupName, normocontrollerId) {
@@ -75,12 +92,16 @@ export default class AcademicalGroupsNetworker {
 
     static _handleAcademicalGroupResponse(academicalGroupOperationResponse) {
         switch (academicalGroupOperationResponse.status) {
-            case 409:
-                throw new ConflictError('Академическая группа с таким названием уже существует');
             case 400:
-                throw new ConflictError('Указаны не валидные данные');
+                throw new ConflictError('Указаны не валидные данные.');
+            case 403:
+                throw new AccessForbiddenError('Вы не имеете доступа к данному ресурсу или операции.');
+            case 409:
+                throw new ConflictError('Академическая группа с таким названием уже существует.');
+            case 500:
+                throw new InternalServerError('Произошла ошибка на стороне сервера.');
             default:
-                throw new Error('Произошла ошибка');
+                throw new Error('Произошла ошибка.');
         }
     }
 }

@@ -13,6 +13,7 @@ import Footer from "../../../../commonComponents/footer/Footer.jsx";
 import RoleTranslator from "../../../../utils/Translators/RoleTranslator.js";
 import AccountsService from "../../../../services/AccountsService.js";
 import AddAccountPopUp from "./components/popups/addAccountPopUp/AddAccountPopUp.jsx";
+import DeleteAccountPopUp from "./components/popups/deleteAccountPopUp/DeleteAccountPopUp.jsx";
 
 export default function Accounts() {
     const navigate = useNavigate();
@@ -29,7 +30,10 @@ export default function Accounts() {
     const roles = [Roles.STUDENT, Roles.NORMOCONTROLLER, Roles.ADMIN];
     const [selectedRoles, setSelectedRoles] = useState(new Set([]));
 
-    const [isAddAccountPopUpShowed, setIsAccountPopUpShowed] = useState(false);
+    const [isAddAccountPopUpShowed, setIsAddAccountPopUpShowed] = useState(false);
+    const [isDeleteAccountPopUpShowed, setIsDeleteAccountPopUpShowed] = useState(false);
+
+    const [accountOnDeletion, setAccountOnDeletion] = useState({});
 
     const resultDownloadRef = useRef();
 
@@ -133,11 +137,23 @@ export default function Accounts() {
     };
 
     const openAddAccountPopUp = () => {
-        setIsAccountPopUpShowed(true);
+        setIsAddAccountPopUpShowed(true);
     };
 
     const closeAddAccountPopUp = () => {
-        setIsAccountPopUpShowed(false);
+        setIsAddAccountPopUpShowed(false);
+    };
+
+    const openDeleteAccountPopUp = (e) => {
+        setIsDeleteAccountPopUpShowed(true);
+        let accountGroupOnDeletionIndex = e.target.parentNode.parentNode.id;
+        let accountGroupOnDeletion = filteredAccounts[accountGroupOnDeletionIndex];
+        setAccountOnDeletion(accountGroupOnDeletion);
+    };
+
+    const closeDeleteAccountPopUp = () => {
+        setIsDeleteAccountPopUpShowed(false);
+        setAccountOnDeletion({});
     };
 
     return (
@@ -145,6 +161,8 @@ export default function Accounts() {
             <Header/>
             {isAddAccountPopUpShowed &&
                 <AddAccountPopUp closePopUp={closeAddAccountPopUp} updateAccounts={getPageData}/>}
+            {isDeleteAccountPopUpShowed &&
+                <DeleteAccountPopUp closePopUp={closeDeleteAccountPopUp} accountOnDeletion={accountOnDeletion} updateAccounts={getPageData}/>}
             <div className={css.adminAccounts}>
                 <div className={css.controls}>
                     <div className={css.filters}>
@@ -209,7 +227,7 @@ export default function Accounts() {
                     {filteredAccounts.sort((a, b) => new Date(b.verificationDate).getTime() - new Date(a.verificationDate).getTime())
                         .map((account, index) => {
                             return (
-                                <div key={index} className={css.accountsNode}>
+                                <div id={index} key={index} className={css.accountsNode}>
                                     <div className={css.accountsNode__header}>
                                         <p className={css.accountsNode__description}><b>{account.fullName}</b></p>
                                         <p className={css.accountsNode__description}>{account.email}</p>
@@ -223,7 +241,8 @@ export default function Accounts() {
                                         {account.role !== Roles.ADMIN && <button
                                             className={`${css.search__button} ${css.search__button_edit}`}>Изменить</button>}
                                         {account.role !== Roles.ADMIN && <button
-                                            className={`${css.search__button} ${css.search__button_remove}`}>Удалить</button>}
+                                            className={`${css.search__button} ${css.search__button_remove}`}
+                                            onClick={openDeleteAccountPopUp}>Удалить</button>}
                                     </div>
                                 </div>
                             );
