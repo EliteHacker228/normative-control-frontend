@@ -34,10 +34,10 @@ export default function Accounts() {
     const resultDownloadRef = useRef();
 
     useEffect(() => {
-        getPageData();
+        getInitPageData();
     }, []);
 
-    const getPageData = async () => {
+    const getInitPageData = async () => {
         let accounts = await AccountsService.getAccounts();
         setAccounts(accounts);
         setFilteredAccounts(accounts);
@@ -50,6 +50,17 @@ export default function Accounts() {
             setSelectedGroups(new Set(searchParams.get('groups').split(',')));
             setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set(searchParams.get('groups').split(',')));
         }
+    }
+
+    const getPageData = async () => {
+        let accounts = await AccountsService.getAccounts();
+        setAccounts(accounts);
+        setFilteredAccounts(accounts);
+        let groups = await AcademicalGroupsService.getAcademicalGroups();
+        let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+        groups = groups.sort((a, b) => collator.compare(a.name, b.name));
+        setAcademicalGroups(groups);
+        setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set(searchParams.get('groups').split(',')));
     }
 
     const onSearchInput = (e) => {
