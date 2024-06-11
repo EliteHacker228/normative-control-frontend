@@ -31,7 +31,7 @@ export default function RemoveAcademicalGroupPopUp({closePopUp, academicalGroup,
         }
     };
 
-    const onDelete = async (e) => {
+    const onDelete = async () => {
         try {
             setIsDeletionInProgress(true);
             setIsDeletionFailed(false);
