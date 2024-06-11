@@ -22,10 +22,11 @@ export default class AccountsService {
         throw new Error('Unknown user role');
     }
 
-    static async updateAccountData(accountId, personalData) {
+    static async updateAccountData(accountId, personalData, doAuth = true) {
         await AccountsNetworker.patchAccount(accountId, personalData);
         let patchEmailResponse = await AccountsNetworker.patchAccountEmail(accountId, personalData.email);
-        AuthService.authenticateUserByJwtTokensPair(patchEmailResponse);
+        if (doAuth)
+            AuthService.authenticateUserByJwtTokensPair(patchEmailResponse);
     }
 
 
@@ -33,12 +34,16 @@ export default class AccountsService {
         await AccountsNetworker.patchAccountPassword(accountId, oldPassword, newPassword);
     }
 
-    static async getNormocontrollers(){
+    static async patchAccountPasswordAsAdmin(accountId, password) {
+        await AccountsNetworker.patchAccountPasswordAsAdmin(accountId, password);
+    }
+
+    static async getNormocontrollers() {
         let normocontrollersPlainObjectsList = await AccountsNetworker.getNormocontrollers();
         return normocontrollersPlainObjectsList.map(normocontroller => Normocontroller.fromPlainObject(normocontroller));
     }
 
-    static async getAccounts(){
+    static async getAccounts() {
         let accountsPlainObjectsList = await AccountsNetworker.getAccounts();
         // return accountsPlainObjectsList.map(account => User.fromPlainObject(account));
         return accountsPlainObjectsList;

@@ -119,12 +119,10 @@ export default class CredentialsValidator {
     }
 
     static validatePasswordUpdatingForm({oldPassword, newPassword}) {
-        if (oldPassword === '' || oldPassword.length < 8)
-            return false;
+        return this.validatePassword(newPassword) && this.validatePassword(oldPassword);
+    }
 
-        if (newPassword === '' || newPassword.length < 8)
-            return false;
-
-        return true;
+    static validatePassword(password) {
+        return !(password === '' || password.length < 8);
     }
 }

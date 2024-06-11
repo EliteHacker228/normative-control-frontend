@@ -156,6 +156,13 @@ export default function Accounts() {
         setAccountOnDeletion({});
     };
 
+    const editAccount = (e) => {
+        let accountOnEditionIndex = e.target.parentNode.parentNode.id;
+        let accountOnEdition = filteredAccounts[accountOnEditionIndex];
+        // console.log(accountOnEdition.id);
+        navigate(`/profile/admin/account?id=${accountOnEdition.id}`);
+    };
+
     return (
         <div>
             <Header/>
@@ -239,7 +246,8 @@ export default function Accounts() {
                                     </div>
                                     <div className={css.accountsNode__buttons}>
                                         {account.role !== Roles.ADMIN && <button
-                                            className={`${css.search__button} ${css.search__button_edit}`}>Изменить</button>}
+                                            className={`${css.search__button} ${css.search__button_edit}`}
+                                            onClick={editAccount}>Изменить</button>}
                                         {account.role !== Roles.ADMIN && <button
                                             className={`${css.search__button} ${css.search__button_remove}`}
                                             onClick={openDeleteAccountPopUp}>Удалить</button>}

@@ -16,8 +16,7 @@ export default class AccountsNetworker {
         };
 
         let accountDataResponse = await fetch(`${ENV.API_URL}/accounts/${accountId}`, requestOptions);
-        if (!accountDataResponse.ok)
-            throw new Error(`Receiving account data failed due to: ${accountDataResponse.statusText}`)
+        await this._handleResponseStatus(accountDataResponse);
         return await accountDataResponse.json();
     }
 
@@ -76,6 +75,26 @@ export default class AccountsNetworker {
             method: "PATCH",
             headers: headers,
             body: raw,
+        };
+
+        let patchAccountPasswordResult = await fetch(`${ENV.API_URL}/accounts/${accountId}/password`, requestOptions);
+        await this._handleResponseStatus(patchAccountPasswordResult);
+        return await patchAccountPasswordResult.json();
+    }
+
+    static async patchAccountPasswordAsAdmin(accountId, newPassword){
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${AuthService.getLocalUserData().accessToken}`);
+
+        const body = JSON.stringify({
+            "newPassword": newPassword
+        });
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: headers,
+            body: body,
         };
 
         let patchAccountPasswordResult = await fetch(`${ENV.API_URL}/accounts/${accountId}/password`, requestOptions);
