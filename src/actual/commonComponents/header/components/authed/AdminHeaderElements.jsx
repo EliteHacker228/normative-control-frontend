@@ -42,8 +42,8 @@ export default function AdminHeaderElements() {
                              className={css.dropdownMenu__element}>Академические группы</NavLink>
                     <NavLink to={'/profile/admin/accounts'}
                              className={css.dropdownMenu__element}>Учётные записи</NavLink>
-                    <NavLink to={'/profile/admin/log'}
-                             className={css.dropdownMenu__element}>Журнал событий</NavLink>
+                    {/*<NavLink to={'/profile/admin/log'}*/}
+                    {/*         className={css.dropdownMenu__element}>Журнал событий</NavLink>*/}
                     <NavLink to={'/profile/admin/personal'} className={css.dropdownMenu__element}>Личная
                         информация</NavLink>
                     <NavLink to={'/'} onClick={onLogout} className={css.dropdownMenu__element}>Выход</NavLink>
