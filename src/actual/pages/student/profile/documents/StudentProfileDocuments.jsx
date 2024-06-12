@@ -66,8 +66,8 @@ export default function StudentProfileDocuments() {
             <div className={css.studentDocuments}>
                 <div className={css.headerContainer}>
                     <h1 className={css.studentDocuments__header}>Загруженные работы</h1>
-                    <button className={css.search__refresh} onClick={onRefreshClick}
-                            disabled={isRefreshDisabled} title={'Обновить результаты'}/>
+                    {/*<button className={css.search__refresh} onClick={onRefreshClick}
+                            disabled={isRefreshDisabled} title={'Обновить результаты'}/>*/}
                 </div>
                 <div className={css.documentsList}>
                     {documents.length === 0 &&

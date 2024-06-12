@@ -229,6 +229,22 @@
     gap: 20px;
 }
 
+.search__goBack {
+    border: none;
+    background: url("./static/goBackIco.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    margin-right: 440px;
+    margin-top: 16px;
+}
+
+.search__goBack:hover {
+    cursor: pointer;
+}
+
 .mistakes {
     border: 1px solid var(--info-dark-blue);
     border-radius: 5px;

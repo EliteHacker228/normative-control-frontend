@@ -114,8 +114,8 @@ export default function NormocontrollerProfileDocuments() {
                         <div className={css.search}>
                             <div className={css.headerContainer}>
                                 <h1 className={css.search__header}>Поиск</h1>
-                                <button className={css.search__refresh} onClick={onRefreshClick}
-                                        disabled={isRefreshDisabled} title={'Обновить результаты'}/>
+                                {/*<button className={css.search__refresh} onClick={onRefreshClick}*/}
+                                {/*        disabled={isRefreshDisabled} title={'Обновить результаты'}/>*/}
                             </div>
                             <div className={css.searchField}>
                                 <input className={css.searchField__input} type='text'

@@ -137,12 +137,20 @@ export default function NormocontrollerProfileDocument() {
         }
     };
 
+
+    const onGoBackClick = () => {
+        console.log('click');
+        navigate('/profile/normocontroller/documents');
+    };
+
     return (
         <div>
             <Header/>
             <div className={css.studentResult}>
                 <div className={css.section}>
                     <div className={css.section}>
+                        <button className={css.search__goBack} onClick={onGoBackClick}
+                                title={'Вернуться к списку работ'}/>
                         <h1 className={css.sectionHeader}>Статус работы</h1>
                         <div className={css.documentVerdict}>
                             <p className={css.documentVerdict__text}>Результат автоматической проверки работы
