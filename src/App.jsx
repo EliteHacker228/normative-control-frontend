@@ -32,6 +32,7 @@ import AcademicalGroups from "./actual/pages/admin/profile/academicalGroups/Acad
 import AdminProfilePersonal from "./actual/pages/admin/profile/personal/AdminProfilePersonal.jsx";
 import Accounts from "./actual/pages/admin/profile/accounts/Accounts.jsx";
 import EditAccount from "./actual/pages/admin/profile/account/EditAccount.jsx";
+import AcademicalGroup from "./actual/pages/admin/profile/group/AcademicalGroup.jsx";
 
 function App() {
     return (
@@ -110,6 +111,12 @@ function App() {
                 <Route path='/profile/admin/groups' element={
                     <RoleSecuredRoute targetRole={Roles.ADMIN}>
                         <AcademicalGroups/>
+                    </RoleSecuredRoute>
+                }/>
+
+                <Route path='/profile/admin/group' element={
+                    <RoleSecuredRoute targetRole={Roles.ADMIN}>
+                        <AcademicalGroup/>
                     </RoleSecuredRoute>
                 }/>
 

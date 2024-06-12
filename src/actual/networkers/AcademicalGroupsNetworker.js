@@ -3,6 +3,7 @@ import AuthService from "../services/AuthService.js";
 import ConflictError from "../errors/ConflictError.js";
 import AccessForbiddenError from "../errors/AccessForbiddenError.js";
 import InternalServerError from "../errors/InternalServerError.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 export default class AcademicalGroupsNetworker {
     static async getAcademicalGroups() {
@@ -11,6 +12,17 @@ export default class AcademicalGroupsNetworker {
         };
 
         let getAcademicalGroupsResponse = await fetch(`${ENV.API_URL}/academical/groups`, requestOptions);
+        if (!getAcademicalGroupsResponse.ok)
+            this._handleAcademicalGroupResponse(getAcademicalGroupsResponse);
+        return await getAcademicalGroupsResponse.json();
+    }
+
+    static async getAcademicalGroupById(id) {
+        const requestOptions = {
+            method: "GET",
+        };
+
+        let getAcademicalGroupsResponse = await fetch(`${ENV.API_URL}/academical/groups/${id}`, requestOptions);
         if (!getAcademicalGroupsResponse.ok)
             this._handleAcademicalGroupResponse(getAcademicalGroupsResponse);
         return await getAcademicalGroupsResponse.json();
@@ -96,6 +108,8 @@ export default class AcademicalGroupsNetworker {
                 throw new ConflictError('Указаны не валидные данные.');
             case 403:
                 throw new AccessForbiddenError('Вы не имеете доступа к данному ресурсу или операции.');
+            case 404:
+                throw new NotFoundError('Ресурс не найден');
             case 409:
                 throw new ConflictError('Академическая группа с таким названием уже существует.');
             case 500:

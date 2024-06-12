@@ -1,0 +1,151 @@
+.popupPage {
+    background-color: var(--default-transparent-dark-blue);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+    cursor: pointer;
+}
+
+.popup {
+    background-color: var(--default-white);
+    border: 3px solid var(--info-dark-blue);
+    border-radius: 8px;
+    padding: 16px;
+
+    width: 600px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    cursor: auto;
+    word-break: break-word;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    align-items: center;
+}
+
+.header__text {
+    text-align: center;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--info-dark-blue);
+
+    flex-grow: 1;
+}
+
+.header__closeButton {
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 1;
+    position: absolute;
+}
+
+.popup__text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: var(--info-dark-blue);
+    width: 100%;
+}
+
+.popup__textInput {
+    font-family: 'Inter', sans-serif;
+    color: var(--info-dark-blue);
+    border: 1px solid var(--info-dark-blue);
+    border-radius: 8px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 4px 8px;
+
+    background-color: var(--default-white);
+}
+
+.popup__textInput::placeholder {
+    font-family: 'Inter', sans-serif;
+    color: var(--info-dark-blue);
+}
+
+.popup__image {
+    height: 200px;
+    width: 200px;
+}
+
+.popup__controls {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.popup__button {
+    color: var(--default-white);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1.5%;
+
+    padding: 8px 16px;
+
+    border: none;
+    border-radius: 10px;
+}
+
+.popup__button:disabled {
+    filter: brightness(85%);
+    cursor: not-allowed;
+}
+
+.popup__button:enabled:hover {
+    cursor: pointer;
+    filter: brightness(110%);
+}
+
+.popup__button:enabled:active {
+    filter: brightness(85%);
+}
+
+.popup__button_add {
+    background-color: var(--acceptance-green);
+}
+
+.popup__button_edit {
+    background-color: var(--edition-yellow);
+}
+
+.popup__button_cancel {
+    background-color: var(--default-light-grey);
+}
+
+.popup__button_tryAgain {
+    background-color: var(--bright-purple);
+}
+
+.popup__button_delete {
+    background-color: var(--rejection-red);
+}

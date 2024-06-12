@@ -76,7 +76,7 @@ export default function AcademicalGroups() {
 
     const onOpenGroup = (e) => {
         let academicalGroupOnEditionIndex = e.target.parentNode.parentNode.id;
-        navigate(`/profile/admin/accounts?groups=${filteredAcademicalGroups[academicalGroupOnEditionIndex].name}`);
+        navigate(`/profile/admin/group?id=${filteredAcademicalGroups[academicalGroupOnEditionIndex].id}`);
         console.log(academicalGroupOnEditionIndex);
     };
 

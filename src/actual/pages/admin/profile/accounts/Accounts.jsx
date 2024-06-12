@@ -166,7 +166,7 @@ export default function Accounts() {
                             </div>
                             <div className={css.searchField}>
                                 <input className={css.searchField__input} type='text'
-                                       placeholder={'Введите ФИО или e-mail обучающегося'} value={searchInput}
+                                       placeholder={'Введите ФИО или e-mail пользователя'} value={searchInput}
                                        onInput={onSearchInput}/>
                                 {/*<img className={css.searchField__button} src={searchIco}/>*/}
                                 <input className={css.searchField__button} type='submit' value=''/>
