@@ -41,6 +41,7 @@ export default function AcademicalGroups() {
     }, [searchRequest, academicalGroups]);
 
     const updateGroups = async () => {
+        console.log('Получаю данные по группам (админ)')
         let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
         setAcademicalGroups(academicalGroups);
     };

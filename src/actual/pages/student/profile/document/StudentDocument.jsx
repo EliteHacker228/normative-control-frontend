@@ -72,9 +72,11 @@ export default function StudentDocument() {
     const resultDownloadRef = useRef();
 
     useEffect(() => {
+        let intervalId;
         (async () => {
             try {
                 await getPageData();
+                intervalId = setInterval(getPageData, 2000);
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -86,15 +88,15 @@ export default function StudentDocument() {
                     case InternalServerError:
                         navigate('/errors/500', {replace: true});
                         break;
-                    default:
-                        console.log(error);
-                        break;
                 }
             }
         })();
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const getPageData = async () => {
+        console.log('Обновляем данные по работе (студент)');
         let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
         setDocumentHtml(documentHtmlWithMistakes.documentHtml);
         // console.log(documentHtmlWithMistakes.documentHtml);
@@ -148,9 +150,9 @@ export default function StudentDocument() {
             elm.style.backgroundColor = 'white';
         }, 2000);
         scrollIntoView(elm, {behavior: "smooth"});
-        if(resultViewRef.current.getBoundingClientRect().top > 0) {
+        if (resultViewRef.current.getBoundingClientRect().top > 0) {
             scrollIntoView(resultViewRef.current, {behavior: "smooth"}, {duration: Number.POSITIVE_INFINITY});
-        }else{
+        } else {
             scrollIntoView(resultViewRef.current, {behavior: "smooth"});
         }
     };
@@ -238,11 +240,13 @@ export default function StudentDocument() {
                                                 {isReportAvailable && hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={unreportIco}
                                                          onClick={() => unreportMistake(documentId, mistake.id)}
-                                                         alt={'Отменить ошибку'} title={'Отменить пометку ошибки как сомнительную'}/>}
+                                                         alt={'Отменить ошибку'}
+                                                         title={'Отменить пометку ошибки как сомнительную'}/>}
                                                 {isReportAvailable && !hasMistakeId(mistake.id) &&
                                                     <img className={css.mistake__button} src={reportIco}
                                                          onClick={() => reportMistake(documentId, mistake.id)}
-                                                         alt={'Доложить о ошибке'} title={'Отметить ошибку как сомнительную'}/>}
+                                                         alt={'Доложить о ошибке'}
+                                                         title={'Отметить ошибку как сомнительную'}/>}
                                             </div>
                                         </div>);
                                 })

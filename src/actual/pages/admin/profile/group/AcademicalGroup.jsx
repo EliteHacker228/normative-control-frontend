@@ -41,21 +41,32 @@ export default function AcademicalGroup() {
 
     useEffect(() => {
         getPageData();
+
+        let intervalId = setInterval(getPageData, 2000);
+
+        return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(() => {
+        updateFilteredAccountsExplicitly(searchInput, accounts);
+    }, [accounts, academicalGroup, searchInput, selectedRoles, selectedGroups, accounts]);
 
     const getPageData = async () => {
         await getPageDataByGroupId(+searchParams.get('id'));
     }
 
     const getPageDataByGroupId = async (academicalGroupId) => {
+        console.log('Обновление академической группы');
         try {
             let accounts = await AccountsService.getAccounts();
             let group = await AcademicalGroupsService.getAcademicalGroupById(academicalGroupId);
             setAcademicalGroup(group);
-            accounts = accounts.filter(user => user.role === Roles.STUDENT && user.academicGroup.id === academicalGroupId);
+            console.log(accounts);
+            accounts = accounts.filter(user => user.role === Roles.STUDENT && user.academicGroup?.id === academicalGroupId);
             accounts.unshift(group.normocontroller);
+            console.log(accounts);
+            console.log(group);
             setAccounts(accounts);
-            updateFilteredAccountsExplicitly(searchInput, accounts);
         }catch (error) {
             switch (error.constructor) {
                 case AccessForbiddenError:
@@ -74,16 +85,10 @@ export default function AcademicalGroup() {
     const onSearchInput = (e) => {
         let newSearchInput = e.target.value;
         setSearchInput(newSearchInput);
-        updateFilteredAccounts(newSearchInput);
-    };
-
-    const updateFilteredAccounts = (localSearchInput) => {
-        let filteredAccounts = accounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
-        setFilteredAccounts(filteredAccounts);
     };
 
     const updateFilteredAccountsExplicitly = (localSearchInput, accounts) => {
-        let filteredAccounts = accounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
+        let filteredAccounts = accounts.filter(account => account && (account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase())));
         setFilteredAccounts(filteredAccounts);
     };
 
@@ -165,12 +170,12 @@ export default function AcademicalGroup() {
                             );
                         })}
                 </div>
-                <div className={css.downloadCsv}>
-                    <div className={`${css.search__button} ${css.search__button_add}`}
-                         onClick={openAddAccountPopUp}>
-                        <p>Добавить пользователя</p>
-                    </div>
-                </div>
+                {/*<div className={css.downloadCsv}>*/}
+                {/*    <div className={`${css.search__button} ${css.search__button_add}`}*/}
+                {/*         onClick={openAddAccountPopUp}>*/}
+                {/*        <p>Добавить пользователя</p>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
             <Footer/>
         </div>

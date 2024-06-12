@@ -36,7 +36,15 @@ export default function Accounts() {
 
     useEffect(() => {
         getInitPageData();
+
+        let intervalId = setInterval(getPageData, 2000);
+
+        return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(() => {
+        updateFilteredAccounts(accounts, academicalGroups, searchInput, selectedRoles, selectedGroups);
+    }, [accounts, academicalGroups, searchInput, selectedRoles, selectedGroups, accounts]);
 
     const getInitPageData = async () => {
         let accounts = await AccountsService.getAccounts();
@@ -49,20 +57,18 @@ export default function Accounts() {
     }
 
     const getPageData = async () => {
+        console.log('Обновляем данные по аккаунтам (админ)');
         let accounts = await AccountsService.getAccounts();
         setAccounts(accounts);
-        setFilteredAccounts(accounts);
         let groups = await AcademicalGroupsService.getAcademicalGroups();
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.sort((a, b) => collator.compare(a.name, b.name));
         setAcademicalGroups(groups);
-        setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set([]));
     }
 
     const onSearchInput = (e) => {
         let newSearchInput = e.target.value;
         setSearchInput(newSearchInput);
-        updateFilteredAccounts(newSearchInput, selectedRoles, selectedGroups);
     };
 
     const onGroupSelect = (e) => {
@@ -75,8 +81,6 @@ export default function Accounts() {
             selectedGroups.add(groupId);
             setSelectedGroups(new Set(updatedGroups));
         }
-
-        updateFilteredAccounts(searchInput, selectedRoles, updatedGroups);
     };
 
     const onRoleSelect = (e) => {
@@ -89,29 +93,15 @@ export default function Accounts() {
             updatedRoles.add(role);
             setSelectedRoles(new Set(updatedRoles));
         }
-
-        updateFilteredAccounts(searchInput, updatedRoles, selectedGroups);
     };
 
-    const setAndUpdateFilteredAccounts = (accounts, academicalGroups, localSearchInput, localSelectedRoles, localSelectedGroups) => {
-        let filteredAccounts = accounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
+    const updateFilteredAccounts = (localAccounts, localAcademicalGroups, localSearchInput, localSelectedRoles, localSelectedGroups) => {
+        let filteredAccounts = localAccounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
         if (localSelectedRoles.size > 0) {
             filteredAccounts = filteredAccounts.filter(account => localSelectedRoles.has(account.role));
         }
         if (localSelectedGroups.size > 0) {
-            let mapped = academicalGroups.filter(academicalGroup => localSelectedGroups.has(academicalGroup.name)).map(academicalGroup => academicalGroup.normocontroller.email);
-            filteredAccounts = filteredAccounts.filter(account => (account.academicGroup && localSelectedGroups.has(account.academicGroup.name)) || mapped.includes(account.email));
-        }
-        setFilteredAccounts(filteredAccounts);
-    };
-
-    const updateFilteredAccounts = (localSearchInput, localSelectedRoles, localSelectedGroups) => {
-        let filteredAccounts = accounts.filter(account => account.fullName.toLowerCase().includes(localSearchInput.toLowerCase()) || account.email.toLowerCase().includes(localSearchInput.toLowerCase()));
-        if (localSelectedRoles.size > 0) {
-            filteredAccounts = filteredAccounts.filter(account => localSelectedRoles.has(account.role));
-        }
-        if (localSelectedGroups.size > 0) {
-            let mapped = academicalGroups.filter(academicalGroup => localSelectedGroups.has(academicalGroup.name)).map(academicalGroup => academicalGroup.normocontroller.email);
+            let mapped = localAcademicalGroups.filter(academicalGroup => localSelectedGroups.has(academicalGroup.name) && academicalGroup.normocontroller).map(academicalGroup => academicalGroup.normocontroller.email);
             filteredAccounts = filteredAccounts.filter(account => (account.academicGroup && localSelectedGroups.has(account.academicGroup.name)) || mapped.includes(account.email));
         }
         setFilteredAccounts(filteredAccounts);

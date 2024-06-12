@@ -29,9 +29,14 @@ export default function StudentProfileDocuments() {
 
     useEffect(() => {
         getPageData();
+
+        let intervalId = setInterval(getPageData, 2000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const getPageData = async () => {
+        console.log('Обновляем данные по работам (студент)');
         let documents = await DocumentsService.getDocuments();
         setDocuments(documents);
     };

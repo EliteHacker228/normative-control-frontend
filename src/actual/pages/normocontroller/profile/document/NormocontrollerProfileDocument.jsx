@@ -41,9 +41,11 @@ export default function NormocontrollerProfileDocument() {
     }
 
     useEffect(() => {
+        let intervalId;
         (async () => {
             try {
                 await getDocumentData();
+                intervalId = setInterval(getDocumentDataNoComments, 2000);
             } catch (error) {
                 switch (error.constructor) {
                     case AccessForbiddenError:
@@ -58,6 +60,8 @@ export default function NormocontrollerProfileDocument() {
                 }
             }
         })();
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const getDocumentData = async () => {
@@ -68,6 +72,20 @@ export default function NormocontrollerProfileDocument() {
         let student = Student.fromPlainObject(documentNode.student);
         setStudent(student);
         setDocumentComment(documentNode.comment ?? '');
+        setDocumentVerdict(documentNode.documentVerdict);
+        let reportedMistakes = new Set(documentNode.reportedMistakesIds);
+        setReportedMistakesIds(reportedMistakes);
+        setDocumentMistakes(documentHtmlWithMistakes.documentMistakes.sort((a, b) => reportedMistakes.has(b.id) - reportedMistakes.has(a.id)));
+    };
+
+    const getDocumentDataNoComments = async () => {
+        console.log('Обновляем данные по работе (нормоконтролер)');
+        let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
+        setDocumentHtml(documentHtmlWithMistakes.documentHtml);
+
+        let documentNode = await DocumentsService.getDocumentNode(documentId);
+        let student = Student.fromPlainObject(documentNode.student);
+        setStudent(student);
         setDocumentVerdict(documentNode.documentVerdict);
         let reportedMistakes = new Set(documentNode.reportedMistakesIds);
         setReportedMistakesIds(reportedMistakes);

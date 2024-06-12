@@ -33,12 +33,21 @@ export default function NormocontrollerProfileDocuments() {
 
     useEffect(() => {
         getPageData();
+
+        let intervalId = setInterval(getPageData, 2000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        updateFilteredDocuments(searchInput, selectedVerdicts, selectedGroups);
+    }, [searchInput, selectedVerdicts, selectedGroups, documents]);
+
     const getPageData = async () => {
+        console.log('Обновляем данные по работам (нормоконтролер)');
         let documents = await DocumentsService.getActualDocuments();
         setDocuments(documents);
-        setFilteredDocuments(documents);
+        // setFilteredDocuments(documents);
         let groups = await AcademicalGroupsService.getAcademicalGroups();
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.filter(group => group.normocontroller.id === AuthService.getLocalUserData().id).sort((a, b) => collator.compare(a.name, b.name));
@@ -52,7 +61,7 @@ export default function NormocontrollerProfileDocuments() {
     const onSearchInput = (e) => {
         let newSearchInput = e.target.value;
         setSearchInput(newSearchInput);
-        updateFilteredDocuments(newSearchInput, selectedVerdicts, selectedGroups);
+        // updateFilteredDocuments(newSearchInput, selectedVerdicts, selectedGroups);
     };
 
     const onGroupSelect = (e) => {
@@ -66,7 +75,7 @@ export default function NormocontrollerProfileDocuments() {
             setSelectedGroups(new Set(updatedGroups));
         }
 
-        updateFilteredDocuments(searchInput, selectedVerdicts, updatedGroups);
+        // updateFilteredDocuments(searchInput, selectedVerdicts, updatedGroups);
     };
 
     const onVerdictSelect = (e) => {
@@ -80,7 +89,7 @@ export default function NormocontrollerProfileDocuments() {
             setSelectedVerdicts(new Set(updatedVerdicts));
         }
 
-        updateFilteredDocuments(searchInput, updatedVerdicts, selectedGroups);
+        // updateFilteredDocuments(searchInput, updatedVerdicts, selectedGroups);
     };
 
     const updateFilteredDocuments = (localSearchInput, localSelectedVerdicts, localSelectedGroups) => {
