@@ -17,7 +17,6 @@ import DeleteAccountPopUp from "./components/popups/deleteAccountPopUp/DeleteAcc
 
 export default function Accounts() {
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
 
     const [accounts, setAccounts] = useState([]);
     const [filteredAccounts, setFilteredAccounts] = useState([]);
@@ -47,11 +46,6 @@ export default function Accounts() {
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.sort((a, b) => collator.compare(a.name, b.name));
         setAcademicalGroups(groups);
-
-        if (searchParams.has('groups')) {
-            setSelectedGroups(new Set(searchParams.get('groups').split(',')));
-            setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set(searchParams.get('groups').split(',')));
-        }
     }
 
     const getPageData = async () => {
@@ -62,7 +56,7 @@ export default function Accounts() {
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
         groups = groups.sort((a, b) => collator.compare(a.name, b.name));
         setAcademicalGroups(groups);
-        setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set(searchParams.get('groups').split(',')));
+        setAndUpdateFilteredAccounts(accounts, groups, '', new Set([]), new Set([]));
     }
 
     const onSearchInput = (e) => {
