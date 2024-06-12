@@ -79,7 +79,7 @@ export default function NormocontrollerProfileDocument() {
     };
 
     const getDocumentDataNoComments = async () => {
-        console.log('Обновляем данные по работе (нормоконтролер)');
+        // console.log('Обновляем данные по работе (нормоконтролер)');
         let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
         setDocumentHtml(documentHtmlWithMistakes.documentHtml);
 
@@ -157,7 +157,7 @@ export default function NormocontrollerProfileDocument() {
 
 
     const onGoBackClick = () => {
-        console.log('click');
+        // console.log('click');
         navigate('/profile/normocontroller/documents');
     };
 

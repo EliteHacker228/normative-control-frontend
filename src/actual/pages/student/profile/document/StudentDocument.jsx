@@ -96,7 +96,7 @@ export default function StudentDocument() {
     }, []);
 
     const getPageData = async () => {
-        console.log('Обновляем данные по работе (студент)');
+        // console.log('Обновляем данные по работе (студент)');
         let documentHtmlWithMistakes = await DocumentsService.getDocumentHtmlWithMistakesList(documentId);
         setDocumentHtml(documentHtmlWithMistakes.documentHtml);
         // console.log(documentHtmlWithMistakes.documentHtml);
@@ -189,7 +189,7 @@ export default function StudentDocument() {
     };
 
     const onGoBackClick = () => {
-        console.log('click');
+        // console.log('click');
         navigate('/profile/student/documents');
     };
 

@@ -6,11 +6,7 @@ export default function CommonAuthedElements() {
     const navigate = useNavigate();
 
     const onLogout = () => {
-        try {
-            AuthService.logoutUser();
-        } catch (error) {
-            console.log(error);
-        }
+        AuthService.logoutUser();
         navigate('/');
     }
 

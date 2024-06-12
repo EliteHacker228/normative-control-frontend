@@ -41,7 +41,7 @@ export default function AcademicalGroups() {
     }, [searchRequest, academicalGroups]);
 
     const updateGroups = async () => {
-        console.log('Получаю данные по группам (админ)')
+        // console.log('Получаю данные по группам (админ)')
         let academicalGroups = await AcademicalGroupsService.getAcademicalGroups();
         setAcademicalGroups(academicalGroups);
     };
@@ -78,7 +78,7 @@ export default function AcademicalGroups() {
     const onOpenGroup = (e) => {
         let academicalGroupOnEditionIndex = e.target.parentNode.parentNode.id;
         navigate(`/profile/admin/group?id=${filteredAcademicalGroups[academicalGroupOnEditionIndex].id}`);
-        console.log(academicalGroupOnEditionIndex);
+        // console.log(academicalGroupOnEditionIndex);
     };
 
     const openEditGroupPopUp = (e) => {

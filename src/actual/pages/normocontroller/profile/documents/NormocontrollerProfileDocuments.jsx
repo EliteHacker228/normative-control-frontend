@@ -44,7 +44,7 @@ export default function NormocontrollerProfileDocuments() {
     }, [searchInput, selectedVerdicts, selectedGroups, documents]);
 
     const getPageData = async () => {
-        console.log('Обновляем данные по работам (нормоконтролер)');
+        // console.log('Обновляем данные по работам (нормоконтролер)');
         let documents = await DocumentsService.getActualDocuments();
         setDocuments(documents);
         // setFilteredDocuments(documents);

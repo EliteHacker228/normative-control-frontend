@@ -18,11 +18,7 @@ export default function NormocontrollerHeaderElements() {
     };
 
     const onLogout = () => {
-        try {
-            AuthService.logoutUser();
-        } catch (error) {
-            console.log(error);
-        }
+        AuthService.logoutUser();
         navigate('/');
     }
 

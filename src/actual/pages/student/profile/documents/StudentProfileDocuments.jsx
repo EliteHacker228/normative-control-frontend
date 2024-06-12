@@ -36,7 +36,7 @@ export default function StudentProfileDocuments() {
     }, []);
 
     const getPageData = async () => {
-        console.log('Обновляем данные по работам (студент)');
+        // console.log('Обновляем данные по работам (студент)');
         let documents = await DocumentsService.getDocuments();
         setDocuments(documents);
     };

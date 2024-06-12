@@ -36,9 +36,6 @@ export default function EditAccount() {
                 case InternalServerError:
                     navigate('/errors/500', {replace: true});
                     break;
-                default:
-                    console.log('Unknown error');
-                    break;
             }
             return;
         }

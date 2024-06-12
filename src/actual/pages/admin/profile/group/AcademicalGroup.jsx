@@ -56,16 +56,16 @@ export default function AcademicalGroup() {
     }
 
     const getPageDataByGroupId = async (academicalGroupId) => {
-        console.log('Обновление академической группы');
+        // console.log('Обновление академической группы');
         try {
             let accounts = await AccountsService.getAccounts();
             let group = await AcademicalGroupsService.getAcademicalGroupById(academicalGroupId);
             setAcademicalGroup(group);
-            console.log(accounts);
+            // console.log(accounts);
             accounts = accounts.filter(user => user.role === Roles.STUDENT && user.academicGroup?.id === academicalGroupId);
             accounts.unshift(group.normocontroller);
-            console.log(accounts);
-            console.log(group);
+            // console.log(accounts);
+            // console.log(group);
             setAccounts(accounts);
         }catch (error) {
             switch (error.constructor) {

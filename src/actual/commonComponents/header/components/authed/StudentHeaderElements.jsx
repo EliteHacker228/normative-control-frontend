@@ -20,11 +20,7 @@ export default function StudentHeaderElements() {
     };
 
     const onLogout = () => {
-        try {
-            AuthService.logoutUser();
-        } catch (error) {
-            console.log(error);
-        }
+        AuthService.logoutUser();
         navigate('/');
     }
 

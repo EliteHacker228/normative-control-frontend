@@ -57,7 +57,7 @@ export default function Accounts() {
     }
 
     const getPageData = async () => {
-        console.log('Обновляем данные по аккаунтам (админ)');
+        // console.log('Обновляем данные по аккаунтам (админ)');
         let accounts = await AccountsService.getAccounts();
         setAccounts(accounts);
         let groups = await AcademicalGroupsService.getAcademicalGroups();
