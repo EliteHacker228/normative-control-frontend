@@ -35,8 +35,6 @@ export default function Accounts() {
 
     const [accountOnDeletion, setAccountOnDeletion] = useState({});
 
-    const resultDownloadRef = useRef();
-
     useEffect(() => {
         getInitPageData();
     }, []);
@@ -125,17 +123,6 @@ export default function Accounts() {
         setFilteredAccounts(filteredAccounts);
     };
 
-    const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
-
-    const onRefreshClick = async () => {
-        setIsRefreshDisabled(true);
-        await getPageData();
-
-        setTimeout(() => {
-            setIsRefreshDisabled(false);
-        }, 5000);
-    };
-
     const openAddAccountPopUp = () => {
         setIsAddAccountPopUpShowed(true);
     };
@@ -176,8 +163,6 @@ export default function Accounts() {
                         <div className={css.search}>
                             <div className={css.headerContainer}>
                                 <h1 className={css.search__header}>Поиск</h1>
-                                <button className={css.search__refresh} onClick={onRefreshClick}
-                                        disabled={isRefreshDisabled} title={'Обновить результаты'}/>
                             </div>
                             <div className={css.searchField}>
                                 <input className={css.searchField__input} type='text'
