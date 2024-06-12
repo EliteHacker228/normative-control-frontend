@@ -186,12 +186,19 @@ export default function StudentDocument() {
         }
     };
 
+    const onGoBackClick = () => {
+        console.log('click');
+        navigate('/profile/student/documents');
+    };
+
     return (
         <div>
             <Header/>
             <div className={css.studentResult}>
                 <div className={css.section}>
                     <div className={css.section}>
+                        <button className={css.search__goBack} onClick={onGoBackClick}
+                                title={'Вернуться к списку работ'}/>
                         <h1 className={css.sectionHeader}>Статус работы</h1>
                         <div className={css.documentVerdict}>
                             <img className={css.documentVerdict__logo}
